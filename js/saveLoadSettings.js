@@ -746,6 +746,37 @@ async function fetchRecentSettings(options = {}) {
   }
 }
 
+// Wait until natal.js has initialized sharedNatal and attached the client-side
+// submit handler. Without this barrier, requestSubmit() can run earlier in the same
+// DOMContentLoaded dispatch and fall through to the form's native POST, which reloads
+// this page and repeats the same initialization indefinitely.
+function waitForNatalSubmitHandler(timeoutMs = 15000) {
+  if (window.__trueSkyNatalSubmitHandlerReady === true) return Promise.resolve(true);
+
+  return new Promise((resolve) => {
+    let finished = false;
+    let timeoutId = null;
+    const eventName = "truesky-natal-submit-ready";
+    const finish = (ready) => {
+      if (finished) return;
+      finished = true;
+      if (timeoutId !== null) clearTimeout(timeoutId);
+      window.removeEventListener(eventName, onReady);
+      resolve(Boolean(ready));
+    };
+    const onReady = () => finish(window.__trueSkyNatalSubmitHandlerReady === true);
+
+    window.addEventListener(eventName, onReady);
+    timeoutId = setTimeout(
+      () => finish(window.__trueSkyNatalSubmitHandlerReady === true),
+      timeoutMs,
+    );
+    // Close the race where the module becomes ready between the first check
+    // and registration of the event listener.
+    if (window.__trueSkyNatalSubmitHandlerReady === true) finish(true);
+  });
+}
+
 // Each page initialization resets the form to the built-in default preset.
 // The account's default location is still loaded separately and is never stored
 // inside a settings preset.
@@ -780,7 +811,20 @@ function initializeDefaultSettings() {
     } catch (locationError) {
       console.warn("Não foi possível aplicar a localização padrão da conta antes do cálculo.", locationError);
     }
-    document.getElementById("natalForm")?.requestSubmit();
+    // Only calculate after the JavaScript submit handler is confirmed ready.
+    // If the chart module failed to initialize, do not fall back to a native form
+    // submission that would navigate away and recreate the initialization loop.
+    const submitHandlerReady = await waitForNatalSubmitHandler();
+    const natalForm = document.getElementById("natalForm");
+    if (submitHandlerReady && natalForm) {
+      natalForm.requestSubmit();
+    } else {
+      setFirebaseSettingsStatus(
+        "O cálculo automático não foi iniciado porque o módulo do cálculo não terminou de inicializar. Recarregue a página e tente novamente.",
+        "warning",
+      );
+      console.error("O formulário natal não está pronto para calcular; envio automático cancelado para evitar recarregamento da página.");
+    }
   })();
 }
 
