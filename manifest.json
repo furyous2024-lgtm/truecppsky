@@ -1,0 +1,32 @@
+{
+  "name": "True Sky Astrology Software",
+  "short_name": "True Sky",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "description": "Online astrology software with chart calculations and community features",
+  "icons": [
+    {
+      "src": "/icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["education", "lifestyle"],
+  "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://truesky.masteringthezodiac.com/manifest.json"
+    }
+  ]
+}

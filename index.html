@@ -1,0 +1,4099 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/queries.css" />
+
+    <title>True Sky - Astrology Software</title>
+    <meta
+      name="description"
+      content="Astronomical astrology software for all devices."
+    />
+    
+    <!-- SVG favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    
+    <!-- Apple Touch Icon for iOS devices -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- PWA manifest for home screen shortcuts -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="True Sky">
+    
+    <script src="./js/backend-config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+    <script src="./js/firebase-config.js"></script>
+    <script src="./js/authGuard.js"></script>
+    <script src="./js/firebase-birth-charts.js"></script>
+    <script src="./js/firebase-settings.js"></script>
+    <script src="/js/d3.v7.min.js"></script>
+  </head>
+  <body data-user-id=""
+      data-current-user="User"
+      data-user-role="user">
+
+    <!-- Master color reference element for synchronized animations -->
+    <div id="masterColorReference" style="visibility: hidden; position: absolute; top: 0; left: 0; width: 1px; height: 1px; filter: hue-rotate(0deg); animation: hueRotateFull 240s infinite linear;"></div>
+
+    <script src="/js/consoleWarning.js"></script>
+    <script>
+      window.user = {};
+    </script>
+
+    <header>
+<nav>
+  <div class="menu">
+    <div class="menu-row">
+      <button id="natal-button">
+        <span>MAIN</span>
+        <img src="images/menu/main.svg" alt="Main Icon">
+      </button>
+      <button id="triwheel-button">
+        <span>TRANSIT</span>
+        <img src="images/menu/triwheel.svg" alt="Triwheel Icon">
+      </button>
+      <button id="graph-button">
+        <span>GRAPH</span>
+        <img src="images/menu/graph.svg" alt="Graph Icon">
+      </button>
+      <button id="return-button">
+        <span>RETURN</span>
+        <img src="images/menu/return.svg" alt="Return Icon">
+      </button>
+      <button id="map-button">
+        <span>MAP</span>
+        <img src="images/menu/map.svg" alt="Map Icon">
+      </button>
+      <button id="settings-button">
+        <span>SETTINGS</span>
+        <img src="images/menu/settings.svg" alt="Settings Icon">
+      </button>
+    </div>
+    <div class="menu-row">
+      <button id="synastry-button">
+        <span>SYNASTRY</span>
+        <img src="images/menu/synastry.svg" alt="Synastry Icon">
+      </button>
+      <button id="composite-button">
+        <span>COMPOSITE</span>
+        <img src="images/menu/composite.svg" alt="Composite Icon">
+      </button>
+      <button id="community-button">
+        <span>CHAT</span>
+        <img src="images/menu/community.svg" alt="Community Icon">
+      </button>
+      <button id="help-button">
+        <span>DOCS</span>
+        <img src="images/menu/help.svg" alt="Help Icon">
+      </button>
+      <button id="account-button">
+        <span>ACCOUNT</span>
+        <img src="images/menu/account.svg" alt="Account Icon">
+      </button>
+    </div>
+  </div>
+</nav>
+    </header>
+
+
+<div id="showNatal">
+  <div id="natal-chart"></div>
+  
+  <form class="form" id="natalForm" action="/" method="post" autocomplete="off">
+    <input type="hidden" name="formType" value="chart" />
+  
+    <p class="form-title">Main Wheel</p>
+  
+    <label for="name" class="name-label">Name:</label>
+    <input
+      class="name"
+      id="natalName"
+      name="name"
+      maxlength="30"
+      spellcheck="false"
+    />
+  
+    <label for="date" class="date-label">Date (dd-month-yyyy):</label>
+    <input
+      class="day"
+      id="natalDay"
+      name="day"
+      min="1"
+      max="31"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <select class="month" id="natalMonth" name="month">
+      <option value=""></option>
+      <option value="January">January</option>
+      <option value="February">February</option>
+      <option value="March">March</option>
+      <option value="April">April</option>
+      <option value="May">May</option>
+      <option value="June">June</option>
+      <option value="July">July</option>
+      <option value="August">August</option>
+      <option value="September">September</option>
+      <option value="October">October</option>
+      <option value="November">November</option>
+      <option value="December">December</option>
+    </select>
+  
+    <input
+      class="year"
+      id="natalYear"
+      name="year"
+      spellcheck="false"
+    />
+  
+    <label for="time" class="time-label">Time (hh-mm):</label>
+    <input
+      class="hour"
+      id="natalHour"
+      name="hour"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <label class="semicolon">:</label>
+    <input
+      class="minute"
+      id="natalMinute"
+      name="minute"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <label class="time-format">(24-hour clock)</label>
+  
+    <label for="location" class="location-label">Location (city, region, country):</label>
+    <input
+      class="location"
+      id="natalLocation"
+      name="location"
+      maxlength="120"
+      spellcheck="false"
+    />
+  
+    <div class="suggestions-box"></div>
+
+    <div class="local-chart-location-fields">
+      <div class="local-coordinate-field">
+        <label for="natalLatitude">Latitude (decimal degrees)</label>
+        <input
+          id="natalLatitude"
+          name="lat"
+          type="number"
+          min="-90"
+          max="90"
+          step="any"
+          placeholder="e.g. -23.5505"
+        />
+      </div>
+      <div class="local-coordinate-field">
+        <label for="natalLongitude">Longitude (decimal degrees)</label>
+        <input
+          id="natalLongitude"
+          name="long"
+          type="number"
+          min="-180"
+          max="180"
+          step="any"
+          placeholder="e.g. -46.6333"
+        />
+      </div>
+      <div class="local-coordinate-field">
+        <label for="natalUtcMode">UTC calculation</label>
+        <select id="natalUtcMode" name="utcMode">
+          <option value="auto">Automatic (city/time zone + date)</option>
+          <option value="manual">Manual UTC offset</option>
+        </select>
+      </div>
+      <div class="local-coordinate-field">
+        <label for="natalUtcOffset">Manual offset (hours)</label>
+        <input
+          id="natalUtcOffset"
+          name="utcOffset"
+          type="number"
+          min="-14"
+          max="14"
+          step="0.25"
+          value="0"
+          disabled
+        />
+      </div>
+      <small class="utc-mode-help">
+        Automatic UTC uses IANA time-zone rules for the selected chart date, including daylight-saving changes where applicable.
+      </small>
+    </div>
+  
+    <button
+      class="calculate"
+      id="natalCalculate"
+      type="submit"
+      name="submit"
+    >Calculate</button>
+  
+    <p class="errorMessage" aria-live="polite"></p>
+  
+    <button
+      class="calculate"
+      id="natalPrint"
+      type="button"
+      name="print"
+    >View</button>
+  
+    <button
+      class="calculate"
+      id="natalSave"
+      type="button"
+      name="save"
+    >Save</button>
+  
+    <div class="recentChartsContainer" id="recentChartsContainer">
+      <ul class="recentChartsList" id="recentChartsList"></ul>
+    </div>
+  
+    <input
+      class="searchChartsInput"
+      id="searchChartsInput"
+      type="text"
+      placeholder="Search..."
+    />
+  
+    <button class="calculate" id="natalReport" type="button" name="report">View
+      Report</button>
+  
+  </form>
+  
+  <script src="/js/animateNatal.js"></script>
+  <script src="./js/saveLoadNatal.js"></script></div>
+
+<div id="tooltip" class="tooltip"></div>
+
+<div id="showTriwheel" style="display: none;">
+  <div id="triwheel-chart"></div>
+  
+  <form class="form" id="triwheelForm" action="/" method="post" autocomplete="off">
+    <input type="hidden" name="formType" value="chart" />
+  
+    <p class="form-title">Transit Wheel</p>
+  
+    <label for="date" class="date-label">Date (dd-month-yyyy):</label>
+    <input
+      class="day"
+      id="triwheelDay"
+      name="day"
+      min="1"
+      max="31"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <select class="month" id="triwheelMonth" name="month">
+      <option value=""></option>
+      <option value="January">January</option>
+      <option value="February">February</option>
+      <option value="March">March</option>
+      <option value="April">April</option>
+      <option value="May">May</option>
+      <option value="June">June</option>
+      <option value="July">July</option>
+      <option value="August">August</option>
+      <option value="September">September</option>
+      <option value="October">October</option>
+      <option value="November">November</option>
+      <option value="December">December</option>
+    </select>
+  
+    <input
+      class="year"
+      id="triwheelYear"
+      name="year"
+      spellcheck="false"
+    />
+  
+    <label for="time" class="time-label">Time (hh-mm):</label>
+    <input
+      class="hour"
+      id="triwheelHour"
+      name="hour"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <label class="semicolon">:</label>
+    <input
+      class="minute"
+      id="triwheelMinute"
+      name="minute"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <label class="time-format">(24-hour clock)</label>
+  
+    <label for="location" class="location-label">Location (city, region, country):</label>
+    <input
+      class="location"
+      id="triwheelLocation"
+      name="location"
+      maxlength="120"
+      spellcheck="false"
+    />
+  
+    <div class="suggestions-box suggestions-triwheel"></div>
+  
+    <button
+      class="calculate"
+      id="triwheelCalculate"
+      type="submit"
+      name="submit"
+    >Calculate</button>
+  
+    <p class="errorMessageTriwheel" aria-live="polite"></p>
+  
+    <button
+      class="calculate"
+      id="triwheelPrint"
+      type="button"
+      name="print"
+    >View</button>
+  
+    <button class="calculate" id="triwheelReport" type="button" name="report">View
+      Report</button>
+  
+  </form>
+  
+  <script src="./js/animateTriwheel.js"></script></div>
+
+<div id="showGraph" style="display: none;">
+  <div id="graph"></div>
+  
+  <form class="form" id="graphForm" action="/" method="post" autocomplete="off">
+    <input type="hidden" name="formType" value="graph" />
+  
+    <p class="form-title">Transit Graph</p>
+  
+    <p class="form-section">Start Date:</p>
+    <label for="date" class="date-label">Date (dd-month-yyyy):</label>
+    <input
+      class="day"
+      id="graphStartDay"
+      name="startDay"
+      min="1"
+      max="31"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <select class="month" id="graphStartMonth" name="startMonth">
+      <option value=""></option>
+      <option value="January">January</option>
+      <option value="February">February</option>
+      <option value="March">March</option>
+      <option value="April">April</option>
+      <option value="May">May</option>
+      <option value="June">June</option>
+      <option value="July">July</option>
+      <option value="August">August</option>
+      <option value="September">September</option>
+      <option value="October">October</option>
+      <option value="November">November</option>
+      <option value="December">December</option>
+    </select>
+  
+    <input
+      class="year"
+      id="graphStartYear"
+      name="startYear"
+      spellcheck="false"
+    />
+  
+    <label for="time" class="time-label">Time (hh-mm):</label>
+    <input
+      class="hour"
+      id="graphStartHour"
+      name="startHour"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <label class="semicolon">:</label>
+    <input
+      class="minute"
+      id="graphStartMinute"
+      name="startMinute"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <label class="time-format">(24-hour clock)</label>
+  
+    <p class="form-section">End Date:</p>
+    <label for="date" class="date-label">Date (dd-month-yyyy):</label>
+    <input
+      class="day"
+      id="graphEndDay"
+      name="endDay"
+      min="1"
+      max="31"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <select class="month" id="graphEndMonth" name="endMonth">
+      <option value=""></option>
+      <option value="January">January</option>
+      <option value="February">February</option>
+      <option value="March">March</option>
+      <option value="April">April</option>
+      <option value="May">May</option>
+      <option value="June">June</option>
+      <option value="July">July</option>
+      <option value="August">August</option>
+      <option value="September">September</option>
+      <option value="October">October</option>
+      <option value="November">November</option>
+      <option value="December">December</option>
+    </select>
+  
+    <input
+      class="year"
+      id="graphEndYear"
+      name="endYear"
+      spellcheck="false"
+    />
+  
+    <label for="time" class="time-label">Time (hh-mm):</label>
+    <input
+      class="hour"
+      id="graphEndHour"
+      name="endHour"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <label class="semicolon">:</label>
+    <input
+      class="minute"
+      id="graphEndMinute"
+      name="endMinute"
+      maxlength="2"
+      spellcheck="false"
+    />
+  
+    <label class="time-format">(24-hour clock)</label>
+  
+    <label for="location" class="location-label">Location (city, region, country):</label>
+    <input
+      class="location"
+      id="graphLocation"
+      name="location"
+      maxlength="120"
+      spellcheck="false"
+    />
+  
+    <div class="suggestions-box suggestions-graph"></div>
+  
+    <button
+      class="calculate"
+      id="graphCalculate"
+      type="submit"
+      name="submit"
+    >Calculate</button>
+  
+    <p class="errorMessageGraph" aria-live="polite"></p>
+  
+    <button
+      class="calculate"
+      id="graphPrint"
+      type="button"
+      name="print"
+    >View</button>
+  
+    <button
+      class="calculate"
+      id="graphReport"
+      type="button"
+      name="report"
+    >View Report</button>
+  
+  </form>  <div id="hidden-triwheel-graph" style="display: none;">
+    <div id="triwheel-graph"></div>
+    
+    <form class="form" id="triwheelFormGraph" action="/" method="post" autocomplete="off">
+      <input type="hidden" name="formType" value="chart" />
+    
+      <p class="form-title">Progression & Transit Wheels</p>
+    
+      <label for="date" class="date-label">Date (dd-month-yyyy):</label>
+      <input
+        class="day"
+        id="triwheelDayGraph"
+        name="day"
+        min="1"
+        max="31"
+        maxlength="2"
+        spellcheck="false"
+      />
+    
+      <select class="month" id="triwheelMonthGraph" name="month">
+        <option value=""></option>
+        <option value="January">January</option>
+        <option value="February">February</option>
+        <option value="March">March</option>
+        <option value="April">April</option>
+        <option value="May">May</option>
+        <option value="June">June</option>
+        <option value="July">July</option>
+        <option value="August">August</option>
+        <option value="September">September</option>
+        <option value="October">October</option>
+        <option value="November">November</option>
+        <option value="December">December</option>
+      </select>
+    
+      <input
+        class="year"
+        id="triwheelYearGraph"
+        name="year"
+        spellcheck="false"
+      />
+    
+      <label for="time" class="time-label">Time (hh-mm):</label>
+      <input
+        class="hour"
+        id="triwheelHourGraph"
+        name="hour"
+        maxlength="2"
+        spellcheck="false"
+      />
+    
+      <label class="semicolon">:</label>
+      <input
+        class="minute"
+        id="triwheelMinuteGraph"
+        name="minute"
+        maxlength="2"
+        spellcheck="false"
+      />
+    
+      <label class="time-format">(24-hour clock)</label>
+    
+      <label for="location" class="location-label">Location (city, region, country):</label>
+      <input
+        class="location"
+        id="triwheelLocationGraph"
+        name="location"
+        maxlength="120"
+        spellcheck="false"
+      />
+    
+      <button
+        class="calculate"
+        id="triwheelCalculateGraph"
+        type="submit"
+        name="submit"
+      >Calculate</button>
+    
+    </form>  </div>
+</div>
+
+<div id="showReturn" style="display: none;">
+  <div id="return-chart"></div>
+  <form class="form" id="returnForm" action="/" method="post" autocomplete="off">
+    <input type="hidden" name="formType" value="chart" />
+  
+    <input type="hidden" id="returnOffset" name="returnOffset" value="0" />
+  
+    <input type="hidden" id="isRelocated" name="isRelocated" value="false" />
+  
+    <p class="form-title">Return Wheel</p>
+  
+    <label for="returnName" class="name-label">Name:</label>
+    <input
+      class="name readonly-input"
+      id="returnName"
+      name="name"
+      maxlength="30"
+      spellcheck="false"
+      readonly
+    />
+  
+    <label for="returnDay" class="date-label">Date (dd-month-yyyy):</label>
+    <input
+      class="day readonly-input"
+      id="returnDay"
+      name="day"
+      min="1"
+      max="31"
+      maxlength="2"
+      spellcheck="false"
+      readonly
+    />
+  
+    <select class="month" id="returnMonth" name="month_display" disabled>
+      <option value=""></option>
+      <option value="January">January</option>
+      <option value="February">February</option>
+      <option value="March">March</option>
+      <option value="April">April</option>
+      <option value="May">May</option>
+      <option value="June">June</option>
+      <option value="July">July</option>
+      <option value="August">August</option>
+      <option value="September">September</option>
+      <option value="October">October</option>
+      <option value="November">November</option>
+      <option value="December">December</option>
+    </select>
+  
+    <input type="hidden" name="month" value="January" />
+  
+    <input
+      class="year readonly-input"
+      id="returnYear"
+      name="year"
+      spellcheck="false"
+      readonly
+    />
+  
+    <label for="returnHour" class="time-label">Time (hh-mm):</label>
+    <input
+      class="hour readonly-input"
+      id="returnHour"
+      name="hour"
+      maxlength="2"
+      spellcheck="false"
+      readonly
+    />
+    <label class="semicolon">:</label>
+    <input
+      class="minute readonly-input"
+      id="returnMinute"
+      name="minute"
+      maxlength="2"
+      spellcheck="false"
+      readonly
+    />
+    <label class="time-format">(24-hour clock)</label>
+  
+    <label for="returnLocation" class="location-label">Location (city, region,
+      country):</label>
+    <input
+      class="location"
+      id="returnLocation"
+      name="location"
+      maxlength="120"
+      spellcheck="false"
+    />
+  
+    <div class="suggestions-box"></div>
+  
+    <button
+      class="calculate"
+      id="returnCalculate"
+      type="submit"
+      name="calculate"
+      style="display: none;"
+    >Calculate</button>
+  
+    <p class="errorMessage" aria-live="polite"></p>
+  
+    <button
+      class="calculate"
+      id="returnPrint"
+      type="button"
+      name="print"
+    >View</button>
+  
+    <button class="calculate" id="returnReport" type="button" name="report">View
+      Report</button>
+  
+  </form>
+  
+  <script type="module" src="./js/animateReturn.js"></script></div>
+
+<div id="showSettings" style="display: none;">
+<p class="settings-title-top">Wheel Settings</p>
+
+<p class="section-title">Planet Symbol/Aspects</p>
+<hr class="section-divider" />
+
+<div id="planet-settings" class="planet-settings">
+
+  <div class="sun-settings">
+    <label>
+      <img
+        src="/images/planets/sun.svg"
+        alt="Sun"
+        class="planet-icon sun-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Sun" checked />
+    <input type="checkbox" name="planetAspects" value="Sun" checked />
+  </div>
+
+  <div class="moon-settings">
+    <label>
+      <img
+        src="/images/planets/moon.svg"
+        alt="Moon"
+        class="planet-icon moon-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Moon" checked />
+    <input type="checkbox" name="planetAspects" value="Moon" checked />
+  </div>
+
+  <div class="mercury-settings">
+    <label>
+      <img
+        src="/images/planets/mercury.svg"
+        alt="Mercury"
+        class="planet-icon mercury-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Mercury" checked />
+    <input type="checkbox" name="planetAspects" value="Mercury" checked />
+  </div>
+
+  <div class="venus-settings">
+    <label>
+      <img
+        src="/images/planets/venus.svg"
+        alt="Venus"
+        class="planet-icon venus-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Venus" checked />
+    <input type="checkbox" name="planetAspects" value="Venus" checked />
+  </div>
+
+  <div class="mars-settings">
+    <label>
+      <img
+        src="/images/planets/mars.svg"
+        alt="Mars"
+        class="planet-icon mars-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Mars" checked />
+    <input type="checkbox" name="planetAspects" value="Mars" checked />
+  </div>
+
+  <div class="jupiter-settings">
+    <label>
+      <img
+        src="/images/planets/jupiter.svg"
+        alt="Jupiter"
+        class="planet-icon jupiter-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Jupiter" checked />
+    <input type="checkbox" name="planetAspects" value="Jupiter" checked />
+  </div>
+
+  <div class="saturn-settings">
+    <label>
+      <img
+        src="/images/planets/saturn.svg"
+        alt="Saturn"
+        class="planet-icon saturn-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Saturn" checked />
+    <input type="checkbox" name="planetAspects" value="Saturn" checked />
+  </div>
+
+  <div class="uranus-settings">
+    <label>
+      <img
+        src="/images/planets/uranus.svg"
+        alt="Uranus"
+        class="planet-icon uranus-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Uranus" checked />
+    <input type="checkbox" name="planetAspects" value="Uranus" checked />
+  </div>
+
+  <div class="neptune-settings">
+    <label>
+      <img
+        src="/images/planets/neptune.svg"
+        alt="Neptune"
+        class="planet-icon neptune-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Neptune" checked />
+    <input type="checkbox" name="planetAspects" value="Neptune" checked />
+  </div>
+
+  <div class="pluto-settings">
+    <label>
+      <img
+        src="/images/planets/pluto.svg"
+        alt="Pluto"
+        class="planet-icon pluto-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Pluto" checked />
+    <input type="checkbox" name="planetAspects" value="Pluto" checked />
+  </div>
+
+  <div class="northnode-settings">
+    <label>
+      <img
+        src="/images/planets/northnode.svg"
+        alt="North Node"
+        class="planet-icon northnode-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="True_Node" checked />
+    <input type="checkbox" name="planetAspects" value="North Node" />
+  </div>
+
+  <div class="southnode-settings">
+    <label>
+      <img
+        src="/images/planets/southnode.svg"
+        alt="South Node"
+        class="planet-icon southnode-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="South Node" checked />
+    <input type="checkbox" name="planetAspects" value="South Node" />
+  </div>
+
+  <div class="ascendant-settings">
+    <label>
+      <img
+        src="/images/planets/ascendantsymbol.svg"
+        alt="Ascendant"
+        class="planet-icon ascendant-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Ascendant_Symbol" checked />
+    <input type="checkbox" name="planetAspects" value="Ascendant Symbol" />
+  </div>
+
+  <div class="midheaven-settings">
+    <label>
+      <img
+        src="/images/planets/midheaven.svg"
+        alt="Midheaven"
+        class="planet-icon midheaven-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Midheaven" checked />
+    <input type="checkbox" name="planetAspects" value="Midheaven" />
+  </div>
+
+  <div class="descendant-settings">
+    <label>
+      <img
+        src="/images/planets/descendant.svg"
+        alt="Descendant"
+        class="planet-icon descendant-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Descendant" />
+    <input type="checkbox" name="planetAspects" value="Descendant" />
+  </div>
+
+  <div class="imumcoeli-settings">
+    <label>
+      <img
+        src="/images/planets/imumcoeli.svg"
+        alt="Imum Coeli"
+        class="planet-icon imumcoeli-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Imum Coeli" />
+    <input type="checkbox" name="planetAspects" value="Imum Coeli" />
+  </div>
+
+  <div class="vertex-settings">
+    <label>
+      <img
+        src="/images/planets/vertex.svg"
+        alt="Vertex"
+        class="planet-icon vertex-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Vertex" />
+    <input type="checkbox" name="planetAspects" value="Vertex" />
+  </div>
+
+  <div class="antivertex-settings">
+    <label>
+      <img
+        src="/images/planets/antivertex.svg"
+        alt="Anti-Vertex"
+        class="planet-icon antivertex-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Anti-Vertex" />
+    <input type="checkbox" name="planetAspects" value="Anti-Vertex" />
+  </div>
+
+  <div class="chiron-settings">
+    <label>
+      <img
+        src="/images/planets/chiron.svg"
+        alt="Chiron"
+        class="planet-icon chiron-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Chiron" checked />
+    <input type="checkbox" name="planetAspects" value="Chiron" />
+  </div>
+
+  <div class="ceres-settings">
+    <label><img
+        src="/images/planets/ceres.svg"
+        alt="Ceres"
+        class="planet-icon ceres-icon"
+      /></label>
+    <input type="checkbox" name="planet" value="Ceres" checked />
+    <input type="checkbox" name="planetAspects" value="Ceres" />
+  </div>
+
+  <div class="vesta-settings">
+    <label><img
+        src="/images/planets/vesta.svg"
+        alt="Vesta"
+        class="planet-icon vesta-icon"
+      /></label>
+    <input type="checkbox" name="planet" value="Vesta" />
+    <input type="checkbox" name="planetAspects" value="Vesta" />
+  </div>
+
+  <div class="pallas-settings">
+    <label><img
+        src="/images/planets/pallas.svg"
+        alt="Pallas"
+        class="planet-icon pallas-icon"
+      /></label>
+    <input type="checkbox" name="planet" value="Pallas" />
+    <input type="checkbox" name="planetAspects" value="Pallas" />
+  </div>
+
+  <div class="juno-settings">
+    <label><img
+        src="/images/planets/juno.svg"
+        alt="Juno"
+        class="planet-icon juno-icon"
+      /></label>
+    <input type="checkbox" name="planet" value="Juno" />
+    <input type="checkbox" name="planetAspects" value="Juno" />
+  </div>
+
+  <div class="lilith-settings">
+    <label>
+      <img
+        src="/images/planets/lilith.svg"
+        alt="Lilith"
+        class="planet-icon lilith-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Lilith" />
+    <input type="checkbox" name="planetAspects" value="Lilith" />
+  </div>
+
+  <div class="priapus-settings">
+    <label>
+      <img
+        src="/images/planets/priapus.svg"
+        alt="Priapus"
+        class="planet-icon priapus-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Priapus" />
+    <input type="checkbox" name="planetAspects" value="Priapus" />
+  </div>
+
+  <div class="partoffortune-settings">
+    <label>
+      <img
+        src="/images/planets/partoffortune.svg"
+        alt="Part of Fortune"
+        class="planet-icon partoffortune-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Part of Fortune" />
+    <input type="checkbox" name="planetAspects" value="Part of Fortune" />
+  </div>
+
+  <div class="partofspirit-settings">
+    <label>
+      <img
+        src="/images/planets/partofspirit.svg"
+        alt="Part of Spirit"
+        class="planet-icon partofspirit-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Part of Spirit" />
+    <input type="checkbox" name="planetAspects" value="Part of Spirit" />
+  </div>
+
+  <div class="galacticcenter-settings">
+    <label>
+      <img
+        src="/images/planets/galacticcenter.svg"
+        alt="Galactic Center"
+        class="planet-icon galacticcenter-icon"
+      />
+    </label>
+    <input type="checkbox" name="planet" value="Galactic Center" />
+    <input type="checkbox" name="planetAspects" value="Galactic Center" />
+  </div>
+
+</div>
+
+<div class="degree-settings">
+  <div class="true-positions-row">
+    <div>
+      <input type="checkbox" name="trueNodes" checked />
+      <label class="type-icon">True Nodes</label>
+    </div>
+    <div>
+      <input type="checkbox" name="trueLilith" />
+      <label class="type-icon">True Lilith</label>
+    </div>
+    <div>
+      <input type="checkbox" name="draconic" />
+      <label class="type-icon">Draconic</label>
+    </div>
+  </div>
+</div>
+
+<div id="customPointsList" class="custom-points-grid">
+  <!-- Custom points will be dynamically added here -->
+</div>
+<p id="customPointsError" class="errorMessageCustomPoints"></p>
+
+<div class="degree-settings">
+  <div class="fixed-stars-settings">
+    <input type="checkbox" name="fixedStars" />
+    <label class="type-icon">Fixed Stars</label>
+    <label for="fixedStarsMagnitude">Mag ≤</label>
+    <select name="fixedStarsMagnitude" id="fixedStarsMagnitude">
+      <option value="1.0">1.0</option>
+      <option value="1.5">1.5</option>
+      <option value="2.0" selected>2.0</option>
+      <option value="2.5">2.5</option>
+    </select>
+    <label for="fixedStarsLatitude">Lat ±</label>
+    <select name="fixedStarsLatitude" id="fixedStarsLatitude">
+      <option value="15">15°</option>
+      <option value="30" selected>30°</option>
+      <option value="45">45°</option>
+      <option value="60">60°</option>
+      <option value="90">90°</option>
+    </select>
+  </div>
+  <div>
+    <input type="checkbox" name="degrees" checked />
+    <label class="type-icon">Planet Degrees</label>
+  </div>
+</div>
+
+<div class="ascendant-override">
+  <label for="ascendantOverride">Ascendant:</label>
+  <select name="ascendantOverride" id="ascendantOverride">
+    <option value="Normal" selected>Normal</option>
+    <option value="Aries">Aries</option>
+    <option value="Sun">Sun</option>
+    <option value="Moon">Moon</option>
+    <option value="Mercury">Mercury</option>
+    <option value="Venus">Venus</option>
+    <option value="Mars">Mars</option>
+    <option value="Jupiter">Jupiter</option>
+    <option value="Saturn">Saturn</option>
+  </select>
+</div>
+
+<p class="section-title">Aspects</p>
+<hr class="section-divider" />
+
+<div id="aspect-settings" class="aspect-settings aspect-settings-natal">
+  <div class="conjunction-settings">
+    <label>
+      <img
+        src="/images/aspects/conjunction.svg"
+        alt="Conjunction"
+        class="aspect-icon conjunction-icon"
+      />
+    </label>
+    <input type="checkbox" name="aspects" value="Conjunction" checked />
+
+    <select name="orbConjunction" class="aspect-orb" data-aspect="Conjunction">
+      <option value="1">1°</option>
+      <option value="2">2°</option>
+      <option value="3">3°</option>
+      <option value="4">4°</option>
+      <option value="5">5°</option>
+      <option value="6">6°</option>
+      <option value="7">7°</option>
+      <option value="8">8°</option>
+      <option value="9">9°</option>
+      <option value="10" selected>10°</option>
+    </select>
+
+  </div>
+
+  <div class="opposition-settings">
+    <label>
+      <img
+        src="/images/aspects/opposition.svg"
+        alt="Opposition"
+        class="aspect-icon opposition-icon"
+      />
+    </label>
+    <input type="checkbox" name="aspects" value="Opposition" checked />
+
+    <select name="orbOpposition" class="aspect-orb" data-aspect="Opposition">
+      <option value="1">1°</option>
+      <option value="2">2°</option>
+      <option value="3">3°</option>
+      <option value="4">4°</option>
+      <option value="5">5°</option>
+      <option value="6">6°</option>
+      <option value="7">7°</option>
+      <option value="8">8°</option>
+      <option value="9">9°</option>
+      <option value="10" selected>10°</option>
+    </select>
+
+  </div>
+
+  <div class="square-settings">
+    <label>
+      <img
+        src="/images/aspects/square.svg"
+        alt="Square"
+        class="aspect-icon square-icon"
+      />
+    </label>
+    <input type="checkbox" name="aspects" value="Square" checked />
+
+    <select name="orbSquare" class="aspect-orb" data-aspect="Square">
+      <option value="1">1°</option>
+      <option value="2">2°</option>
+      <option value="3">3°</option>
+      <option value="4">4°</option>
+      <option value="5">5°</option>
+      <option value="6">6°</option>
+      <option value="7">7°</option>
+      <option value="8" selected>8°</option>
+      <option value="9">9°</option>
+      <option value="10">10°</option>
+    </select>
+
+  </div>
+
+  <div class="trine-settings">
+    <label>
+      <img
+        src="/images/aspects/trine.svg"
+        alt="Trine"
+        class="aspect-icon trine-icon"
+      />
+    </label>
+    <input type="checkbox" name="aspects" value="Trine" checked />
+
+    <select name="orbTrine" class="aspect-orb" data-aspect="Trine">
+      <option value="1">1°</option>
+      <option value="2">2°</option>
+      <option value="3">3°</option>
+      <option value="4">4°</option>
+      <option value="5">5°</option>
+      <option value="6">6°</option>
+      <option value="7">7°</option>
+      <option value="8" selected>8°</option>
+      <option value="9">9°</option>
+      <option value="10">10°</option>
+    </select>
+
+  </div>
+
+  <div class="sextile-settings">
+    <label>
+      <img
+        src="/images/aspects/sextile.svg"
+        alt="Sextile"
+        class="aspect-icon sextile-icon"
+      />
+    </label>
+    <input type="checkbox" name="aspects" value="Sextile" checked />
+
+    <select name="orbSextile" class="aspect-orb" data-aspect="Sextile">
+      <option value="1">1°</option>
+      <option value="2">2°</option>
+      <option value="3">3°</option>
+      <option value="4">4°</option>
+      <option value="5">5°</option>
+      <option value="6" selected>6°</option>
+      <option value="7">7°</option>
+      <option value="8">8°</option>
+      <option value="9">9°</option>
+      <option value="10">10°</option>
+    </select>
+
+  </div>
+
+  <div class="semisextile-settings">
+    <label>
+      <img
+        src="/images/aspects/semisextile.svg"
+        alt="Semisextile"
+        class="aspect-icon semisextile-icon"
+      />
+    </label>
+    <input type="checkbox" name="aspects" value="Semisextile" checked />
+
+    <select name="orbSemisextile" class="aspect-orb" data-aspect="Semisextile">
+      <option value="1">1°</option>
+      <option value="2">2°</option>
+      <option value="3" selected>3°</option>
+      <option value="4">4°</option>
+      <option value="5">5°</option>
+      <option value="6">6°</option>
+      <option value="7">7°</option>
+      <option value="8">8°</option>
+      <option value="9">9°</option>
+      <option value="10">10°</option>
+    </select>
+
+  </div>
+
+  <div class="quincunx-settings">
+    <label>
+      <img
+        src="/images/aspects/quincunx.svg"
+        alt="Quincunx"
+        class="aspect-icon quincunx-icon"
+      />
+    </label>
+    <input type="checkbox" name="aspects" value="Quincunx" checked />
+
+    <select name="orbQuincunx" class="aspect-orb" data-aspect="Quincunx">
+      <option value="1">1°</option>
+      <option value="2">2°</option>
+      <option value="3" selected>3°</option>
+      <option value="4">4°</option>
+      <option value="5">5°</option>
+      <option value="6">6°</option>
+      <option value="7">7°</option>
+      <option value="8">8°</option>
+      <option value="9">9°</option>
+      <option value="10">10°</option>
+    </select>
+
+  </div>
+</div>
+
+<div id="customAspectsList" class="custom-aspects-grid">
+  <!-- Custom aspects will be dynamically added here -->
+</div>
+<p id="customAspectsError" class="errorMessageCustomAspects"></p>
+
+<p class="section-title">Systems</p>
+<hr class="section-divider" />
+
+<div id="system-settings" class="system-settings">
+  <label class="type-icon">
+    Zodiac system:
+  </label>
+  <select name="zodiacSystem">
+    <option value="Tropical" selected>Tropical 12 (30°)</option>
+    <option value="13 Equal">13 Equal (Ophiuchus #13)</option>
+    <option value="Midpoint">13 signs (Ophiuchus midpoint, True Sidereal)</option>
+    <option value="IAU Real Constellations">IAU Real Constellations</option>
+  </select>
+
+  <label class="type-icon">
+    Ayanamsa:
+  </label>
+  <select name="ayanamsaSystem">
+    <option value="Tropical" selected>Tropical (0°)</option>
+    <option value="Fagan/Bradley">Fagan/Bradley</option>
+    <option value="Lahiri">Lahiri</option>
+    <option value="DeLuce">DeLuce</option>
+    <option value="Raman">Raman</option>
+    <option value="Babylonian/Eta Piscium">Babylonian/Eta Piscium</option>
+    <option value="Babylonian/Aldebaran = 15 Tau">Babylonian/Aldebaran = 15 Tau</option>
+    <option value="Galact. Center = 0 Sag">Galact. Center = 0 Sag</option>
+    <option value="J2000">J2000</option>
+    <option value="Custom">Custom</option>
+  </select>
+
+  <label class="type-icon custom-ayanamsa-label" for="customAyanamsa" hidden>
+    Custom ayanamsa:
+  </label>
+  <div class="custom-ayanamsa-field" hidden>
+    <input
+      type="number"
+      id="customAyanamsa"
+      name="customAyanamsa"
+      min="-360"
+      max="360"
+      step="any"
+      value="0"
+      aria-label="Custom ayanamsa in degrees"
+    />
+    <span>°</span>
+  </div>
+
+  <label class="type-icon">
+    House:
+  </label>
+  <select name="houseSystem">
+    <option value="Placidus">Placidus</option>
+    <option value="Equal">Equal</option>
+    <option value="Whole Sign">Whole Sign</option>
+    <option value="Koch">Koch</option>
+    <option value="Porphyrius">Porphyrius</option>
+    <option value="Regiomontanus">Regiomontanus</option>
+    <option value="Campanus">Campanus</option>
+  </select>
+
+  <label class="type-icon">
+    Coordinate:
+  </label>
+  <select name="coordinateSystem">
+    <option value="Geocentric">Geocentric</option>
+    <option value="Topocentric">Topocentric</option>
+    <option value="Heliocentric">Heliocentric</option>
+  </select>
+</div>
+
+<p class="settings-title">Graph Settings</p>
+
+<p class="section-title">Natal/Progressed/Transit</p>
+<hr class="section-divider" />
+
+<div id="graph-planet-settings" class="graph-planet-settings">
+
+  <div class="sun-settings">
+    <label>
+      <img
+        src="/images/planets/sun.svg"
+        alt="Sun"
+        class="planet-icon sun-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Sun" checked />
+    <input type="checkbox" name="planetProgressed" value="Sun" checked />
+    <input type="checkbox" name="planetTransit" value="Sun" />
+  </div>
+
+  <div class="moon-settings">
+    <label>
+      <img
+        src="/images/planets/moon.svg"
+        alt="Moon"
+        class="planet-icon moon-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Moon" checked />
+    <input type="checkbox" name="planetProgressed" value="Moon" checked />
+    <input type="checkbox" name="planetTransit" value="Moon" />
+  </div>
+
+  <div class="mercury-settings">
+    <label>
+      <img
+        src="/images/planets/mercury.svg"
+        alt="Mercury"
+        class="planet-icon mercury-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Mercury" checked />
+    <input type="checkbox" name="planetProgressed" value="Mercury" checked />
+    <input type="checkbox" name="planetTransit" value="Mercury" />
+  </div>
+
+  <div class="venus-settings">
+    <label>
+      <img
+        src="/images/planets/venus.svg"
+        alt="Venus"
+        class="planet-icon venus-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Venus" checked />
+    <input type="checkbox" name="planetProgressed" value="Venus" checked />
+    <input type="checkbox" name="planetTransit" value="Venus" />
+  </div>
+
+  <div class="mars-settings">
+    <label>
+      <img
+        src="/images/planets/mars.svg"
+        alt="Mars"
+        class="planet-icon mars-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Mars" checked />
+    <input type="checkbox" name="planetProgressed" value="Mars" checked />
+    <input type="checkbox" name="planetTransit" value="Mars" />
+  </div>
+
+  <div class="jupiter-settings">
+    <label>
+      <img
+        src="/images/planets/jupiter.svg"
+        alt="Jupiter"
+        class="planet-icon jupiter-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Jupiter" checked />
+    <input type="checkbox" name="planetProgressed" value="Jupiter" checked />
+    <input type="checkbox" name="planetTransit" value="Jupiter" checked />
+  </div>
+
+  <div class="saturn-settings">
+    <label>
+      <img
+        src="/images/planets/saturn.svg"
+        alt="Saturn"
+        class="planet-icon saturn-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Saturn" checked />
+    <input type="checkbox" name="planetProgressed" value="Saturn" checked />
+    <input type="checkbox" name="planetTransit" value="Saturn" checked />
+  </div>
+
+  <div class="uranus-settings">
+    <label>
+      <img
+        src="/images/planets/uranus.svg"
+        alt="Uranus"
+        class="planet-icon uranus-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Uranus" />
+    <input type="checkbox" name="planetProgressed" value="Uranus" />
+    <input type="checkbox" name="planetTransit" value="Uranus" checked />
+  </div>
+
+  <div class="neptune-settings">
+    <label>
+      <img
+        src="/images/planets/neptune.svg"
+        alt="Neptune"
+        class="planet-icon neptune-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Neptune" />
+    <input type="checkbox" name="planetProgressed" value="Neptune" />
+    <input type="checkbox" name="planetTransit" value="Neptune" checked />
+  </div>
+
+  <div class="pluto-settings">
+    <label>
+      <img
+        src="/images/planets/pluto.svg"
+        alt="Pluto"
+        class="planet-icon pluto-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Pluto" />
+    <input type="checkbox" name="planetProgressed" value="Pluto" />
+    <input type="checkbox" name="planetTransit" value="Pluto" checked />
+  </div>
+
+  <div class="chiron-settings">
+    <label>
+      <img
+        src="/images/planets/chiron.svg"
+        alt="Chiron"
+        class="planet-icon chiron-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Chiron" />
+    <input type="checkbox" name="planetProgressed" value="Chiron" />
+    <input type="checkbox" name="planetTransit" value="Chiron" checked />
+  </div>
+
+  <div class="northnode-settings">
+    <label>
+      <img
+        src="/images/planets/northnode.svg"
+        alt="North Node"
+        class="planet-icon northnode-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="True_Node" />
+    <input type="checkbox" name="planetProgressed" value="North Node" />
+    <input type="checkbox" name="planetTransit" value="North Node" checked />
+  </div>
+
+  <div class="ascendant-settings">
+    <label>
+      <img
+        src="/images/planets/ascendantsymbol.svg"
+        alt="Ascendant"
+        class="planet-icon ascendant-icon"
+      />
+    </label>
+    <input
+      type="checkbox"
+      name="planetNatal"
+      value="Ascendant_Symbol"
+      checked
+    />
+    <input type="checkbox" name="planetProgressed" value="Ascendant_Symbol" />
+    <input type="checkbox" name="planetTransit" value="Ascendant_Symbol" />
+  </div>
+
+  <div class="midheaven-settings">
+    <label>
+      <img
+        src="/images/planets/midheaven.svg"
+        alt="Midheaven"
+        class="planet-icon midheaven-icon"
+      />
+    </label>
+    <input type="checkbox" name="planetNatal" value="Midheaven" checked />
+    <input type="checkbox" name="planetProgressed" value="Midheaven" />
+    <input type="checkbox" name="planetTransit" value="Midheaven" />
+  </div>
+
+</div>
+
+<p class="section-title">Aspects</p>
+<hr class="section-divider" />
+
+<div id="graph-aspect-settings" class="aspect-settings">
+  <div class="conjunction-settings">
+    <label>
+      <img
+        src="/images/aspects/conjunction.svg"
+        alt="Conjunction"
+        class="aspect-icon conjunction-icon"
+      />
+    </label>
+    <input
+      type="checkbox"
+      name="transitingAspects"
+      value="Conjunction"
+      checked
+    />
+  </div>
+
+  <div class="opposition-settings">
+    <label>
+      <img
+        src="/images/aspects/opposition.svg"
+        alt="Opposition"
+        class="aspect-icon opposition-icon"
+      />
+    </label>
+    <input
+      type="checkbox"
+      name="transitingAspects"
+      value="Opposition"
+      checked
+    />
+  </div>
+
+  <div class="square-settings">
+    <label>
+      <img
+        src="/images/aspects/square.svg"
+        alt="Square"
+        class="aspect-icon square-icon"
+      />
+    </label>
+    <input type="checkbox" name="transitingAspects" value="Square" checked />
+  </div>
+
+  <div class="trine-settings">
+    <label>
+      <img
+        src="/images/aspects/trine.svg"
+        alt="Trine"
+        class="aspect-icon trine-icon"
+      />
+    </label>
+    <input type="checkbox" name="transitingAspects" value="Trine" checked />
+  </div>
+
+  <div class="sextile-settings">
+    <label>
+      <img
+        src="/images/aspects/sextile.svg"
+        alt="Sextile"
+        class="aspect-icon sextile-icon"
+      />
+    </label>
+    <input type="checkbox" name="transitingAspects" value="Sextile" checked />
+  </div>
+
+  <div class="semisextile-settings">
+    <label>
+      <img
+        src="/images/aspects/semisextile.svg"
+        alt="Semisextile"
+        class="aspect-icon semisextile-icon"
+      />
+    </label>
+    <input
+      type="checkbox"
+      name="transitingAspects"
+      value="Semisextile"
+      checked
+    />
+  </div>
+
+  <div class="quincunx-settings">
+    <label>
+      <img
+        src="/images/aspects/quincunx.svg"
+        alt="Quincunx"
+        class="aspect-icon quincunx-icon"
+      />
+    </label>
+    <input type="checkbox" name="transitingAspects" value="Quincunx" checked />
+  </div>
+</div>
+
+<p class="section-title">Types</p>
+<hr class="section-divider" />
+
+<div id="graph-type-settings" class="graph-type-settings">
+  <div>
+    <input
+      type="checkbox"
+      name="transitingTypes"
+      value="Transiting to Natal"
+      checked
+    />
+    <label class="type-icon">Transiting to Natal</label>
+  </div>
+
+  <div>
+    <input
+      type="checkbox"
+      name="transitingTypes"
+      value="Progressed to Natal"
+      checked
+    />
+    <label class="type-icon">Progressed to Natal</label>
+  </div>
+
+  <div>
+    <input
+      type="checkbox"
+      name="transitingTypes"
+      value="Transiting to Transiting"
+      checked
+    />
+    <label class="type-icon">Transiting to Transiting</label>
+  </div>
+
+  <div>
+    <input
+      type="checkbox"
+      name="transitingTypes"
+      value="Progressed to Progressed"
+      checked
+    />
+    <label class="type-icon">Progressed to Progressed</label>
+
+  </div>
+
+  <div>
+    <input type="checkbox" name="transitingTypes" value="Stations" checked />
+    <label class="type-icon">Transiting Stations</label>
+  </div>
+
+  <div>
+    <input type="checkbox" name="transitingTypes" value="Progressed Stations" checked />
+    <label class="type-icon">Progressed Stations</label>
+  </div>
+
+  <div>
+    <input
+      type="checkbox"
+      name="transitingTypes"
+      value="House Ingresses"
+      checked
+    />
+    <label class="type-icon">House Ingresses</label>
+  </div>
+
+  <div>
+    <input
+      type="checkbox"
+      name="transitingTypes"
+      value="Sign Ingresses"
+      checked
+    />
+    <label class="type-icon">Sign Ingresses</label>
+  </div>
+
+</div>
+
+<p class="settings-title">Save/Load Settings</p>
+
+<form class="settings-form" autocomplete="off">
+  <label for="settingsName" class="name-label">Settings Name:</label>
+  <input
+    class="name"
+    id="settingsName"
+    name="settingsName"
+    maxlength="40"
+    spellcheck="false"
+    value="Default Settings"
+  />
+
+  <div class="recentSettingsContainer" id="recentSettingsContainer">
+    <ul class="recentSettingsList" id="recentSettingsList"></ul>
+  </div>
+
+  <p class="errorMessageSettings" aria-live="polite"></p>
+  <p id="settingsFirebaseStatus" aria-live="polite" style="margin-top: 6px;"></p>
+  <p class="errorMessage" aria-live="polite" style="margin-top: -28px;"></p>
+
+  <button class="calculate" id="settingsSave" type="button">Save Settings</button>
+  <button class="calculate" id="settingsSaveFirebase" type="button">Save Settings Firebase</button>
+  <button class="calculate" id="settingsApply" type="button">Apply Without
+    Saving</button>
+  <button class="calculate" id="settingsApplyDefaults" type="button">Apply
+    Default Settings</button>
+</form>
+
+<script src="./js/saveLoadSettings.js"></script></div>
+
+<div id="showMap" style="display: none;">
+  <div id="astro-map"></div>
+  <div id="sky-map" style="display: none;"></div>
+  <div id="hidden-map-relocation" style="display: none;">
+    <div id="map-relocation-chart"></div>
+  </div>
+  
+  <br />
+  <form class="form" id="mapForm" action="/astrocartography" method="post" autocomplete="off">
+    <input type="hidden" name="formType" value="map" />
+  
+    <button
+      class="calculate"
+      id="mapPrint"
+      type="button"
+      name="print"
+    >View</button>
+  
+    <p class="errorMessageMap" aria-live="polite"></p>
+  
+  </form>
+  
+  <form class="form" id="mapRelocationForm" action="/" method="post" autocomplete="off" style="display: none;">
+    <input type="hidden" name="formType" value="chart" />
+    <input type="hidden" id="mapRelocationName" name="name" />
+    <input type="hidden" id="mapRelocationDay" name="day" />
+    <input type="hidden" id="mapRelocationMonth" name="month" />
+    <input type="hidden" id="mapRelocationYear" name="year" />
+    <input type="hidden" id="mapRelocationHour" name="hour" />
+    <input type="hidden" id="mapRelocationMinute" name="minute" />
+    <input type="hidden" id="mapRelocationLocation" name="location" />
+  </form>
+</div>
+
+<div id="showSynastry" style="display: none;">
+  <div id="synastry-chart"></div>
+
+<form class="form" id="synastryForm" action="/" method="post" autocomplete="off">
+  <input type="hidden" name="formType" value="chart" />
+
+  <p class="form-title">Synastry Wheel</p>
+
+  <label for="name" class="name-label">Name:</label>
+  <input
+    class="name"
+    id="synastryName"
+    name="name"
+    maxlength="30"
+    spellcheck="false"
+  />
+
+  <label for="date" class="date-label">Date (dd-month-yyyy):</label>
+  <input
+    class="day"
+    id="synastryDay"
+    name="day"
+    min="1"
+    max="31"
+    maxlength="2"
+    spellcheck="false"
+  />
+
+  <select class="month" id="synastryMonth" name="month">
+    <option value=""></option>
+    <option value="January">January</option>
+    <option value="February">February</option>
+    <option value="March">March</option>
+    <option value="April">April</option>
+    <option value="May">May</option>
+    <option value="June">June</option>
+    <option value="July">July</option>
+    <option value="August">August</option>
+    <option value="September">September</option>
+    <option value="October">October</option>
+    <option value="November">November</option>
+    <option value="December">December</option>
+  </select>
+
+  <input
+    class="year"
+    id="synastryYear"
+    name="year"
+    spellcheck="false"
+  />
+
+  <label for="time" class="time-label">Time (hh-mm):</label>
+  <input
+    class="hour"
+    id="synastryHour"
+    name="hour"
+    maxlength="2"
+    spellcheck="false"
+  />
+
+  <label class="semicolon">:</label>
+  <input
+    class="minute"
+    id="synastryMinute"
+    name="minute"
+    maxlength="2"
+    spellcheck="false"
+  />
+
+  <label class="time-format">(24-hour clock)</label>
+
+  <label for="location" class="location-label">Location (city, region, country):</label>
+  <input
+    class="location"
+    id="synastryLocation"
+    name="location"
+    maxlength="120"
+    spellcheck="false"
+  />
+
+  <div class="suggestions-box suggestions-synastry"></div>
+
+  <button
+    class="calculate"
+    id="synastryCalculate"
+    type="submit"
+    name="submit"
+  >Calculate</button>
+
+  <p class="errorMessageSynastry" aria-live="polite"></p>
+
+  <button
+    class="calculate"
+    id="synastryPrint"
+    type="button"
+    name="print"
+  >View</button>
+
+  <button
+    class="calculate"
+    id="synastrySave"
+    type="button"
+    name="save"
+  >Save</button>
+
+  <div class="recentChartsContainer" id="synastryRecentChartsContainer">
+    <ul class="recentChartsList" id="synastryRecentChartsList"></ul>
+  </div>
+
+  <input
+    class="searchChartsInput"
+    id="synastrySearchChartsInput"
+    type="text"
+    placeholder="Search..."
+  />
+
+  <button
+    class="calculate"
+    id="synastryReport"
+    type="button"
+    name="report"
+  >View Report</button>
+
+</form>
+
+<script src="/js/animateSynastry.js"></script>
+<script src="./js/saveLoadSynastry.js"></script></div>
+
+<div id="showComposite" style="display: none;">
+  <div id="composite-chart"></div>
+  <div id="composite-chart-blank"></div>
+<br />
+<form class="form">
+  <button
+    class="calculate"
+    id="compositePrint"
+    type="button"
+    name="print"
+  >View</button>
+  <button
+    class="calculate"
+    id="compositeReport"
+    type="button"
+    name="report"
+  >View Report</button>
+</form></div>
+
+<div id="showCommunity" style="display: none;">
+  <div id="channel-selection">
+    <span class="channel-btn active-channel" data-channel="ai">#sky</span>
+    <span class="channel-btn" data-channel="welcome">#everyone</span>
+  </div>
+  
+  <div
+    id="chatBox"
+    style="height:350px; overflow-y:scroll; border:1px solid #ccc; padding:5px;"
+  ></div>
+  
+  <div id="chatInputRow">
+    <div id="user-info">
+      <img src="/images/default-avatar.png" alt="Avatar" />
+      <span>User</span>
+    </div>
+  
+    <textarea
+      id="chatInput"
+      placeholder="Type your message here..."
+      maxlength="500"
+      rows="1"
+      style="resize: none;"
+    ></textarea>
+  
+    <button id="sendMessage">
+      <img src="/images/misc/arrow-right.svg" alt="Send" />
+    </button>
+  </div>
+  
+  <p class="errorMessage" id="chatErrorMessage" aria-live="polite"></p>
+  
+  
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/aiChat.js"></script>
+  <script src="/community.js"></script>
+  <script src="/js/communityChat.js"></script></div>
+
+<div id="showHelp" style="display: none;">
+<div class="help-tutorial">
+  <h1>True Sky Documentation</h1>
+  <p class="tutorial-intro">Welcome! Let's take a step-by-step tour through True
+    Sky astrology software.</p>
+  <p class="tutorial-intro"><strong>Note:</strong>
+    For technical support please use
+    <strong>CHAT</strong>
+    above. Admins will have an admin badge
+    <img src="/images/misc/badge.svg" style="width: 24px;" />. For private
+    support, or to report bugs, email truesky@masteringthezodiac.com</p>
+
+  <!-- Simple Navigation -->
+  <div class="tutorial-nav">
+    <ul>
+      <li><a href="#" onclick="showStep('intro', event)">Getting Started &
+          Installation</a></li>
+      <li><a href="#" onclick="showStep('main', event)">Step 1: MAIN: Create
+          Your First Chart</a></li>
+      <li><a href="#" onclick="showStep('transit', event)">Step 2: TRANSIT: See
+          Current Influences</a></li>
+      <li><a href="#" onclick="showStep('graph-tutorial', event)">Step 3: GRAPH:
+          Plan Ahead with Graphs</a></li>
+      <li><a href="#" onclick="showStep('return', event)">Step 4: RETURN: Annual
+          And Monthly Forecasting</a></li>
+      <li><a href="#" onclick="showStep('map', event)">Step 5: MAP:
+          Astrocartography And Sky Planetarium</a></li>
+      <li><a href="#" onclick="showStep('synastry', event)">Step 6: SYNASTRY:
+          Relationship Analysis</a></li>
+      <li><a href="#" onclick="showStep('composite', event)">Step 7: COMPOSITE:
+          Combined Charts</a></li>
+      <li><a href="#" onclick="showStep('settings', event)">Step 8: SETTINGS:
+          Customize Your Experience</a></li>
+      <li><a href="#" onclick="showStep('account', event)">Step 9: ACCOUNT:
+          Manage Your Profile</a></li>
+      <li><a href="#" onclick="showStep('chat', event)">Step 10: CHAT: Community
+          & Sky</a></li>
+      <li><a href="#" onclick="showStep('technical', event)">Technical
+          Specifications</a></li>
+      <li><a href="#" onclick="showStep('releases', event)">Latest Releases</a></li>
+      <li><a href="#" onclick="showStep('tos', event)">Terms of Service &
+          Privacy Policy</a></li>
+      <li><a href="#" onclick="showStep('credits', event)">Credits &
+          Acknowledgments</a></li>
+    </ul>
+  </div>
+
+  <!-- Introduction -->
+  <div class="tutorial-step" id="intro">
+    <h2 onclick="toggleStep('intro')" class="step-header">
+      Getting Started & Installation
+      <span class="step-icon">▼</span>
+    </h2>
+    <div class="step-content">
+      <h3>What is True Sky?</h3>
+      <p>True Sky is an online astrology software app that creates astrological
+        charts that help you understand planetary influences in yours or someone
+        elses life. It can be accessed by all devices, anywhere there is an
+        internet connection.</p>
+
+      <h3>What Can You Do Here?</h3>
+      <ul>
+        <li><strong>Create Birth Charts:</strong>
+          Calculate your natal chart using your birth date, time, and location</li>
+        <li><strong>Track Planetary Influences:</strong>
+          See how transiting planets affect your birth chart</li>
+        <li><strong>Analyze Relationships:</strong>
+          Compare charts with partners, friends, or family</li>
+        <li><strong>Join Community:</strong>
+          Connect with other astrology enthusiasts</li>
+      </ul>
+
+      <h3>Install True Sky App (Recommended)</h3>
+      <p>Install True Sky for quick access on any device, including desktop.
+        Look for the install icon in your browser's address bar above, or:</p>
+      <ul>
+        <li><strong>Chrome (Recommended):</strong>
+          Menu (⋮) → Save and share → Install app</li>
+        <li><strong>Edge:</strong>
+          Menu (⋯) → Apps → Install this site as an app</li>
+        <li><strong>Safari iOS:</strong>
+          Share button → Add to Home Screen → Add</li>
+        <li><strong>Safari Mac:</strong>
+          File → Add to Dock (macOS Sonoma or later)</li>
+      </ul>
+      <p><strong>Alternative:</strong>
+        Bookmark True Sky using Ctrl+D (Windows/Linux), Cmd+D (Mac), or your
+        browser's bookmark menu. We recommend using Google Chrome for optimal
+        performance and compatibility.</p>
+
+      <h3>Setting Up True Sidereal (Optional)</h3>
+      <p>To use the True Sidereal zodiac system, which aligns with the actual
+        star constellations:</p>
+      <ol>
+        <li>Navigate to the <strong>SETTINGS</strong> section</li>
+        <li>Set <strong>Zodiac</strong> to "Midpoint (True Sidereal)"</li>
+        <li>Set <strong>House</strong> to "Equal"</li>
+        <li>Set <strong>Coordinates</strong> to "Topocentric"</li>
+      </ol>
+      <p>These settings provide calculations based on the actual astronomical
+        positions of the constellations, rather than the traditional zodiac of
+        30-degree signs.</p>
+
+      <h3>How This Tutorial Works</h3>
+      <p>We'll walk through each section of True Sky in order. Each step builds
+        on the previous one, so start from the beginning if you're new.</p>
+
+      <div class="tutorial-tip">
+        <strong>💡 Ready to start?</strong>
+        Click
+        <a href="#" onclick="showStep('main', event)">Step 1: Create Your First
+          Chart</a>
+        to begin your journey.
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 1: Main Chart -->
+  <div class="tutorial-step" id="main">
+    <h2 onclick="toggleStep('main')" class="step-header">
+      Step 1: MAIN: Create Your First Chart
+      <span class="step-icon">▼</span>
+    </h2>
+    <div class="step-content">
+      <h3>Your Natal Chart - The Foundation of Astrology</h3>
+      <p>Your birth chart (natal chart) is a precise map showing where all the
+        planets were positioned at the exact moment and location of your birth.
+        This is the cornerstone of all astrological readings and the starting
+        point for every other feature in True Sky.</p>
+
+      <h3>Required Information</h3>
+      <ul>
+        <li><strong>Birth Date:</strong>
+          Day, Month, Year</li>
+        <li><strong>Birth Time:</strong>
+          Hour and minute in 24-hour format</li>
+        <li><strong>Birth Location:</strong>
+          City, region, country with automatic coordinate lookup</li>
+        <li><strong>Chart Name:</strong>
+          Personal identifier for your chart</li>
+      </ul>
+
+      <h3>Creating Your First Chart</h3>
+      <ol>
+        <li><strong>Click MAIN:</strong>
+          The first button in the top menu</li>
+        <li><strong>Name Field:</strong>
+          Type any identifying name (your name, "My Chart", etc. - max 30
+          characters)</li>
+        <li><strong>Birth Date Fields:</strong>
+          <ul>
+            <li>Day: Type number 1-31</li>
+            <li>Month: Select from dropdown menu</li>
+            <li>Year: Type full year (e.g., 1985, 2001)</li>
+          </ul>
+        </li>
+        <li><strong>Birth Time Fields:</strong>
+          <ul>
+            <li>Hour: 0-23 (14 = 2 PM, 20 = 8 PM)</li>
+            <li>Minute: 0-59</li>
+            <li>Unknown time? Use 12:00 (noon) as estimate</li>
+          </ul>
+        </li>
+        <li><strong>Birth Location Field:</strong>
+          <ul>
+            <li>Start typing your birth city</li>
+            <li>Select from autocomplete suggestions</li>
+            <li>Coordinates automatically calculated from city selection</li>
+            <li>Custom locations can be entered by typing a unique location name
+              and entering the coordinates followed by the checkmark ✔</li>
+          </ul>
+        </li>
+        <li><strong>Click <span class="btn-style">Calculate</span>:</strong>
+          Generates your natal chart data</li>
+        <li><strong>Click <span class="btn-style">View</span>:</strong>
+          Displays your saveable and printable natal chart</li>
+        <li><strong>Share Charts:</strong>
+          Generated charts, graphs, and reports can be freely shared for
+          professional or personal use</li>
+      </ol>
+
+      <h3>Understanding Your Chart Display</h3>
+      <ul>
+        <li><strong>Chart Wheel:</strong>
+          Circular diagram with 12 house sections</li>
+        <li><strong>House Numbers:</strong>
+          1-12 sections representing life areas</li>
+        <li><strong>Zodiac Signs:</strong>
+          The 12 signs around the outer rim</li>
+        <li><strong>Planet Positions:</strong>
+          Symbols showing exact zodiac degrees</li>
+        <li><strong>Aspect Lines:</strong>
+          Colored lines connecting planets showing relationships between planets</li>
+        <li><strong>Planet Degrees:</strong>
+          Exact positions (if enabled in Settings)</li>
+      </ul>
+
+      <h3>Chart Management Features</h3>
+      <ul>
+        <li><strong>Click <span class="btn-style">Save</span>:</strong>
+          Store charts permanently in your collection (max 5K)</li>
+        <li><strong>Saved Charts List:</strong>
+          View all your saved charts below the form</li>
+        <li><strong>Search Function:</strong>
+          Type to find specific charts quickly</li>
+        <li><strong>Chart Selection:</strong>
+          Select any saved chart name to instantly display it</li>
+      </ul>
+
+      <h3>Interactive Chart Features</h3>
+      <ul>
+        <li><strong>Chart Animation:</strong>
+          Animate chart by hour, minute, day, month, or year for chart
+          rectification</li>
+        <li><strong>Interactive Planet Display:</strong>
+          Click and examine different planets and points in your chart</li>
+        <li><strong>Aspect Display:</strong>
+          Click center of chart to bring up aspectarian</li>
+        <li><strong>Aspect Interpretations:</strong>
+          Click individual aspects within the aspectarian to view detailed
+          interpretations</li>
+        <li><strong>Click <span class="btn-style">View Report</span>:</strong>
+          Get detailed astrological interpretation of your natal chart</li>
+      </ul>
+
+      <h3>Common Chart Creation Issues</h3>
+      <ul>
+        <li><strong>Chart already exists in database:</strong>
+          Click
+          <span class="btn-style">Calculate</span>
+          before saving new charts</li>
+        <li><strong>Location Not Found:</strong>
+          Try larger city or alternate spelling</li>
+        <li><strong>Time Zone Confusion:</strong>
+          True Sky automatically handles time zones</li>
+        <li><strong>Historical Dates:</strong>
+          Works for any date in recorded history</li>
+      </ul>
+
+      <div class="tutorial-tip">
+        <strong>🎯 What's Next?</strong>
+        Now that you have your birth chart, move to
+        <a href="#" onclick="showStep('transit', event)">Step 2: See Current
+          Influences</a>
+        to understand how today's planets affect you.
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Transit -->
+  <div class="tutorial-step" id="transit">
+    <h2 onclick="toggleStep('transit')" class="step-header">
+      Step 2: TRANSIT: See Current Influences
+      <span class="step-icon">▼</span>
+    </h2>
+    <div class="step-content">
+      <h3>What Are Transits?</h3>
+      <p>Transits show how the planets in the sky interact with your birth
+        chart. This reveals what energies are active in your life at any given
+        point in time.</p>
+
+      <h3>Creating a Transit Chart</h3>
+      <ol>
+        <li><strong>First:</strong>
+          Make sure you've created your birth chart in the
+          <strong>MAIN</strong>
+          section</li>
+        <li><strong>Click TRANSIT:</strong>
+          This is the second button in the top menu</li>
+        <li><strong>Date And Time Fields:</strong>
+          Usually today's date, but you can pick any date</li>
+        <li><strong>Location Field:</strong>
+          Where you are right now (only necessary for hourly forecasting)</li>
+        <li><strong>Click <span class="btn-style">Calculate</span>:</strong>
+          Generates your transit chart data</li>
+        <li><strong>Click <span class="btn-style">View</span>:</strong>
+          Displays your saveable and printable transit chart showing three rings
+          of planets known as a triwheel</li>
+      </ol>
+
+      <h3>Reading Your Triwheel</h3>
+      <p>You'll see three circles:</p>
+      <ul>
+        <li><strong>Inner Circle:</strong>
+          Your birth chart (the reference chart for the triwheel)</li>
+        <li><strong>Middle Circle:</strong>
+          Your seconday progressed planets (slow evolution over years)</li>
+        <li><strong>Outer Circle:</strong> Transiting planets in the sky</li>
+      </ul>
+
+      <h3>Biwheel Modes</h3>
+      <p>Use the radio buttons below the chart to switch between viewing modes:</p>
+      <ul>
+        <li><strong>Prog & Tran (Default):</strong>
+          Full triwheel showing natal, progressions, and transits</li>
+        <li><strong>Progressions:</strong>
+          Biwheel showing only natal (inner) and progressions (outer)</li>
+        <li><strong>Transits:</strong>
+          Biwheel showing only natal (inner) and transits (outer)</li>
+      </ul>
+
+      <h3>What to Look For</h3>
+      <ul>
+        <li><strong>Progressed Personal Planets (Moon to Mars):</strong>
+          Shows your psychological and emotional development over a large period
+          of time</li>
+        <li><strong>Transiting Outer Planets (Jupiter to Pluto):</strong>
+          Reflect major life themes and longer cycles unfolding across one or
+          more years</li>
+        <li><strong>Transiting Inner Planets (Moon to Mars):</strong>
+          Indicate day-to-day activity, daily motivations, and short-term
+          changes</li>
+      </ul>
+
+      <h3>Interactive Chart Features</h3>
+      <ul>
+        <li><strong>Animate Chart Option:</strong>
+          Animate by year, month, day, hour, or minute below the chart
+        </li>
+        <li><strong>Interactive Planet Display:</strong>
+          Click and examine different planets and points across all three wheels
+          in your triwheel</li>
+        <li><strong>Aspect Display:</strong>
+          Click center of chart to bring up aspectarian</li>
+        <li><strong>Aspect Interpretations:</strong>
+          Click individual aspects within the aspectarian to view detailed
+          interpretations</li>
+        <li><strong>Click <span class="btn-style">View Report</span>:</strong>
+          Get detailed astrological interpretation of your transit chart</li>
+      </ul>
+
+      <div class="tutorial-tip">
+        <strong>🎯 What's Next?</strong>
+        Transit charts show one moment at a time. Move to
+        <a href="#" onclick="showStep('graph-tutorial', event)">Step 3: Plan
+          Ahead with Graphs</a>
+        to see transits in a timeline.
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Graph Section -->
+  <div class="tutorial-step" id="graph-tutorial">
+    <h2 onclick="toggleStep('graph-tutorial')" class="step-header">
+      Step 3: GRAPH: Plan Ahead with Graphs
+      <span class="step-icon">▼</span>
+    </h2>
+    <div class="step-content">
+      <h3>Interactive Timeline for Planetary Timing</h3>
+      <p>The Graph section creates an interactive timeline showing when
+        planetary influences will be strongest during certain periods of time.
+        Perfect for timing important astrological events and tracking planetary
+        cycles.</p>
+
+      <h3>Creating Your Timing Graph</h3>
+      <ol>
+        <li><strong>Click GRAPH:</strong>
+          The third button in the top menu</li>
+        <li><strong>Set Start Date:</strong>
+          Enter the beginning date for your timeline</li>
+        <li><strong>Set End Date:</strong>
+          Enter the ending date (recommended 2-3 years)</li>
+        <li><strong>Enter Location:</strong>
+          Where you'll be during this period (only necessary for hourly
+          forecasting)</li>
+        <li><strong>Click <span class="btn-style">Calculate</span>:</strong>
+          Generate your timing graph</li>
+        <li><strong>Click <span class="btn-style">View</span>:</strong>
+          Display your interactive timeline in saveable and printable form</li>
+      </ol>
+
+      <h3>Date Range Limits</h3>
+      <p>To ensure efficient calculations, date ranges are limited based on your
+        planet selection in
+        <strong>SETTINGS</strong>:</p>
+      <ul>
+        <li><strong>Standard Limits:</strong>
+          <ul>
+            <li>Maximum range: 5 years</li>
+            <li>With fast transits (Sun–Mars): 3 months</li>
+            <li>With transiting Moon: 1 month</li>
+          </ul>
+        </li>
+        <li><strong>Extended Ranges:</strong>
+          Select only one transiting planet with no progressed planets to unlock
+          longer ranges:
+          <ul>
+            <li>Single outer planet (Jupiter–North Node): up to 20 years</li>
+            <li>Single fast planet (Sun–Mars): up to 2 years</li>
+            <li>Moon only: up to 6 months</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Interactive Features</h3>
+      <p>The graph offers multiple ways to interact with your timeline:</p>
+      <ul>
+        <li><strong>Triwheel Preview:</strong>
+          Shows detailed planetary influences at that specific moment<br
+          />Desktop: Left-click on graph | Mobile: Tap on graph</li>
+        <li><strong>Move Timeline Marker:</strong>
+          Slides the red timeline marker to different dates<br />Desktop:
+          Right-click and drag | Mobile: Tap and drag</li>
+        <li><strong>Aspect Interpretations:</strong>
+          Click aspect labels on the left side of the graph to view detailed
+          interpretations</li>
+        <li><strong>Click <span class="btn-style">View Report</span>:</strong>
+          Get detailed astrological interpretation of your graph timeline</li>
+      </ul>
+
+      <div class="tutorial-tip">
+        <strong>🎯 What's Next?</strong>
+        Move to
+        <a href="#" onclick="showStep('return', event)">Step 4: Annual And
+          Monthly Forecasting</a>
+        to see your yearly and monthly themes in one chart.
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: Return Section -->
+  <div class="tutorial-step" id="return">
+    <h2 onclick="toggleStep('return')" class="step-header">Step 4: RETURN:
+      Annual And Monthly Forecasting
+      <span class="step-icon">▼</span></h2>
+    <div class="step-content">
+      <h3>Your Yearly and Monthly Themes</h3>
+      <p>Return charts show the overall themes and energy patterns for entire
+        years (Solar Return) or months (Lunar Return) below the chart. Perfect
+        for understanding the major astrological themes during a specific year
+        or month.</p>
+
+      <h3>Creating Return Charts</h3>
+      <ol>
+        <li><strong>Click RETURN:</strong>
+          This is the fourth button in the top menu</li>
+        <li><strong>Name Field:</strong>
+          Enter a name to identify this return chart</li>
+        <li><strong>Automatic Date/Time:</strong>
+          The date and time fields are automatically calculated from the natal
+          chart and cannot be edited</li>
+        <li><strong>Location Field:</strong>
+          Defaults to the natal location but can be changed to current location
+          if preferred</li>
+        <li><strong>Click <span class="btn-style">Calculate</span>:</strong>
+          Generate the return chart data</li>
+        <li><strong>Click <span class="btn-style">View</span>:</strong>
+          Display your return chart wheel</li>
+        <li><strong>Change Return Type:</strong>
+          Select
+          <strong>Solar</strong>
+          or
+          <strong>Lunar</strong>
+          return below chart
+        </li>
+        <li><strong>Past And Future Return:</strong>
+          Use the arrows ← → under the chart to change between past and future
+          returns
+        </li>
+      </ol>
+
+      <h3>How Return Charts Work</h3>
+      <ul>
+        <li><strong>Solar Return:</strong>
+          Calculated for when the Sun returns to your exact birth position
+          (annually)</li>
+        <li><strong>Lunar Return:</strong>
+          Calculated for when the Moon returns to your exact birth position
+          (monthly)</li>
+        <li><strong>Automatic Calculation:</strong>
+          True Sky determines the exact date and time automatically</li>
+        <li><strong>Location Matters:</strong>
+          You can change the location to see how being elsewhere affects your
+          return</li>
+        <li><strong>Yearly And Montly Themes:</strong>
+          Shows the overarching energy and themes for that year or month</li>
+      </ul>
+
+      <h3>Interactive Chart Features</h3>
+      <ul>
+        <li><strong>Interactive Planet Display:</strong>
+          Click and examine different planets and points in your return chart</li>
+        <li><strong>Aspect Display:</strong>
+          Click center of chart to bring up aspectarian</li>
+        <li><strong>Aspect Interpretations:</strong>
+          Click individual aspects within the aspectarian to view detailed
+          interpretations</li>
+        <li><strong>Click <span class="btn-style">View Report</span>:</strong>
+          Get detailed astrological interpretation of your return chart</li>
+      </ul>
+
+      <div class="tutorial-tip">
+        <strong>🎯 What's Next?</strong>
+        Upto this point we have used charts to show personal themes. Move to
+        <a href="#" onclick="showStep('map', event)">Step 5: Astrocartography
+          And Sky Planetarium</a>
+        to see your chart placed in physical space.
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5: Map -->
+  <div class="tutorial-step" id="map">
+    <h2 onclick="toggleStep('map')" class="step-header">Step 5: MAP:
+      Astrocartography And Sky Planetarium
+      <span class="step-icon">▼</span></h2>
+    <div class="step-content">
+      <h3>Your Chart In Real Space</h3>
+      <p>Your map shows where your natal planets land in physical space, both
+        across Earth and in the night sky. Perfect for finding locations where
+        each planet's influence is strongest and seeing the actual sky at birth.</p>
+
+      <h3>Creating Your Map</h3>
+      <ol>
+        <li><strong>First:</strong>
+          Make sure you've created your chart in the
+          <strong>MAIN</strong>
+          section</li>
+        <li><strong>Click MAP:</strong>
+          The fifth button in the top menu</li>
+        <li><strong>Automatic Loading:</strong>
+          Your map loads from the main chart automatically</li>
+        <li><strong>Switch Views:</strong>
+          Click
+          <strong>World</strong>
+          or
+          <strong>Sky</strong>
+          at the top of the section to toggle between the two</li>
+        <li><strong>Click <span class="btn-style">View</span>:</strong>
+          View or print the currently-visible map</li>
+      </ol>
+
+      <h3>Reading Your World Map</h3>
+      <p>Each planet draws four lines across Earth:</p>
+      <ul>
+        <li><strong>MC (solid and vertical):</strong>
+          Where the planet was overhead</li>
+        <li><strong>IC (dashed and vertical):</strong>
+          Where the planet was underfoot</li>
+        <li><strong>AC (solid and curved):</strong>
+          Where the planet was rising on the eastern horizon</li>
+        <li><strong>DC (dashed and curved):</strong>
+          Where the planet was setting on the western horizon</li>
+      </ul>
+
+      <h3>Reading Your Sky Map</h3>
+      <p>Each planet in the sky:</p>
+      <ul>
+        <li><strong>Stars and Constellations:</strong>
+          The brightest visible stars and the modern constellation patterns</li>
+        <li><strong>Ecliptic:</strong>
+          The Sun's path across the sky, with degree marks</li>
+        <li><strong>Zodiac Bands:</strong>
+          Colored bands along the ecliptic showing each sign, matching your
+          SETTINGS zodiac system</li>
+        <li><strong>Natal Planets:</strong>
+          Planet glyphs at their sky positions</li>
+      </ul>
+
+      <h3>Interactive Map Features</h3>
+      <ul>
+        <li><strong>Click-To-Relocate (World):</strong>
+          Click anywhere on the world map to see the chart relocated to that
+          location</li>
+        <li><strong>Drag to Pan:</strong>
+          Click and drag, or single-finger drag on touchscreen, to move around</li>
+        <li><strong>Double-Click Zoom:</strong>
+          Double-click left to zoom in, double-click right to zoom out</li>
+        <li><strong><span class="btn-style">+</span>
+            and
+            <span class="btn-style">−</span>
+            Buttons:</strong>
+          Zoom in or out</li>
+        <li><strong><span class="btn-style">↺</span> Reset Button:</strong>
+          Returns the view to start</li>
+      </ul>
+
+      <div class="tutorial-tip">
+        <strong>🎯 What's Next?</strong>
+        You've seen your chart in physical space! Move to
+        <a href="#" onclick="showStep('synastry', event)">Step 6: Relationship
+          Analysis</a>
+        to compare your chart with someone else's.
+      </div>
+    </div>
+  </div>
+
+  <div class="tutorial-step" id="synastry">
+    <h2 onclick="toggleStep('synastry')" class="step-header">Step 6: SYNASTRY:
+      Relationship Analysis
+      <span class="step-icon">▼</span></h2>
+    <div class="step-content">
+      <h3>Understanding Your Connections</h3>
+      <p>Synastry charts compare two people's birth charts to reveal
+        relationship dynamics, compatibility, and areas of harmony or challenge.
+        Perfect for romantic relationships, friendships, business partnerships,
+        or family connections.</p>
+
+      <h3>Creating a Synastry Chart</h3>
+      <ol>
+        <li><strong>Click SYNASTRY:</strong>
+          This is the first button on the bottom row in the top menu</li>
+        <li><strong>Name Field:</strong>
+          Enter the name of the chart you want to check compatibility with</li>
+        <li><strong>Second Person's Information:</strong>
+          Enter birth date, time, and location for the person you want to
+          compare to your natal chart</li>
+        <li><strong>Click <span class="btn-style">Calculate</span>:</strong>
+          Generate the synastry chart data</li>
+        <li><strong>Click <span class="btn-style">View</span>:</strong>
+          Display the saveable and printable synastry chart wheel</li>
+        <li><strong>Click <span class="btn-style">Save</span>:</strong>
+          Store the second person's chart data for future reference</li>
+      </ol>
+
+      <h3>Reading Your Synastry Chart</h3>
+      <ul>
+        <li><strong>Inner Circle:</strong>
+          Your natal chart (from
+          <strong>MAIN</strong>
+          section</li>
+        <li><strong>Outer Circle:</strong> The second person's birth chart</li>
+        <li><strong>Colored Lines:</strong>
+          Planetary aspects between the two charts (can be clicked to view
+          aspectarian)</li>
+        <li><strong>Swap Charts:</strong>
+          Charts can be swapped below the synastry wheel to show how one chart
+          relates to the other
+        </li>
+      </ul>
+
+      <h3>What to Look For</h3>
+      <ul>
+        <li><strong>Harmonious Aspects:</strong>
+          Often shown in blue - areas of natural compatibility</li>
+        <li><strong>Challenging Aspects:</strong>
+          Often shown in red - areas requiring understanding</li>
+        <li><strong>Planets Close Together:</strong>
+          Shared values and similar approaches</li>
+      </ul>
+
+      <h3>Interactive Chart Features</h3>
+      <ul>
+        <li><strong>Interactive Planet Display:</strong>
+          Click and examine different planets and points from both charts</li>
+        <li><strong>Aspect Display:</strong>
+          Click center of chart to bring up aspectarian showing relationship
+          dynamics</li>
+        <li><strong>Aspect Interpretations:</strong>
+          Click individual aspects within the aspectarian to view detailed
+          interpretations</li>
+        <li><strong>Click <span class="btn-style">View Report</span>:</strong>
+          Get detailed astrological interpretation of the synastry chart</li>
+      </ul>
+
+      <div class="tutorial-tip">
+        <strong>🎯 What's Next?</strong>
+        Synastry shows individual connections. Move to
+        <a href="#" onclick="showStep('composite', event)">Step 7: Combined
+          Charts</a>
+        to see your relationship as a single entity.
+      </div>
+    </div>
+  </div>
+
+  <div class="tutorial-step" id="composite">
+    <h2 onclick="toggleStep('composite')" class="step-header">Step 7: COMPOSITE:
+      Combined Charts
+      <span class="step-icon">▼</span></h2>
+    <div class="step-content">
+      <h3>Your Relationship as One Entity</h3>
+      <p>Composite charts create a single chart representing your relationship
+        itself - not how you interact individually, but what your partnership
+        creates together. Perfect for understanding the unique energy and
+        purpose of your relationship.</p>
+
+      <h3>Creating a Composite Chart</h3>
+      <ol>
+        <li><strong>Click COMPOSITE:</strong>
+          This is the second button on the bottom row in the top menu</li>
+        <li><strong>Prerequisites:</strong>
+          You must have already created individual birth charts for both people
+          in the
+          <strong>MAIN</strong>
+          and
+          <strong>SYNASTRY</strong>
+          sections</li>
+        <li><strong>Click <span class="btn-style">View</span>:</strong>
+          Displays the composite chart in saveable and printable format</li>
+      </ol>
+
+      <p><strong>Note:</strong>
+        Composite charts are automatically generated from existing natal chart
+        data. The form only contains a View button since no additional input is
+        needed.</p>
+
+      <h3>How Composite Charts Work</h3>
+      <p>The composite chart uses mathematical midpoints between your planets:</p>
+      <ul>
+        <li><strong>Midpoint Planets:</strong>
+          Each planet position is the midpoint between both of your planets</li>
+        <li><strong>Relationship Personality:</strong>
+          Shows the character and energy of your partnership</li>
+        <li><strong>Shared Purpose:</strong>
+          Reveals what your relationship is meant to accomplish</li>
+      </ul>
+
+      <h3>Understanding Your Composite</h3>
+      <ul>
+        <li><strong>Sun Sign:</strong>
+          The core identity and purpose of your relationship</li>
+        <li><strong>Moon Sign:</strong>
+          The emotional nature and needs of your partnership</li>
+        <li><strong>Rising Sign:</strong>
+          What your relationship is destined to develop</li>
+        <li><strong>Planetary Aspects:</strong>
+          The internal dynamics of your partnership</li>
+      </ul>
+
+      <h3>Interactive Chart Features</h3>
+      <ul>
+        <li><strong>Interactive Planet Display:</strong>
+          Click and examine different midpoint planets and points in your
+          composite chart</li>
+        <li><strong>Aspect Display:</strong>
+          Click center of chart to bring up aspectarian showing internal
+          relationship patterns</li>
+        <li><strong>Aspect Interpretations:</strong>
+          Click individual aspects within the aspectarian to view detailed
+          interpretations</li>
+        <li><strong>Click <span class="btn-style">View Report</span>:</strong>
+          Get detailed astrological interpretation of your composite chart</li>
+      </ul>
+
+      <div class="tutorial-tip">
+        <strong>🎯 What's Next?</strong>
+        Now you understand relationships charts! Move to
+        <a href="#" onclick="showStep('settings', event)">Step 8: Customize Your
+          Experience</a>
+        to personalize how True Sky works for you.
+      </div>
+    </div>
+  </div>
+
+  <div class="tutorial-step" id="settings">
+    <h2 onclick="toggleStep('settings')" class="step-header">Step 8: SETTINGS:
+      Customize Your Experience
+      <span class="step-icon">▼</span></h2>
+    <div class="step-content">
+      <h3>Complete Chart Customization System</h3>
+      <p>Settings is True Sky's most comprehensive section, allowing you to
+        customize your astrological calculations. Whether you're a beginner
+        wanting simpler charts or an advanced practitioner with specific
+        preferences, Settings gives you complete control over planets, aspects,
+        house systems, and graph displays.</p>
+
+      <h3>Accessing Settings</h3>
+      <ol>
+        <li><strong>Click SETTINGS:</strong>
+          The last button on the first row in the top menu</li>
+        <li><strong>Make Adjustments:</strong>
+          Use checkboxes, dropdowns, and input fields</li>
+        <li><strong>Click
+            <span class="btn-style">Apply Without Saving</span>:</strong>
+          Test changes temporarily</li>
+        <li><strong>Click <span class="btn-style">Save Settings</span>:</strong>
+          Store named configurations for reuse</li>
+        <li><strong>Click
+            <span class="btn-style">Apply Default Settings</span>:</strong>
+          Reset to original True Sky defaults</li>
+      </ol>
+
+      <h3>Wheel Settings - Planet Controls</h3>
+      <p>Each planet has two checkboxes: Display (show in charts) and Aspects
+        (include in aspect calculations):</p>
+      <ul>
+        <li><strong>Traditional Planets:</strong>
+          Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn</li>
+        <li><strong>Modern Planets:</strong>
+          Uranus, Neptune, Pluto (discovered after 1781)</li>
+        <li><strong>Chart Angles:</strong>
+          Ascendant, Midheaven, Descendant, Imum Coeli, Vertex, Anti-Vertex</li>
+        <li><strong>Asteroids:</strong>
+          Chiron, Ceres, Vesta, Pallas, Juno (mythology-based points)</li>
+        <li><strong>Calculated Points:</strong>
+          North Node, South Node, Lilith, Priapus, Part of Fortune, Part of
+          Spirit, Galactic Center</li>
+        <li><strong>Calculation Toggles:</strong>
+          True Nodes (use osculating vs mean), True Lilith (use osculating vs
+          mean), Draconic (align zodiac to North Node)</li>
+      </ul>
+
+      <h3>Wheel Settings - Custom Points</h3>
+      <p>Add up to 5 custom points from a list of 219 available:</p>
+      <ul>
+        <li><strong>Adding Points:</strong>
+          Type an asteroid name, then click ✓ to add</li>
+        <li><strong>Display/Aspects:</strong>
+          Each custom point has checkboxes for wheel display and aspect
+          calculations</li>
+        <li><strong>Wheel Labels:</strong>
+          Custom points appear as numbered labels (01, 02, etc.) on the chart
+          wheel</li>
+        <li><strong>Removing Points:</strong>
+          Click X then ✓ to confirm removal</li>
+        <li><strong>Saved with Settings:</strong>
+          Custom points persist when saving and loading settings configurations</li>
+        <li><strong>Available:</strong>
+          Abundantia, Achilles, Adeona, Adonis, Adrastea, Aeria, Aesculapia,
+          Agamemnon, Aglaja, Aletheia, Alkmene, Alkeste, Amalthea, Ambrosia,
+          Amor, Amycus, Amphitrite, Andromache, Anteros, Antigone, Antiope,
+          Anubis, Aphrodite, Apollo, Arachne, Arete, Ariadne, Artemis, Asbolus,
+          Asclepius, Aspasia, Astarte, Asterope, Astraea, Atalante, Ate, Atira,
+          Athene, Atropos, Aurora, Ausonia, Bacchus, Bamberga, Bellona, Bienor,
+          Boda, Borasisi, Camilla, Ceto, Chaos, Chariklo, Chloris, Circe,
+          Clotho, Concordia, Cosicosi, Cupido, Cybele, Daedalus, Danae, Daphne,
+          Davida, Dejanira, Demeter, Diana, Dike, Dione, Diotima, Echeclus,
+          Echo, Egeria, Elektra, Elpis, Eos, Erato, Eris, Eros, Euphrosyne,
+          Europa, Eurydike, Eurynome, Euterpe, Fama, Felicitas, Fides, Flora,
+          Fortuna, Frigga, Galatea, Gonggong, Harmonia, Haumea, Hebe, Hecuba,
+          Hekate, Hektor, Helena, Hera, Hermes, Hermione, Hesperia, Hestia,
+          Hidalgo, Hildegard, Hybris, Hygiea, Hylonome, Hypatia, Icarus, Ida,
+          Iduna, Ino, Interamnia, Io, Iphigenia, Irene, Iris, Isis, Ismene,
+          Ixion, Jokaste, Julia, Justitia, Kaali, Kalliope, Kalypso, Kama,
+          Karma, Kassandra, Kleopatra, Klio, Klytaemnestra, Klytia, Koronis,
+          Lachesis, Laetitia, Leda, Leto, Lilith, Lucifer, Lucina, Lutetia,
+          Maja, Makemake, Maria, Medea, Medusa, Melpomene, Metis, Midas,
+          Minerva, Mnemosyne, Narcissus, Nausikaa, Nemesis, Nessus, Nike, Niobe,
+          Nuwa, Nymphe, Nysa, Odysseus, Okyrhoe, Ophelia, Orcus, Ornamenta,
+          Orpheus, Osiris, Pan, Pandora, Parvati, Peitho, Penelope, Persephone,
+          Phaedra, Phaethon, Philomela, Philosophia, Phocaea, Pholus, Piazzia,
+          Polyhymnia, Priamus, Prometheus, Proserpina, Psyche, Pythia, Quaoar,
+          Salacia, Sapientia, Sappho, Scylla, Sedna, Semele, Sibylla, Sirene,
+          Sirona, Sisyphus, Siva, Sophrosyne, Sphinx, Tantalus, Terpsichore,
+          Thalia, Themis, Thetis, Thisbe, Toro, Tyche, Typhon, Urania, Urda,
+          Valentine, Varuna, Venusia, Veronika, Victoria, Wisdom, Zeus</li>
+      </ul>
+
+      <h3>Wheel Settings - Fixed Stars</h3>
+      <p>Display the 46 stars in the local catalog. Their positions are
+        recalculated for the chart date with the Swiss Ephemeris, including
+        stellar proper motion:</p>
+      <ul>
+        <li><strong>Magnitude Filter:</strong>
+          Adjust from 1.0 to 2.5 to show brighter or dimmer stars</li>
+        <li><strong>Latitude Filter:</strong>
+          Adjust from ±15° to ±90° to filter stars by ecliptic latitude</li>
+        <li><strong>Available:</strong> The 46 named stars in the local
+          <code>fixedStars.json</code> catalog</li>
+      </ul>
+
+      <h3>Wheel Settings - Display Options</h3>
+      <p>Additional display controls:</p>
+      <ul>
+        <li><strong>Planet Degrees:</strong>
+          Toggle to show/hide exact degree positions on chart</li>
+        <li><strong>Ascendant Override:</strong>
+          Force ascendant to specific sign or planet</li>
+      </ul>
+
+      <h3>Wheel Settings - Aspect Settings with Custom Orbs</h3>
+      <p>Each aspect can be toggled on/off with customizable orb degrees:</p>
+      <ul>
+        <li><strong>Conjunction (0°):</strong>
+          Default 10° orb - planets in same sign/degree</li>
+        <li><strong>Opposition (180°):</strong>
+          Default 10° orb - planets directly across</li>
+        <li><strong>Square (90°):</strong>
+          Default 8° orb - tension and challenge aspects</li>
+        <li><strong>Trine (120°):</strong>
+          Default 8° orb - harmonious, flowing energy</li>
+        <li><strong>Sextile (60°):</strong>
+          Default 6° orb - opportunity and cooperation</li>
+        <li><strong>Semisextile (30°):</strong>
+          Default 3° orb - minor adjustment aspects</li>
+        <li><strong>Quincunx (150°):</strong>
+          Default 3° orb - requires constant adjustment</li>
+      </ul>
+
+      <h3>Wheel Settings - Astrological Systems</h3>
+      <ul>
+        <li><strong>Zodiac System:</strong>
+          12 options including Tropical (default), Midpoint (True Sidereal),
+          13 Equal (Ophiuchus #13), IAU Real Constellations, Fagan/Bradley,
+          Lahiri, DeLuce, Raman, and other Sidereal variants</li>
+        <li><strong>House System:</strong>
+          7 systems - Placidus (default), Equal, Whole Sign, Koch, Porphyrius,
+          Regiomontanus, Campanus</li>
+        <li><strong>Coordinate System:</strong>
+          Geocentric (Earth-centered), Topocentric (location-adjusted), or
+          Heliocentric (Sun-centered, shows Earth instead of Sun)</li>
+      </ul>
+
+      <h3>Graph Settings - Planet Controls</h3>
+      <p>Three-column system for choosing which planets will be used in the
+        timeline:</p>
+      <ul>
+        <li><strong>Natal Column:</strong>
+          The natal planets you want enabled in the timeline</li>
+        <li><strong>Progressed Column:</strong>
+          The progressed planets you want enabled</li>
+        <li><strong>Transit Column:</strong>
+          The transiting planets you want enabled</li>
+      </ul>
+
+      <h3>Graph Settings - Aspect Settings</h3>
+      <p>Toggle which aspects appear in the graph timeline as exact contacts
+        with 1° orb lines:</p>
+      <ul>
+        <li><strong>Aspects:</strong>
+          Conjunction (0°), Opposition (180°), Square (90°), Trine (120°),
+          Sextile (60°), Semisextile (30°), Quincunx (150°)</li>
+      </ul>
+
+      <h3>Graph Settings - Transit Types</h3>
+      <ul>
+        <li><strong>Transiting to Natal:</strong>
+          How current planets affect your birth chart</li>
+        <li><strong>Transiting to Transiting:</strong>
+          Current planetary relationships in the sky</li>
+        <li><strong>Transiting Stations:</strong>
+          When transiting planets change direction (retrograde/direct)</li>
+        <li><strong>Progressed to Natal:</strong>
+          How your evolved self relates to your birth chart</li>
+        <li><strong>Progressed to Progressed:</strong>
+          Internal evolution and development patterns</li>
+        <li><strong>Progressed Stations:</strong>
+          When progressed planets change direction (retrograde/direct)</li>
+        <li><strong>House Ingresses:</strong>
+          When planets move from one house to another</li>
+        <li><strong>Sign Ingresses:</strong>
+          When planets move from one zodiac sign to another</li>
+      </ul>
+
+      <h3>Save/Load Settings - Saving and Managing Settings</h3>
+      <ul>
+        <li><strong>Settings Name Field:</strong>
+          Name your configuration (max 40 characters)</li>
+        <li><strong>Click <span class="btn-style">Save Settings</span>:</strong>
+          Store your current configuration permanently and apply settings (max
+          10 saved settings)</li>
+        <li><strong>Click
+            <span class="btn-style">Apply Without Saving</span>:</strong>
+          Apply settings temporarily for current session</li>
+        <li><strong>Click
+            <span class="btn-style">Apply Default Settings</span>:</strong>
+          Reset everything to True Sky defaults and apply default settings</li>
+        <li><strong>Saved Settings List:</strong>
+          Load and apply previously saved configurations</li>
+      </ul>
+
+      <h3>Common Setting Configurations</h3>
+      <ul>
+        <li><strong>Beginner Setup:</strong>
+          Traditional planets only, major aspects only</li>
+        <li><strong>Psychological Astrology:</strong>
+          All modern planets, minor aspects included</li>
+        <li><strong>Traditional Astrology:</strong>
+          Traditional planets, major aspects, whole sign houses</li>
+        <li><strong>Evolutionary Astrology:</strong>
+          Focus on Lunar Nodes, Pluto, Chiron</li>
+        <li><strong>Simplified Charts:</strong>
+          Minimal aspects, no asteroids, clean display</li>
+      </ul>
+
+      <div class="tutorial-tip">
+        <strong>🎯 What's Next?</strong>
+        Your charts are now personalized to your preferences! Move to
+        <a href="#" onclick="showStep('account', event)">Step 9: Manage Your
+          Profile</a>
+        to set up your account and data management options.
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 9: Account -->
+  <div class="tutorial-step" id="account">
+    <h2 onclick="toggleStep('account')" class="step-header">
+      Step 9: ACCOUNT: Manage Your Profile
+      <span class="step-icon">▼</span>
+    </h2>
+    <div class="step-content">
+      <h3>Account Management System</h3>
+      <p>The Account section provides tools for managing your saved charts,
+        profile, subscription, and account settings. This is your central hub
+        for data management, billing, and account security.</p>
+
+      <h3>Accessing Your Account</h3>
+      <ol>
+        <li><strong>Click ACCOUNT:</strong>
+          The last button on the bottom row in the top menu</li>
+      </ol>
+
+      <h3>Import/Export Chart Data</h3>
+      <ul>
+        <li><strong>Click <span class="btn-style">Import Charts</span>:</strong>
+          Upload .txt files containing saved chart data (max 1K charts per
+          import, 5K total) with each line in the following format example:</li>
+        <p>"John Doe", 1960, "March", 20, 18:59:00, -4, "New York City, New
+          York, United States", -74.00597, 40.71427</p>
+        <p><strong>Minor variations are allowed, for example:</strong></p>
+        <p>Jane Doe, 1990, December, 11, 21:25:00, +06:00:00, "Janesville, WI,
+          USA", -89.018611, 42.682778</p>
+        <p><strong>Note:</strong>
+          Data fields must be in this order, comma separated, and must have
+          quotations around location name if it contains commas. True Sky uses
+          its own time zone adjustments based on the location coordinates
+          uploaded.
+        </p>
+        <p><strong>MTZ Community with Prometheus:</strong>
+          To export your charts from Prometheus, open Prometheus and go to
+          'Load' on the top menu. Open the folder you want to export. Click
+          'Export...' and then 'Export Charts to Text File'.
+        </p>
+        <li><strong>Click <span class="btn-style">Export Charts</span>:</strong>
+          Download all your charts as .txt backup files. We recommend exporting
+          regularly as a backup of your chart collection.</li>
+        <li><strong>Click
+            <span class="btn-style">Delete All Charts</span>:</strong>
+          Remove all saved charts from your account (deleted charts cannot be
+          recovered - always export your charts before deleting).</li>
+      </ul>
+
+      <h3>Account Settings - Chat Settings</h3>
+      <ul>
+        <li><strong>Memory Toggle:</strong>
+          Enable or disable Sky remembering your name and preferences</li>
+        <li><strong>Click <span class="btn-style">Clear Memory</span>:</strong>
+          Erase what Sky has learned about you</li>
+      </ul>
+
+      <h3>Account Settings - Profile Information</h3>
+      <ul>
+        <li><strong>Profile Image:</strong>
+          Automatically imported from your Google account, or uploadable for
+          email users</li>
+        <li><strong>Display Name:</strong>
+          Shows your Google account name or your chosen display name</li>
+        <li><strong>Update Name/Photo:</strong>
+          For Google users, links to Google account management. For email users,
+          opens an in-app editor.</li>
+        <li><strong>Set Default Location:</strong>
+          Enter your most common location to speed up chart creation</li>
+        <li><strong>Click <span class="btn-style">Log Out</span>:</strong>
+          Sign out of your True Sky account</li>
+      </ul>
+
+      <h3>Account Settings - Subscription Management</h3>
+      <ul>
+        <li><strong>Subscription Status:</strong>
+          View current subscription status</li>
+        <li><strong>Payment Date:</strong>
+          See when your next payment is due</li>
+        <li><strong>Sky Messages:</strong>
+          Shows your current plan and upgrade options</li>
+        <li><strong>Billing Portal:</strong>
+          Click payment date to manage billing</li>
+        <li><strong>Click
+            <span class="btn-style">Cancel Subscription</span>:</strong>
+          To cancel your subscription through the billing portal</li>
+        <li><strong>Click
+            <span class="btn-style">Delete Account</span>:</strong>
+          Permanently cancel your subscription and delete your True Sky account
+          (entire account and all charts are permanently deleted - deleted
+          accounts and charts cannot be restored)</li>
+      </ul>
+
+      <div class="tutorial-tip">
+        <strong>🎯 What's Next?</strong>
+        Your account is updated! Move to
+        <a href="#" onclick="showStep('chat', event)">Step 10: Community & Sky</a>
+        to connect with other astrology enthusiasts and get help.
+      </div>
+    </div>
+  </div>
+
+  <div class="tutorial-step" id="chat">
+    <h2 onclick="toggleStep('chat')" class="step-header">Step 10: CHAT:
+      Community & Sky
+      <span class="step-icon">▼</span></h2>
+    <div class="step-content">
+      <h3>Community Chat</h3>
+      <p>True Sky includes a live chat system where you can connect with
+        astrology enthusiasts, practitioners, and get help.</p>
+
+      <h3>Accessing Chat</h3>
+      <ol>
+        <li><strong>Click CHAT:</strong>
+          This is the third button on the bottom row in the top menu</li>
+        <li><strong>Chat History:</strong>
+          Scroll through the chat history (up to 7 days)</li>
+        <li><strong>Message Input:</strong>
+          Use the text input at the bottom (max 500 characters)</li>
+        <li><strong>Send Message:</strong>
+          Press Enter or click the arrow button to send your message</li>
+      </ol>
+
+      <p><strong>*Important Security Note:</strong>
+        We recommend only getting technical help from admins with the admin
+        badge
+        <img src="/images/misc/badge.svg" style="width: 24px;" />. Remember all
+        messages are public. Never share personal details in the chat - if you
+        need direct support, email truesky@masteringthezodiac.com
+      </p>
+
+      <h3>Chat Features</h3>
+      <ul>
+        <li><strong>Real-Time Updates:</strong>
+          Messages appear instantly as others type</li>
+        <li><strong>Username Mentions:</strong>
+          Click any username to @mention them in your message</li>
+        <li><strong>Message History:</strong>
+          See previous conversations with timestamps</li>
+        <li><strong>Delete Messages:</strong>
+          Click the 'remove' button next to the timestamp to delete your message</li>
+        <li><strong>Auto-Scroll:</strong>
+          Chat automatically scrolls to show newest messages</li>
+      </ul>
+
+      <h3>Chat Etiquette</h3>
+      <ul>
+        <li><strong>Help Others:</strong>
+          Share your knowledge when you can assist with astrological questions</li>
+        <li><strong>Be Patient:</strong> Users may not respond immediately</li>
+        <li><strong>Stay Respectful:</strong>
+          Admins monitor chat and can delete messages and ban users from the
+          chat feature</li>
+      </ul>
+
+      <h3>Sky Chat</h3>
+      <p>Chat with Sky, your astrology assistant. Sky reads your calculated
+        charts and provides personalized interpretations.</p>
+
+      <h3>Using Sky Chat</h3>
+      <ol>
+        <li><strong>Click CHAT:</strong> Navigate to the chat section</li>
+        <li><strong>Select #sky:</strong> Click the #sky channel button</li>
+        <li><strong>Calculate a Chart First:</strong>
+          Sky reads from your currently displayed charts in MAIN, SYNASTRY,
+          COMPOSITE, TRANSIT, RETURN, and GRAPH</li>
+        <li><strong>Ask Questions:</strong>
+          Type your question and press Enter or click send</li>
+        <li><strong>Follow Suggestions:</strong>
+          Click suggested follow-up questions or type your own</li>
+      </ol>
+
+      <h3>What Sky Can Help With</h3>
+      <ul>
+        <li><strong>Chart Readings:</strong>
+          Natal, synastry, composite, transit, return, and graph interpretations</li>
+        <li><strong>Timing Questions:</strong>
+          When transits go exact, sign entries, aspect timing</li>
+        <li><strong>App Help:</strong>
+          How to use features, troubleshoot settings</li>
+        <li><strong>Astrology Concepts:</strong>
+          House systems, aspects, dignities, techniques</li>
+      </ul>
+
+      <h3>Sky Chat Features</h3>
+      <ul>
+        <li><strong>Message Limit:</strong>
+          50 messages per billing cycle (resets at next payment date)</li>
+        <li><strong>Memory:</strong>
+          Sky remembers your name and preferences across conversations</li>
+        <li><strong>Clear History:</strong>
+          Click "Clear history" below the input to start fresh</li>
+        <li><strong>Unlimited Option:</strong>
+          Upgrade to unlimited messages in ACCOUNT</li>
+      </ul>
+
+      <div class="tutorial-tip">
+        <strong>🎉 Congratulations!</strong>
+        You now understand all True Sky features! Start with
+        <a href="#" onclick="showStep('main', event)">Step 1: Create Your First
+          Chart</a>
+        and ask Sky in the #sky channel if you need help.
+      </div>
+    </div>
+  </div>
+
+  <!-- Technical Specifications -->
+  <div class="tutorial-step" id="technical">
+    <h2 onclick="toggleStep('technical')" class="step-header">
+      Technical Specifications
+      <span class="step-icon">▼</span>
+    </h2>
+    <div class="step-content">
+      <h3>Planetary Position Accuracy</h3>
+      <p>The accuracy of planetary positions varies based on the time period and
+        celestial body:</p>
+
+      <h4>Major Planets (Sun through Pluto)</h4>
+      <ul>
+        <li><strong>Available Range:</strong> 10,000 BCE to 10,000 CE</li>
+        <li><strong>Highest Accuracy:</strong> 3000 BCE to 3000 CE</li>
+        <li><strong>Note:</strong>
+          Positions are reliable throughout the entire range, with maximum
+          precision during the central 6000-year period</li>
+      </ul>
+
+      <h4>Asteroids (Ceres, Vesta, Pallas, Juno, and custom points)</h4>
+      <ul>
+        <li><strong>Most Accurate:</strong> 1800 CE to 2400 CE</li>
+        <li><strong>Note:</strong>
+          Precision decreases outside this range due to limited observational
+          data and orbital perturbations</li>
+      </ul>
+
+      <h4>Chiron</h4>
+      <ul>
+        <li><strong>Available Range:</strong> 700 CE to 4650 CE only</li>
+        <li><strong>Automatic Exclusion:</strong>
+          Chiron is automatically removed from calculations outside this period
+          due to orbital instability</li>
+        <li><strong>Note:</strong>
+          Chiron's highly eccentric orbit makes long-term predictions unreliable
+          beyond these dates</li>
+      </ul>
+
+      <h4>Calculated Points</h4>
+      <ul>
+        <li><strong>Lunar Nodes:</strong>
+          Calculated using True or Mean Node method (defaults to True)</li>
+        <li><strong>Black Moon Lilith & Priapus:</strong>
+          Calculated using True or Mean lunar apogee (defaults to Mean)</li>
+        <li><strong>Vertex, Anti-vertex, Part of Fortune, and Part of Spirit:</strong>
+          Standard mathematical calculations</li>
+        <li><strong>Highest Accuracy:</strong> 3000 BCE to 3000 CE</li>
+        <li><strong>Note:</strong>
+          These mathematical points are available across all dates but with
+          optimal precision in the central time period</li>
+      </ul>
+
+      <h3>Calculation Methods</h3>
+      <p>Some astrological calculations employ specific methodologies that may
+        differ from other standard practices:</p>
+
+      <h4>Progressions</h4>
+      <ul>
+        <li><strong>Method:</strong> Secondary Progressions (day per year)</li>
+        <li><strong>Midheaven:</strong> Solar Arc longitude</li>
+      </ul>
+
+      <h4>True Sidereal (Midpoint Method)</h4>
+      <ul>
+        <li><strong>Boundaries:</strong>
+          Midpoints of constellations along the ecliptic</li>
+        <li><strong>Constellations:</strong> 13 signs including Ophiuchus</li>
+        <li><strong>Sign Sizes:</strong>
+          Variable based on actual constellation sizes</li>
+      </ul>
+      <p><a href="https://masteringthezodiac.com/midpoint-method"
+          target="_blank" rel="noopener noreferrer">Full method &amp;
+          boundary tables</a></p>
+      <h4>Additional Zodiac Systems</h4>
+      <ul>
+        <li><strong>13 Equal:</strong> divides the ecliptic into 13 equal
+          signs of 360/13 degrees, with Ophiuchus as sign 13 and the Galactic
+          Center at 0° Sagittarius</li>
+        <li><strong>IAU Real Constellations:</strong> uses the official IAU
+          constellation boundaries projected onto the ecliptic of the chart date</li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- Latest Releases -->
+  <div class="tutorial-step" id="releases">
+    <h2 onclick="toggleStep('releases')" class="step-header">
+      Latest Releases
+      <span class="step-icon">▼</span>
+    </h2>
+    <div class="step-content">
+      <h3>Custom Aspects, Extended Returns & Time Zone Refinements - September 10, 2026</h3>
+      <h4>Custom Aspects, More Return Types, and Refined Historical Timezones</h4>
+      <p>This update adds custom aspects, expands return charts to Mercury
+        through Saturn, and improves historical timezone accuracy for
+        births before 1966.</p>
+
+      <h4>What's New:</h4>
+      <ul>
+        <li>Add up to 5 custom aspects at any angle from 0° to 180°, with
+          configurable orbs (see SETTINGS)</li>
+        <li>Return charts now include Mercury, Venus, Mars, Jupiter, and
+          Saturn returns</li>
+        <li>Expanded historical timezone accuracy for U.S. births before
+          1966 in states that did not observe daylight saving time, and for
+          Netherlands births before 1940</li>
+      </ul>
+
+      <h4>What We've Fixed:</h4>
+      <ul>
+        <li>Return charts near daylight saving time transitions</li>
+        <li>Month names not appearing in non-English browser settings</li>
+        <li>Triwheel and synastry charts not reflecting unsaved settings
+          changes</li>
+        <li>Chart popups for custom points and custom aspects</li>
+      </ul>
+
+      <p><strong>Important:</strong> For births in certain U.S. states
+        1946-1966 or the Netherlands 1919-1940, your saved charts will use
+        more accurate historical timezone data on next load. Ascendants may
+        shift by up to one hour where the old data was off.</p>
+
+      <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;" />
+
+      <h3>Sky Update and Chart Refinements - August 8, 2026</h3>
+      <h4>Improved Sky and Minor Chart Updates</h4>
+      <p>This update sharpens Sky's responses and cleans up the chart display.</p>
+
+      <h4>What's New:</h4>
+      <ul>
+        <li>Improved Sky (AI chat) with fresher, more accurate responses</li>
+      </ul>
+
+      <h4>What We've Fixed:</h4>
+      <ul>
+        <li>Updated Capricorn boundary by −0.0871° (−5.24 arcminutes); first
+          edge star corrected from Dabih to Algedi.</li>
+        <li>Planet symbols now align more closely with their ticks in charts
+          with many planets</li>
+        <li>Astrocartography city names now increase in size when zooming in</li>
+        <li>Sky map scrolling optimized for mobile</li>
+        <li>Better planet symbol alignment on the aspectarian</li>
+        <li>Removed Heliocentric directions</li>
+        <li>Removed retrograde symbols for the angles</li>
+      </ul>
+
+      <p>Your existing charts and settings remain unchanged.</p>
+
+      <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;" />
+
+      <h3>Astrocartography And Planetarium - June 24, 2026</h3>
+      <h4>MAP Section Now Available!</h4>
+      <p>This update introduces MAP, a new section that shows your natal chart
+        in physical space - planetary lines across Earth and the actual sky.</p>
+
+      <h4>What's New:</h4>
+      <ul>
+        <li>New MAP section with World view (astrocartography) and Sky view
+          (planetarium)</li>
+        <li>Click any location on the World map to instantly see your chart
+          relocated</li>
+        <li>Sky view shows the actual sky at birth with stars, constellations,
+          ecliptic, zodiac bands, and your natal planets at their true positions</li>
+        <li>Honors your SETTINGS zodiac system, house system, coordinate system,
+          and node/Lilith preferences</li>
+      </ul>
+
+      <h4>What We've Fixed:</h4>
+      <ul>
+        <li>Improved app feel and experience throughout app</li>
+        <li>Transiting natal house cusps now display correctly in planet popups
+          for sidereal zodiac systems</li>
+        <li>Improved symbol spacing to prevent large gaps from appearing on
+          chart wheels</li>
+        <li>Clearer error messages for quadrant house systems like Placidus at
+          extreme latitudes</li>
+      </ul>
+
+      <p>These updates expand your chart into physical space, across Earth and
+        into the night sky. Your existing charts and settings remain unchanged.</p>
+
+      <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;" />
+
+      <h3>AI Chat & Chart Enhancements - June 8, 2026</h3>
+      <h4>Chat with Sky, Your AI Astrology Assistant</h4>
+      <p>This update introduces Sky, an AI assistant that reads your calculated
+        charts and provides personalized interpretations, timing insights, and
+        answers to your astrology questions.</p>
+
+      <h4>What's New:</h4>
+      <ul>
+        <li>Ask Sky about your natal chart, transits, synastry, returns, and
+          graphs in the #ai channel</li>
+        <li>Sky remembers your name and preferences across conversations</li>
+        <li>50 messages per month included with subscription, with optional
+          unlimited upgrade</li>
+        <li>Over 100 additional asteroids, comets, and TNOs added to custom
+          points</li>
+        <li>Draconic chart option added to SETTINGS</li>
+        <li>Sign ingresses and progressed stations now available in GRAPH</li>
+        <li>Faster load times</li>
+        <li>Referral program available - earn up to $60 per referral</li>
+      </ul>
+
+      <h4>What We've Fixed:</h4>
+      <ul>
+        <li>Aspectarian display on mobile Safari</li>
+        <li>Retrograde date inconsistencies</li>
+        <li>House ingress lines in GRAPH</li>
+      </ul>
+
+      <p>These updates bring AI-powered chart interpretations and expanded
+        calculation options. Your existing charts and settings remain unchanged.</p>
+
+      <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;" />
+
+      <h3>Fixed Stars & Chart Enhancements - March 1, 2026</h3>
+      <h4>Fixed Stars Now Available</h4>
+      <p>This update introduces fixed stars to your charts, heliocentric
+        coordinate system, and biwheel charts.</p>
+
+      <h4>What's New:</h4>
+      <ul>
+        <li>Fixed stars can now be displayed on chart wheels with configurable
+          magnitude and latitude filters</li>
+        <li>Heliocentric coordinate system option for solar system charts</li>
+        <li>Biwheel transit wheels for simplified two-wheel views</li>
+        <li>Optimized location name display</li>
+        <li>Better error handling and output lines for transit graphs</li>
+      </ul>
+
+      <h4>What We've Fixed:</h4>
+      <ul>
+        <li>Symbol spacing improved for charts with many planets</li>
+        <li>Station symbols now display correctly for sidereal charts</li>
+        <li>Return location selection and lunar return accuracy</li>
+      </ul>
+
+      <p>These updates expand your charting capabilities with fixed stars and
+        provide more accurate calculations. Your existing charts and settings
+        remain unchanged.</p>
+
+      <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;" />
+
+      <h3>Custom Points & Extended Settings - December 10, 2025</h3>
+      <h4>Expanded Chart Customization</h4>
+      <p>This update brings powerful new customization options to your charts,
+        including custom asteroid points and additional calculated points for
+        more detailed astrological analysis.</p>
+
+      <h4>What's New:</h4>
+      <ul>
+        <li>Add up to 5 custom asteroids from a list of 200+ popular asteroids,
+          displayed as numbered labels on the chart wheel</li>
+        <li>New calculated points available: Vertex, Anti-Vertex, Priapus, Part
+          of Spirit, and Galactic Center</li>
+        <li>Choose between True or Mean positions for Lunar Nodes and Lilith</li>
+        <li>Chat messages now retained for four weeks instead of two</li>
+      </ul>
+
+      <h4>What We've Fixed:</h4>
+      <ul>
+        <li>Long location names can now be used without issues</li>
+        <li>Transit graph now correctly uses input start and end dates</li>
+        <li>Improved symbol spacing to prevent overlapping on chart wheels</li>
+      </ul>
+
+      <p>These updates give you more control over your chart calculations and
+        display options. Your existing charts and settings remain unchanged.</p>
+
+      <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;" />
+
+      <h3>Full Planet Interpretations & Reports - October 14, 2025</h3>
+      <h4>Major Interpretations & Reporting Overhaul</h4>
+      <p>We've completely transformed how you explore and understand your charts
+        with comprehensive clickable interpretations and detailed reports now
+        available across all chart types.</p>
+
+      <h4>What's New:</h4>
+      <ul>
+        <li>Click any planet across all chart types to instantly view detailed
+          interpretations including sign meanings, house positions, and
+          planetary characteristics</li>
+        <li>Click individual aspects within the aspectarian to read in-depth
+          aspect interpretations explaining the relationship between any two
+          planets</li>
+        <li>Generate reports for all chart types including natal, transit,
+          return, synastry, composite, and the transit graph</li>
+        <li>Enhanced planet descriptions with improved formatting and clarity
+          throughout the interface</li>
+      </ul>
+
+      <h4>What We've Fixed:</h4>
+      <ul>
+        <li>There were no bug fixes in this release</li>
+      </ul>
+
+      <p>These updates make True Sky more helpful and insightful, bringing
+        professional-grade astrological interpretations to every chart type.
+        Your charts and settings remain unchanged.</p>
+
+      <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;" />
+
+      <h3>3x Locations & Full Clickable Planet Interpretations - October 6, 2025</h3>
+      <h4>Larger Global Coverage & Interactive Chart Improvements</h4>
+      <p>We've dramatically expanded location coverage with easier custom
+        coordinate entry, enhanced chart interactivity across all chart types,
+        and improved progressed chart accuracy and chat features.</p>
+
+      <h4>What's New:</h4>
+      <ul>
+        <li>Expanded location database to over 150,000 cities worldwide, now
+          covering all locations with population 1,000 or greater</li>
+        <li>Custom locations now use degrees, minutes, and seconds input format
+          for easier coordinate entry</li>
+        <li>All planets are now clickable across every chart type (triwheel,
+          return, synastry, composite) to display detailed planet information</li>
+        <li>Chat input area now auto-expands as you type for easier message
+          composition</li>
+        <li>Users can now remove their own chat messages</li>
+      </ul>
+
+      <h4>What We've Fixed:</h4>
+      <ul>
+        <li>Progressed ascendant calculations now use proper "Midheaven Solar
+          Arc in Longitude" method for precise geometric accuracy</li>
+      </ul>
+
+      <p>These updates enhance True Sky's global reach and make chart
+        exploration more interactive and intuitive. Your charts and settings
+        remain unchanged.</p>
+
+      <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;" />
+
+      <h3>Multi-platform Update - September 10, 2025</h3>
+      <h4>Major Safari Compatibility & Print System Overhaul</h4>
+      <p>We've completely rebuilt the print and view systems to work seamlessly
+        across all browsers, especially Safari, and fixed critical issues with
+        historical date calculations.</p>
+
+      <h4>What We've Fixed:</h4>
+      <ul>
+        <li>Safari users can now successfully print charts and reports on both
+          desktop and mobile, including PWA installations</li>
+        <li>View and View Report buttons now work reliably across all browsers
+          with proper print preview functionality</li>
+        <li>Locations with apostrophes (like L'Aquila) now save and load
+          correctly</li>
+        <li>Transit graph triwheel popup fixed on mobile touch devices</li>
+        <li>Historical dates (years 1-99 AD) are now correctly interpreted as
+          ancient dates instead of modern centuries</li>
+      </ul>
+
+      <h4>What's New:</h4>
+      <ul>
+        <li>Unified print system that handles all chart types consistently</li>
+        <li>True Sidereal setup guide added to documentation</li>
+        <li>Improved error handling and user feedback throughout the application</li>
+      </ul>
+
+      <p>This update represents significant infrastructure improvements to
+        ensure True Sky works reliably across all devices and browsers. Your
+        charts and settings remain unchanged.</p>
+    </div>
+  </div>
+
+  <!-- Terms of Service & Privacy Policy -->
+  <div class="tutorial-step" id="tos">
+    <h2 onclick="toggleStep('tos')" class="step-header">
+      Terms of Service & Privacy Policy
+      <span class="step-icon">▼</span>
+    </h2>
+    <div class="step-content">
+      <p><strong>Last updated: August 8th 2026</strong></p>
+      <p>By using True Sky astrology software, you agree to the following terms:</p>
+
+      <h3>1. Service Description</h3>
+      <p>True Sky, provided by Mastering the Zodiac LLC, offers astronomical
+        astrology software for personal and entertainment purposes. Features
+        include various astrological chart calculations, planetary transit
+        visualizations, and other related tools and information. All content is
+        for educational and entertainment use only and does not constitute
+        professional advice.</p>
+      <p>You are granted a limited, personal, non-transferable, revocable
+        license to use the service in accordance with these Terms. If astrology
+        is restricted or illegal in your location, you access the service at
+        your own risk. Mastering the Zodiac LLC will not be liable for any legal
+        consequences you may face.</p>
+
+      <h3>2. User Accounts</h3>
+      <p>You must provide accurate information when creating your account.
+        Authentication is via Google or email verification and only minimal
+        profile data is stored. You are responsible for account security. You
+        must be at least 13 years old to use the service. If you are between 13
+        and 17, you may only use the service with the consent of a parent or
+        legal guardian. By using the service, you represent that you meet these
+        requirements. We do not perform independent age verification. You may
+        delete your account in-app; we will delete profile data and charts,
+        retaining only what is required by law or billing.</p>
+
+      <h3>3. Acceptable Use</h3>
+      <ul>
+        <li>Use the service for lawful purposes.</li>
+        <li>Do not interfere with or disrupt operation.</li>
+        <li>Follow applicable laws in your location.</li>
+        <li>Respect other users; participate in a constructive, non-abusive
+          manner.</li>
+        <li>No prohibited, harassing, hateful, defamatory, obscene, or spam
+          content in any part of the service, including chat.</li>
+        <li>No impersonation, doxxing, unlawful solicitation, reverse
+          engineering, or infringement of others' rights.</li>
+      </ul>
+
+      <h3>4. Community Chat</h3>
+      <p>The community chat feature allows users to communicate in real time. By
+        using it, you agree to the following:</p>
+      <ul>
+        <li>Messages are stored temporarily before being automatically deleted,
+          generally within four weeks.</li>
+        <li>Do not share personal, sensitive, or confidential information; chat
+          is not private.</li>
+        <li>We may monitor, remove, or edit any messages at our discretion for
+          moderation, safety, or legal compliance.</li>
+        <li>We may limit, suspend, or ban your access to chat or the service
+          (with or without notice) for violations of these Terms or applicable
+          law.</li>
+        <li>You are solely responsible for your own messages and any
+          consequences of posting them.</li>
+      </ul>
+      <p>DMCA Notice: If you believe that text in the chat infringes your
+        copyright, please send a written notice to
+        <a
+          href="mailto:truesky@masteringthezodiac.com"
+        >truesky@masteringthezodiac.com</a>
+        with: (1) your contact information, (2) identification of the infringing
+        text, (3) a statement under penalty of perjury that you are the
+        copyright owner or authorized to act on their behalf, and (4) your
+        signature. We will review and, if appropriate, remove the content.</p>
+
+      <h3>5. AI Chat</h3>
+      <p>The AI Chat feature ("Sky") provides AI-assisted astrological
+        interpretations. By using it, you agree to the following:</p>
+      <ul>
+        <li>Your messages and chart data are processed by Anthropic's Claude AI
+          service to generate responses. Anthropic retains this data temporarily
+          for abuse prevention per their privacy policy.</li>
+        <li>Conversation history is stored on our servers (limited to 100
+          messages per user).</li>
+        <li>The optional memory feature stores your name, preferences, and notes
+          to personalize responses. You can disable memory or delete it at any
+          time in ACCOUNT.</li>
+        <li>AI responses may contain errors and are for entertainment purposes
+          only.</li>
+        <li>Usage limits apply per billing cycle. We may adjust limits to ensure
+          service quality.</li>
+      </ul>
+
+      <h3>6. Privacy Policy</h3>
+      <p>We collect only the data needed to operate the service, including
+        Google account details, subscription and payment data via Stripe, saved
+        charts/settings, temporary chat history, and server logs for security.
+        We use essential cookies (such as a session cookie) to maintain your
+        login state and secure the service. These cookies do not track you for
+        advertising purposes and are required for the site to function.
+        Affiliate referrals may be tracked via non-personal parameters.</p>
+      <p>AI Chat: When you use AI Chat, your messages and chart data are sent to
+        Anthropic LLC for processing. Anthropic processes this data to generate
+        responses and retains it temporarily per their privacy policy. Stored AI
+        conversation history and optional memory can be deleted in ACCOUNT.</p>
+      <p>Email Communications: By creating an account, you agree to receive
+        service-related emails about your account, important updates, and
+        service changes. You may also receive feature announcements and product
+        updates which you can unsubscribe from at any time. These communications
+        are considered part of the service.</p>
+      <p>If you access the service from outside the United States, your data
+        will be transferred to and stored in the United States. Data is stored
+        securely on servers in the United States, retained only as long as
+        necessary or required by law, and may be transferred internationally
+        using legal safeguards such as Standard Contractual Clauses (SCCs). We
+        do not "sell" or "share" personal information as those terms are defined
+        by the CCPA/CPRA. Limited sharing occurs with Google (authentication),
+        Stripe (billing; card data is processed by Stripe, and we do not store
+        card numbers), Anthropic (AI Chat), and hosting providers, each under
+        their own privacy policies.</p>
+      <p>Legal bases for processing (EU/UK): performance of a contract (to
+        provide the service), legitimate interests (to secure and improve the
+        service), and consent where we rely on it (e.g., certain
+        communications). Where applicable (GDPR, CCPA), you may request access,
+        correction, deletion, portability, withdraw consent, or object to
+        certain uses. You may also lodge a complaint with your data protection
+        authority. Contact
+        <a
+          href="mailto:truesky@masteringthezodiac.com"
+        >truesky@masteringthezodiac.com</a>
+        to exercise rights.</p>
+      <p>Children's Privacy: the service is not directed to children under 13,
+        and we do not knowingly collect personal information from them. If you
+        believe a child has provided personal information, contact us to delete
+        it. We take reasonable security measures but cannot guarantee absolute
+        protection. If required by law, we will notify you and authorities of
+        any data breach.</p>
+
+      <h3>7. Subscription and Billing</h3>
+      <p>Some features require a paid subscription billed via Stripe. A free
+        trial may be included for new subscriptions, with the length and terms
+        stated at sign-up. At the end of the trial, your paid plan will begin
+        and your default payment method will be charged the then-current price
+        unless you cancel through the billing portal before the trial ends. One
+        trial per user.
+        <strong>All payments are final. We do not offer refunds except where
+          required by applicable law.</strong>
+        You may cancel at any time via the billing portal to prevent future
+        charges. A payment reversal, chargeback, or refund initiated after
+        access has been granted is grounds for terminating your access to True
+        Sky, in addition to Mastering the Zodiac LLC's other remedies.
+        Mastering the Zodiac LLC may contest chargebacks with supporting
+        documentation.</p>
+
+      <h3>8. Service Availability & Right to Refuse Service</h3>
+      <p>We aim for reliable service but cannot guarantee uninterrupted access.
+        Features may change, be added, or be removed at our discretion.
+        Maintenance and outages will be announced when possible. We may suspend
+        or terminate accounts, or restrict features (including chat), at our
+        discretion for policy or legal violations, in compliance with applicable
+        laws and without unlawful discrimination.</p>
+
+      <h3>9. Content Ownership</h3>
+      <p>All service software, calculations, and content we provide are owned by
+        Mastering the Zodiac LLC and protected by copyright. No reproduction or
+        distribution without written permission. However, you may share printed
+        charts, graphs, and reports generated by the service without
+        modification.</p>
+
+      <h3>10. User Content & License</h3>
+      <p>You retain ownership of content you submit (including chat messages).
+        You grant us a non-exclusive, worldwide, royalty-free license to host,
+        store, transmit, display, and moderate that content solely to operate,
+        secure, and improve the service. You represent that you have all rights
+        needed to grant this license.</p>
+
+      <h3>11. Indemnification</h3>
+      <p>You agree to indemnify and hold harmless Mastering the Zodiac LLC, its
+        affiliates, and agents from any claims, liabilities, damages, and
+        expenses (including legal fees) arising from your use of the service,
+        your content, or your violation of these Terms.</p>
+
+      <h3>12. Limitation of Liability</h3>
+      <p>True Sky is provided "as is" without warranty of any kind, either
+        express or implied, including the implied warranties of merchantability,
+        fitness for a particular purpose, and non-infringement, to the maximum
+        extent permitted by law. We are not responsible for decisions made based
+        on astrological information. Mastering the Zodiac LLC is not liable for
+        indirect, incidental, special, consequential, or punitive damages, or
+        for loss of profits, revenues, data, goodwill, or other losses.
+        Mastering the Zodiac LLC's total aggregate liability arising out of or
+        related to the service will not exceed the amount you paid to Mastering
+        the Zodiac LLC in the twelve months preceding the event giving rise to
+        the claim. These limitations do not apply to liability for gross
+        negligence, willful misconduct, or any liability that cannot be limited
+        under applicable law.</p>
+
+      <h3>13. Changes</h3>
+      <p>We may update these Terms and the Privacy Policy from time to time.
+        Where required by law, we will provide notice of material changes before
+        they take effect. Continued use after changes means you accept them.</p>
+
+      <h3>14. Entire Agreement</h3>
+      <p>These Terms constitute the entire agreement between you and Mastering
+        the Zodiac LLC regarding your use of True Sky and supersede all prior
+        communications, oral or written, on that subject. Product-specific
+        agreements you separately accept, including the Mastering the Zodiac
+        website Terms and any CTSA Terms, remain in effect for those programs
+        and are not superseded by these Terms.</p>
+
+      <h3>15. Governing Law & Disputes</h3>
+      <p>These Terms are governed by the laws of Florida, without regard to its
+        conflict-of-laws rules. Any dispute arising out of or related to these
+        Terms will be resolved exclusively in the state or federal courts
+        located in Florida, to the extent permitted by applicable law, and you
+        consent to the personal jurisdiction of those courts. Both parties
+        agree to attempt informal resolution before filing suit. You and
+        Mastering the Zodiac LLC waive any right to bring or join a class
+        action, collective action, or class-wide arbitration; all disputes must
+        be brought in your individual capacity.</p>
+
+      <h3>16. Contact</h3>
+      <p>For questions about these terms or privacy, contact us through app
+        support or email
+        <a
+          href="mailto:truesky@masteringthezodiac.com"
+        >truesky@masteringthezodiac.com</a>.</p>
+    </div>
+  </div>
+
+  <!-- Credits & Acknowledgments -->
+  <div class="tutorial-step" id="credits">
+    <h2 onclick="toggleStep('credits')" class="step-header">
+      Credits & Acknowledgments
+      <span class="step-icon">▼</span>
+    </h2>
+    <div class="step-content">
+      <h3>Community</h3>
+      <p><em>A big thank you to the
+          <a href="https://masteringthezodiac.com" target="_blank">Mastering the
+            Zodiac</a>
+          community for their continued support and dedication to advancing
+          astronomical astrology education and practice.</em></p>
+
+      <h3>Third-Party Services</h3>
+      <p><em>A special thank you to
+          <a href="https://www.geonames.org" target="_blank">GeoNames.org</a>
+          for providing the comprehensive geographical database that powers our
+          location services, made available under the
+          <a
+            href="https://creativecommons.org/licenses/by/4.0/"
+            target="_blank"
+          >Creative Commons Attribution 4.0 License</a>.</em></p>
+    </div>
+  </div>
+
+</div>
+
+<script src="./js/helpDoc.js"></script></div>
+
+<div id="showAccount" style="display: none;">
+<p class="settings-title-top">Import/Export Charts</p>
+
+<div class="import-export-container">
+  <input type="file" id="chartFileInput" accept=".txt" style="display:none;" />
+  <button id="importChartsBtn">Import Charts</button>
+  <button id="exportChartsBtn">Export Charts</button>
+</div>
+
+<div id="importResults" class="import-export-results"></div>
+
+<div class="delete-charts" id="delete-charts-section">
+  <button id="deleteChartsBtn">Delete All Charts</button>
+  <div class="confirm-delete-container">
+    <input type="checkbox" id="confirmExportCheckbox" />
+    <span>I confirm deletion of all charts in my account</span>
+  </div>
+</div>
+
+<script src="./js/importCharts.js"></script>
+
+<p class="settings-title">Chat Settings</p>
+
+<div class="ai-settings-container">
+  <div class="confirm-delete-container">
+    <input type="checkbox" id="aiMemoryToggle" checked />
+    <span>Allow Sky to remember things about me</span>
+  </div>
+  <p class="ai-memory-description">
+    When enabled, Sky remembers your name, preferences, and interests across conversations.
+  </p>
+  <button id="clearAiMemoryBtn">Clear Memory</button>
+</div>
+
+<div id="aiMemoryMessage" class="import-export-results"></div>
+
+<script src="./js/accountAiMemory.js"></script>
+
+<p class="settings-title">Account Settings</p>
+
+<div class="user-info">
+  <img src="/images/default-avatar.png" alt="Avatar" class="account-avatar" />
+  <span class="account-display-name">User</span>
+  <a href="#" onclick="handleNamePhoto()" class="name-photo-btn">
+    Update Name/Photo
+  </a>
+</div>
+
+<script src="./js/accountProfile.js"></script>
+<script src="./js/googleInfo.js"></script>
+
+<div class="default-location">
+  <div>
+    <label for="defaultLocation" class="name-label">Default Location: </label>
+    <input
+      class="location"
+      id="defaultLocation"
+      name="defaultLocation"
+      maxlength="120"
+      spellcheck="false"
+      autocomplete="off"
+      placeholder="New York City, New York, United States"
+      value=""
+    />
+    <div class="suggestions-box suggestions-default-location"></div>
+  </div>
+
+  <button type="button" id="saveDefaultLocationBtn">✔</button>
+</div>
+
+<p
+  id="defaultLocationMessage"
+  class="default-location-message"
+  aria-live="polite"
+></p>
+
+<script src="./js/saveDefaultLocation.js"></script>
+
+<div class="logout" id="logout-section">
+  <button id="logoutBtn" type="button" onclick="window.TrueSkyAuth && window.TrueSkyAuth.signOut ? window.TrueSkyAuth.signOut() : (window.firebase && window.firebase.auth ? window.firebase.auth().signOut().then(function(){ window.location.replace('/login'); }).catch(function(error){ console.error('Erro ao sair da conta Firebase:', error); }) : window.location.replace('/login'))">Log Out</button>
+</div>
+
+<div class="subscribe" id="subscribe-section">
+  <p>Subscription status:
+        <span class="subscription-status">Canceled</span>
+        </p>
+      <p class="payment-date">Next payment date:
+        <a href="/billing-portal" class="billing-link">None</a>
+      </p>
+    
+      <button id="subscribeBtn" onclick="location.href='/subscribe';">
+        Unlock Full Features
+      </button>
+  <p>Refer others and earn upto $60 per referral. <a href="https://masteringthezodiac.com/distributors" target="_blank" rel="noopener noreferrer" class="billing-link">Learn more.</a></p>
+</div>
+
+
+<script>
+function showCancelAiConfirm() {
+  document.getElementById('cancelAiBtn').style.visibility = 'hidden';
+  document.getElementById('cancelAiBtn').style.position = 'absolute';
+  document.getElementById('cancelAiConfirm').style.display = 'block';
+}
+
+function hideCancelAiConfirm() {
+  document.getElementById('cancelAiConfirm').style.display = 'none';
+  document.getElementById('cancelAiBtn').style.visibility = 'visible';
+  document.getElementById('cancelAiBtn').style.position = 'static';
+}
+
+function showRenewAiConfirm() {
+  document.getElementById('renewAiBtn').style.visibility = 'hidden';
+  document.getElementById('renewAiBtn').style.position = 'absolute';
+  document.getElementById('renewAiConfirm').style.display = 'block';
+}
+
+function hideRenewAiConfirm() {
+  document.getElementById('renewAiConfirm').style.display = 'none';
+  document.getElementById('renewAiBtn').style.visibility = 'visible';
+  document.getElementById('renewAiBtn').style.position = 'static';
+}
+
+async function cancelUnlimitedAI() {
+  const msg = document.getElementById('aiAddonMessage');
+  msg.textContent = 'Canceling...';
+
+  try {
+    const response = await fetch('/cancel-ai-addon', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      window.location.reload();
+    } else {
+      msg.textContent = data.error || 'Failed to cancel.';
+      hideCancelAiConfirm();
+    }
+  } catch (err) {
+    msg.textContent = 'Network error.';
+    hideCancelAiConfirm();
+  }
+}
+
+async function renewUnlimitedAI() {
+  const msg = document.getElementById('aiAddonMessage');
+  msg.textContent = 'Renewing...';
+
+  try {
+    const response = await fetch('/renew-ai-addon', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      window.location.reload();
+    } else {
+      msg.textContent = data.error || 'Failed to renew.';
+      hideRenewAiConfirm();
+    }
+  } catch (err) {
+    msg.textContent = 'Network error.';
+    hideRenewAiConfirm();
+  }
+}
+
+async function showAiPricing() {
+  document.getElementById('upgradeAiBtn').style.visibility = 'hidden';
+  document.getElementById('upgradeAiBtn').style.position = 'absolute';
+  document.getElementById('aiPricingInfo').style.display = 'block';
+  document.getElementById('confirmAiBtn').disabled = true;
+  document.getElementById('aiPricingDetails').textContent = 'Loading pricing...';
+
+  try {
+    const response = await fetch('/preview-ai-addon', { credentials: 'same-origin' });
+    const data = await response.json();
+
+    if (!response.ok) {
+      document.getElementById('aiPricingDetails').textContent = data.error || 'Failed to load pricing.';
+      return;
+    }
+
+    const prorated = (data.proratedAmount / 100).toFixed(2);
+    const monthly = (data.monthlyAmount / 100).toFixed(2);
+    let nextDate = 'your next billing date';
+    if (data.nextBillingDate && data.nextBillingDate > 0) {
+      nextDate = new Date(data.nextBillingDate * 1000).toLocaleDateString(undefined, {
+        month: 'short', day: 'numeric', year: 'numeric'
+      });
+    }
+
+    const totalMonthly = (15 + parseFloat(monthly)).toFixed(2);
+    document.getElementById('aiPricingDetails').innerHTML =
+      'Unlimited Sky AI: $' + monthly + '/month<br>' +
+      'Due today: $' + prorated + ' (prorated)<br>' +
+      'Next billing: ' + nextDate + ' ($' + totalMonthly + ')';
+    document.getElementById('confirmAiBtn').disabled = false;
+
+  } catch (err) {
+    document.getElementById('aiPricingDetails').textContent = 'Network error.';
+  }
+}
+
+function hideAiPricing() {
+  document.getElementById('aiPricingInfo').style.display = 'none';
+  document.getElementById('upgradeAiBtn').style.visibility = 'visible';
+  document.getElementById('upgradeAiBtn').style.position = 'static';
+}
+
+async function upgradeToUnlimitedAI() {
+  const msg = document.getElementById('aiAddonMessage');
+  const confirmBtn = document.getElementById('confirmAiBtn');
+  confirmBtn.disabled = true;
+  confirmBtn.textContent = 'Purchasing...';
+
+  try {
+    const response = await fetch('/subscribe-ai-addon', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      window.location.reload();
+    } else if (data.redirectUrl) {
+      window.location.href = data.redirectUrl;
+    } else {
+      msg.textContent = data.error || 'Failed to upgrade.';
+      hideAiPricing();
+    }
+  } catch (err) {
+    msg.textContent = 'Network error.';
+    hideAiPricing();
+  }
+}
+</script>
+
+<div class="delete-account" id="delete-account-section">
+  <p
+    id="deleteAccountMessage"
+    class="delete-account-results"
+    aria-live="polite"
+  ></p>
+  <button id="deleteAccountBtn">Delete Account</button>
+  <div class="confirm-delete-container">
+    <input type="checkbox" id="confirmDeleteAccountCheckbox" />
+    <span>I confirm irreversible deletion of my account and charts</span>
+  </div>
+</div>
+
+<script src="./js/deleteAccount.js"></script>
+
+
+</div>
+
+<div id="loading-overlay">
+  <div class="spinner"></div>
+</div>
+
+<script src="./js/chartPrintView.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/buttonEffects.js"></script>
+<script src="./js/colorSync.js"></script>
+
+<script src="./js/formFocus.js"></script>
+<script src="./js/formFields.js"></script>
+<script src="./js/locationSuggestions.js"></script>
+
+<script type="module" src="natal.js"></script>
+<script type="module" src="triwheel.js"></script>
+<script type="module" src="graph.js"></script>
+<script type="module" src="return.js"></script>
+<script type="module" src="settings.js"></script>
+<script type="module" src="synastry.js"></script>
+<script type="module" src="composite.js"></script>
+<script type="module" src="astrocartography.js"></script>
+
+<script type="module" src="./js/preloadedCharts.js"></script>
+
+<footer>
+</footer>
+
+<!-- Subscription lock icons disabled: buttons remain functional without decorative lock symbols. -->
+<script src="/js/installPrompt.js"></script>
+</body>
+</html>

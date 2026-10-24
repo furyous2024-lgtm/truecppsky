@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="48px"
+   viewBox="68 -890 824 824"
+   width="48px"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg">
+  <defs id="defs1">
+    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath4">
+      <rect style="display:none;stroke-width:20" id="rect4" width="888.28912" height="60.144592" x="9.2530117" y="-510.0723" ry="4.1584158" d="M 13.411427,-510.0723 H 893.38372 c 2.30376,0 4.15842,1.85466 4.15842,4.15842 v 51.82776 c 0,2.30376 -1.85466,4.15842 -4.15842,4.15842 H 13.411427 c -2.303762,0 -4.1584153,-1.85466 -4.1584153,-4.15842 v -51.82776 c 0,-2.30376 1.8546533,-4.15842 4.1584153,-4.15842 z" />
+      <path id="lpe_path-effect4" style="stroke-width:20" class="powerclip" d="M 76,-883 H 884 V -78 H 76 Z m -62.588573,372.9277 c -2.303762,0 -4.1584153,1.85466 -4.1584153,4.15842 v 51.82776 c 0,2.30376 1.8546533,4.15842 4.1584153,4.15842 H 893.38372 c 2.30376,0 4.15842,-1.85466 4.15842,-4.15842 v -51.82776 c 0,-2.30376 -1.85466,-4.15842 -4.15842,-4.15842 z" />
+    </clipPath>
+  </defs>
+  
+  <!-- Bottom left quadrant - 1st house/Aries -->
+  <path d="M 452,-83 Q 294,-95 187.5,-208.5 81,-322 81,-480 81,-638 187.5,-751.5 294,-865 452,-877 v 102 Q 337,-764 259.5,-679.5 182,-595 183,-480 q 1,115 77.5,199.5 Q 337,-196 452,-185 Z" 
+        id="path1" clip-path="url(#clipPath4)" fill="#e15947"/>
+  
+  <!-- Bottom right quadrant - 4th house/Cancer -->
+  <path d="M 512,-83 v -102 q 106,-9 179,-84 73,-75 86,-181 H 879 Q 868,-301 764.5,-197 661,-93 512,-83 Z" 
+        id="path2" clip-path="url(#clipPath4)" fill="#a5c16f"/>
+  
+  <!-- Top right quadrant - 7th house/Libra -->  
+  <path d="M 777,-510 Q 765,-616 691.5,-691 618,-766 512,-776 v -102 q 148,11 252,115 104,104 115,253 z" 
+        id="path3" clip-path="url(#clipPath4)" fill="#33b7bb"/>
+        
+  <!-- Top left quadrant - 10th house/Capricorn -->
+  <!-- This section needs to be created to complete the circle -->
+  <path d="M 452,-877 Q 294,-865 187.5,-751.5 81,-638 81,-480 L 183,-480 Q 183,-595 259.5,-679.5 337,-764 452,-775 Z" 
+        id="path4" clip-path="url(#clipPath4)" fill="#a14cd3"/>
+</svg>

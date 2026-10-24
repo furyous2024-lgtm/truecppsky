@@ -1,0 +1,3170 @@
+[
+  {
+    "name": "Buenos Aires",
+    "region": "Buenos Aires",
+    "country": "Argentina",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "timezone": "America/Argentina/Buenos_Aires",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Mendoza",
+    "region": "Mendoza",
+    "country": "Argentina",
+    "lat": -32.8895,
+    "lon": -68.8458,
+    "timezone": "America/Argentina/Mendoza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Sydney",
+    "region": "New South Wales",
+    "country": "Australia",
+    "lat": -33.86882,
+    "lon": 151.209296,
+    "timezone": "Australia/Sydney",
+    "utcOffset": "UTC+10:00"
+  },
+  {
+    "name": "Brisbane",
+    "region": "Queensland",
+    "country": "Australia",
+    "lat": -27.4698,
+    "lon": 153.0251,
+    "timezone": "Australia/Brisbane",
+    "utcOffset": "UTC+10:00"
+  },
+  {
+    "name": "Melbourne",
+    "region": "Victoria",
+    "country": "Australia",
+    "lat": -37.8136,
+    "lon": 144.9631,
+    "timezone": "Australia/Melbourne",
+    "utcOffset": "UTC+10:00"
+  },
+  {
+    "name": "Perth",
+    "region": "Western Australia",
+    "country": "Australia",
+    "lat": -31.9523,
+    "lon": 115.8613,
+    "timezone": "Australia/Perth",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Braunau am Inn",
+    "region": "Upper Austria",
+    "country": "Austria",
+    "lat": 48.2567,
+    "lon": 13.0434,
+    "timezone": "Europe/Vienna",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Vienna",
+    "region": "Vienna",
+    "country": "Austria",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "timezone": "Europe/Vienna",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Dhaka",
+    "region": "Dhaka",
+    "country": "Bangladesh",
+    "lat": 23.8103,
+    "lon": 90.4125,
+    "timezone": "Asia/Dhaka",
+    "utcOffset": "UTC+06:00"
+  },
+  {
+    "name": "Brussels",
+    "region": "Brussels",
+    "country": "Belgium",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "timezone": "Europe/Brussels",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "La Paz",
+    "region": "La Paz",
+    "country": "Bolivia",
+    "lat": -16.4897,
+    "lon": -68.1193,
+    "timezone": "America/La_Paz",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Rio Branco",
+    "region": "Acre",
+    "country": "Brasil",
+    "lat": -9.97499,
+    "lon": -67.8243,
+    "timezone": "America/Rio_Branco",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Maceió",
+    "region": "Alagoas",
+    "country": "Brasil",
+    "lat": -9.66599,
+    "lon": -35.735,
+    "timezone": "America/Maceio",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Macapá",
+    "region": "Amapá",
+    "country": "Brasil",
+    "lat": 0.034934,
+    "lon": -51.069395,
+    "timezone": "America/Belem",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Manaus",
+    "region": "Amazonas",
+    "country": "Brasil",
+    "lat": -3.119028,
+    "lon": -60.021731,
+    "timezone": "America/Manaus",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Feira de Santana",
+    "region": "Bahia",
+    "country": "Brasil",
+    "lat": -12.2664,
+    "lon": -38.9663,
+    "timezone": "America/Bahia",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Porto Seguro",
+    "region": "Bahia",
+    "country": "Brasil",
+    "lat": -16.4497,
+    "lon": -39.0647,
+    "timezone": "America/Bahia",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Salvador",
+    "region": "Bahia",
+    "country": "Brasil",
+    "lat": -12.977749,
+    "lon": -38.50163,
+    "timezone": "America/Bahia",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Fortaleza",
+    "region": "Ceará",
+    "country": "Brasil",
+    "lat": -3.731862,
+    "lon": -38.52667,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Brasília",
+    "region": "Distrito Federal",
+    "country": "Brasil",
+    "lat": -15.793889,
+    "lon": -47.882778,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Vila Velha",
+    "region": "Espírito Santo",
+    "country": "Brasil",
+    "lat": -20.3417,
+    "lon": -40.2875,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Vitória",
+    "region": "Espírito Santo",
+    "country": "Brasil",
+    "lat": -20.3155,
+    "lon": -40.3128,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Goiânia",
+    "region": "Goiás",
+    "country": "Brasil",
+    "lat": -16.686891,
+    "lon": -49.264794,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "São Luís",
+    "region": "Maranhão",
+    "country": "Brasil",
+    "lat": -2.53073,
+    "lon": -44.3068,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Cuiabá",
+    "region": "Mato Grosso",
+    "country": "Brasil",
+    "lat": -15.601,
+    "lon": -56.0974,
+    "timezone": "America/Cuiaba",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Campo Grande",
+    "region": "Mato Grosso do Sul",
+    "country": "Brasil",
+    "lat": -20.4697,
+    "lon": -54.6201,
+    "timezone": "America/Campo_Grande",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Belo Horizonte",
+    "region": "Minas Gerais",
+    "country": "Brasil",
+    "lat": -19.916681,
+    "lon": -43.934493,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Ouro Preto",
+    "region": "Minas Gerais",
+    "country": "Brasil",
+    "lat": -20.3856,
+    "lon": -43.5035,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Uberlândia",
+    "region": "Minas Gerais",
+    "country": "Brasil",
+    "lat": -18.91861,
+    "lon": -48.27722,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Cascavel",
+    "region": "Paraná",
+    "country": "Brasil",
+    "lat": -24.955499,
+    "lon": -53.455236,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Curitiba",
+    "region": "Paraná",
+    "country": "Brasil",
+    "lat": -25.428954,
+    "lon": -49.267137,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Foz do Iguaçu",
+    "region": "Paraná",
+    "country": "Brasil",
+    "lat": -25.516335,
+    "lon": -54.585376,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Londrina",
+    "region": "Paraná",
+    "country": "Brasil",
+    "lat": -23.304452,
+    "lon": -51.169582,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Maringá",
+    "region": "Paraná",
+    "country": "Brasil",
+    "lat": -23.420999,
+    "lon": -51.933056,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Ponta Grossa",
+    "region": "Paraná",
+    "country": "Brasil",
+    "lat": -25.099363,
+    "lon": -50.158451,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "João Pessoa",
+    "region": "Paraíba",
+    "country": "Brasil",
+    "lat": -7.1195,
+    "lon": -34.845,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Belém",
+    "region": "Pará",
+    "country": "Brasil",
+    "lat": -1.455833,
+    "lon": -48.503887,
+    "timezone": "America/Belem",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Recife",
+    "region": "Pernambuco",
+    "country": "Brasil",
+    "lat": -8.047562,
+    "lon": -34.877,
+    "timezone": "America/Recife",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Teresina",
+    "region": "Piauí",
+    "country": "Brasil",
+    "lat": -5.08921,
+    "lon": -42.8016,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Natal",
+    "region": "Rio Grande do Norte",
+    "country": "Brasil",
+    "lat": -5.7793,
+    "lon": -35.2009,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Caxias do Sul",
+    "region": "Rio Grande do Sul",
+    "country": "Brasil",
+    "lat": -29.16806,
+    "lon": -51.17944,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Pelotas",
+    "region": "Rio Grande do Sul",
+    "country": "Brasil",
+    "lat": -31.771944,
+    "lon": -52.3425,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Porto Alegre",
+    "region": "Rio Grande do Sul",
+    "country": "Brasil",
+    "lat": -30.034647,
+    "lon": -51.217658,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Niterói",
+    "region": "Rio de Janeiro",
+    "country": "Brasil",
+    "lat": -22.883237,
+    "lon": -43.103435,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Petrópolis",
+    "region": "Rio de Janeiro",
+    "country": "Brasil",
+    "lat": -22.505,
+    "lon": -43.17861,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Rio de Janeiro",
+    "region": "Rio de Janeiro",
+    "country": "Brasil",
+    "lat": -22.906847,
+    "lon": -43.172897,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Porto Velho",
+    "region": "Rondônia",
+    "country": "Brasil",
+    "lat": -8.76077,
+    "lon": -63.8999,
+    "timezone": "America/Porto_Velho",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Boa Vista",
+    "region": "Roraima",
+    "country": "Brasil",
+    "lat": 2.82384,
+    "lon": -60.6753,
+    "timezone": "America/Boa_Vista",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Blumenau",
+    "region": "Santa Catarina",
+    "country": "Brasil",
+    "lat": -26.918752,
+    "lon": -49.066025,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Florianópolis",
+    "region": "Santa Catarina",
+    "country": "Brasil",
+    "lat": -27.59487,
+    "lon": -48.54822,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Joinville",
+    "region": "Santa Catarina",
+    "country": "Brasil",
+    "lat": -26.30444,
+    "lon": -48.84867,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Aracaju",
+    "region": "Sergipe",
+    "country": "Brasil",
+    "lat": -10.9472,
+    "lon": -37.0731,
+    "timezone": "America/Maceio",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Aparecida",
+    "region": "São Paulo",
+    "country": "Brasil",
+    "lat": -22.84694,
+    "lon": -45.22972,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Campinas",
+    "region": "São Paulo",
+    "country": "Brasil",
+    "lat": -22.90556,
+    "lon": -47.06083,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Ribeirão Preto",
+    "region": "São Paulo",
+    "country": "Brasil",
+    "lat": -21.1775,
+    "lon": -47.81028,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Santos",
+    "region": "São Paulo",
+    "country": "Brasil",
+    "lat": -23.960833,
+    "lon": -46.333889,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Sorocaba",
+    "region": "São Paulo",
+    "country": "Brasil",
+    "lat": -23.50167,
+    "lon": -47.45806,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "São José dos Campos",
+    "region": "São Paulo",
+    "country": "Brasil",
+    "lat": -23.2237,
+    "lon": -45.9009,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "São Paulo",
+    "region": "São Paulo",
+    "country": "Brasil",
+    "lat": -23.55052,
+    "lon": -46.633308,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Palmas",
+    "region": "Tocantins",
+    "country": "Brasil",
+    "lat": -10.184,
+    "lon": -48.3336,
+    "timezone": "America/Araguaina",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Sofia",
+    "region": "Sofia",
+    "country": "Bulgaria",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "timezone": "Europe/Sofia",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Vancouver",
+    "region": "British Columbia",
+    "country": "Canada",
+    "lat": 49.2827,
+    "lon": -123.1207,
+    "timezone": "America/Vancouver",
+    "utcOffset": "UTC-08:00"
+  },
+  {
+    "name": "Toronto",
+    "region": "Ontario",
+    "country": "Canada",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "timezone": "America/Toronto",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Montreal",
+    "region": "Quebec",
+    "country": "Canada",
+    "lat": 45.5017,
+    "lon": -73.5673,
+    "timezone": "America/Toronto",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Santiago",
+    "region": "Región Metropolitana",
+    "country": "Chile",
+    "lat": -33.44889,
+    "lon": -70.669265,
+    "timezone": "America/Santiago",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Beijing",
+    "region": "Beijing",
+    "country": "China",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "timezone": "Asia/Shanghai",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Hong Kong",
+    "region": "Hong Kong",
+    "country": "China",
+    "lat": 22.3193,
+    "lon": 114.1694,
+    "timezone": "Asia/Hong_Kong",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Shanghai",
+    "region": "Shanghai",
+    "country": "China",
+    "lat": 31.2304,
+    "lon": 121.4737,
+    "timezone": "Asia/Shanghai",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Medellín",
+    "region": "Antioquia",
+    "country": "Colombia",
+    "lat": 6.2442,
+    "lon": -75.5812,
+    "timezone": "America/Bogota",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Bogotá",
+    "region": "Bogotá",
+    "country": "Colombia",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "timezone": "America/Bogota",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "San José",
+    "region": "San José",
+    "country": "Costa Rica",
+    "lat": 9.9281,
+    "lon": -84.0907,
+    "timezone": "America/Costa_Rica",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "Zagreb",
+    "region": "Zagreb",
+    "country": "Croatia",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "timezone": "Europe/Zagreb",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Havana",
+    "region": "La Habana",
+    "country": "Cuba",
+    "lat": 23.1136,
+    "lon": -82.3666,
+    "timezone": "America/Havana",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Prague",
+    "region": "Prague",
+    "country": "Czechia",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "timezone": "Europe/Prague",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Copenhagen",
+    "region": "Capital Region",
+    "country": "Denmark",
+    "lat": 55.6761,
+    "lon": 12.5683,
+    "timezone": "Europe/Copenhagen",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Santo Domingo",
+    "region": "Distrito Nacional",
+    "country": "Dominican Republic",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "timezone": "America/Santo_Domingo",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Quito",
+    "region": "Pichincha",
+    "country": "Ecuador",
+    "lat": -0.1807,
+    "lon": -78.4678,
+    "timezone": "America/Guayaquil",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Cairo",
+    "region": "Cairo",
+    "country": "Egypt",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "timezone": "Africa/Cairo",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Suva",
+    "region": "Central",
+    "country": "Fiji",
+    "lat": -18.1248,
+    "lon": 178.4501,
+    "timezone": "Pacific/Fiji",
+    "utcOffset": "UTC+12:00"
+  },
+  {
+    "name": "Helsinki",
+    "region": "Uusimaa",
+    "country": "Finland",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "timezone": "Europe/Helsinki",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Paris",
+    "region": "Île-de-France",
+    "country": "France",
+    "lat": 48.856614,
+    "lon": 2.352222,
+    "timezone": "Europe/Paris",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Berlin",
+    "region": "Berlin",
+    "country": "Germany",
+    "lat": 52.520008,
+    "lon": 13.404954,
+    "timezone": "Europe/Berlin",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Accra",
+    "region": "Greater Accra",
+    "country": "Ghana",
+    "lat": 5.6037,
+    "lon": -0.187,
+    "timezone": "Africa/Accra",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "Athens",
+    "region": "Attica",
+    "country": "Greece",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "timezone": "Europe/Athens",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Budapest",
+    "region": "Budapest",
+    "country": "Hungary",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "timezone": "Europe/Budapest",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Reykjavik",
+    "region": "Capital Region",
+    "country": "Iceland",
+    "lat": 64.1466,
+    "lon": -21.9426,
+    "timezone": "Atlantic/Reykjavik",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "Delhi",
+    "region": "Delhi",
+    "country": "India",
+    "lat": 28.613939,
+    "lon": 77.209021,
+    "timezone": "Asia/Kolkata",
+    "utcOffset": "UTC+05:30"
+  },
+  {
+    "name": "Mumbai",
+    "region": "Maharashtra",
+    "country": "India",
+    "lat": 19.075984,
+    "lon": 72.877656,
+    "timezone": "Asia/Kolkata",
+    "utcOffset": "UTC+05:30"
+  },
+  {
+    "name": "Bali",
+    "region": "Bali",
+    "country": "Indonesia",
+    "lat": -8.3405,
+    "lon": 115.092,
+    "timezone": "Asia/Makassar",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Jakarta",
+    "region": "Jakarta",
+    "country": "Indonesia",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "timezone": "Asia/Jakarta",
+    "utcOffset": "UTC+07:00"
+  },
+  {
+    "name": "Tehran",
+    "region": "Tehran",
+    "country": "Iran",
+    "lat": 35.6892,
+    "lon": 51.389,
+    "timezone": "Asia/Tehran",
+    "utcOffset": "UTC+03:30"
+  },
+  {
+    "name": "Dublin",
+    "region": "Leinster",
+    "country": "Ireland",
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "timezone": "Europe/Dublin",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "Jerusalem",
+    "region": "Jerusalem",
+    "country": "Israel",
+    "lat": 31.768319,
+    "lon": 35.21371,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Tel Aviv",
+    "region": "Tel Aviv",
+    "country": "Israel",
+    "lat": 32.0853,
+    "lon": 34.7818,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Rome",
+    "region": "Lazio",
+    "country": "Italy",
+    "lat": 41.902782,
+    "lon": 12.496366,
+    "timezone": "Europe/Rome",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Kyoto",
+    "region": "Kyoto",
+    "country": "Japan",
+    "lat": 35.0116,
+    "lon": 135.7681,
+    "timezone": "Asia/Tokyo",
+    "utcOffset": "UTC+09:00"
+  },
+  {
+    "name": "Osaka",
+    "region": "Osaka",
+    "country": "Japan",
+    "lat": 34.6937,
+    "lon": 135.5023,
+    "timezone": "Asia/Tokyo",
+    "utcOffset": "UTC+09:00"
+  },
+  {
+    "name": "Tokyo",
+    "region": "Tokyo",
+    "country": "Japan",
+    "lat": 35.676422,
+    "lon": 139.650027,
+    "timezone": "Asia/Tokyo",
+    "utcOffset": "UTC+09:00"
+  },
+  {
+    "name": "Amman",
+    "region": "Amman",
+    "country": "Jordan",
+    "lat": 31.9539,
+    "lon": 35.9106,
+    "timezone": "Asia/Amman",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Nairobi",
+    "region": "Nairobi",
+    "country": "Kenya",
+    "lat": -1.2921,
+    "lon": 36.8219,
+    "timezone": "Africa/Nairobi",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Beirut",
+    "region": "Beirut",
+    "country": "Lebanon",
+    "lat": 33.8938,
+    "lon": 35.5018,
+    "timezone": "Asia/Beirut",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "country": "Malaysia",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "timezone": "Asia/Kuala_Lumpur",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Mexico City",
+    "region": "Ciudad de México",
+    "country": "Mexico",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "timezone": "America/Mexico_City",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "Cancún",
+    "region": "Quintana Roo",
+    "country": "Mexico",
+    "lat": 21.1619,
+    "lon": -86.8515,
+    "timezone": "America/Cancun",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Casablanca",
+    "region": "Casablanca-Settat",
+    "country": "Morocco",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "timezone": "Africa/Casablanca",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Kathmandu",
+    "region": "Bagmati",
+    "country": "Nepal",
+    "lat": 27.7172,
+    "lon": 85.324,
+    "timezone": "Asia/Kathmandu",
+    "utcOffset": "UTC+05:45"
+  },
+  {
+    "name": "Amsterdam",
+    "region": "North Holland",
+    "country": "Netherlands",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "timezone": "Europe/Amsterdam",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Auckland",
+    "region": "Auckland",
+    "country": "New Zealand",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "timezone": "Pacific/Auckland",
+    "utcOffset": "UTC+12:00"
+  },
+  {
+    "name": "Wellington",
+    "region": "Wellington",
+    "country": "New Zealand",
+    "lat": -41.2865,
+    "lon": 174.7762,
+    "timezone": "Pacific/Auckland",
+    "utcOffset": "UTC+12:00"
+  },
+  {
+    "name": "Lagos",
+    "region": "Lagos",
+    "country": "Nigeria",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "timezone": "Africa/Lagos",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Oslo",
+    "region": "Oslo",
+    "country": "Norway",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "timezone": "Europe/Oslo",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Lahore",
+    "region": "Punjab",
+    "country": "Pakistan",
+    "lat": 31.5204,
+    "lon": 74.3587,
+    "timezone": "Asia/Karachi",
+    "utcOffset": "UTC+05:00"
+  },
+  {
+    "name": "Karachi",
+    "region": "Sindh",
+    "country": "Pakistan",
+    "lat": 24.8607,
+    "lon": 67.0011,
+    "timezone": "Asia/Karachi",
+    "utcOffset": "UTC+05:00"
+  },
+  {
+    "name": "Bethlehem",
+    "region": "West Bank",
+    "country": "Palestinian Territories",
+    "lat": 31.705791,
+    "lon": 35.200657,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Panama City",
+    "region": "Panamá",
+    "country": "Panama",
+    "lat": 8.9824,
+    "lon": -79.5199,
+    "timezone": "America/Panama",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Asunción",
+    "region": "Asunción",
+    "country": "Paraguay",
+    "lat": -25.2637,
+    "lon": -57.5759,
+    "timezone": "America/Asuncion",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Cusco",
+    "region": "Cusco",
+    "country": "Peru",
+    "lat": -13.532,
+    "lon": -71.9675,
+    "timezone": "America/Lima",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Lima",
+    "region": "Lima",
+    "country": "Peru",
+    "lat": -12.0464,
+    "lon": -77.0428,
+    "timezone": "America/Lima",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Manila",
+    "region": "Metro Manila",
+    "country": "Philippines",
+    "lat": 14.5995,
+    "lon": 120.9842,
+    "timezone": "Asia/Manila",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Warsaw",
+    "region": "Masovian",
+    "country": "Poland",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "timezone": "Europe/Warsaw",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Lisbon",
+    "region": "Lisboa",
+    "country": "Portugal",
+    "lat": 38.722252,
+    "lon": -9.139337,
+    "timezone": "Europe/Lisbon",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "Porto",
+    "region": "Porto",
+    "country": "Portugal",
+    "lat": 41.1579,
+    "lon": -8.6291,
+    "timezone": "Europe/Lisbon",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "Doha",
+    "region": "Doha",
+    "country": "Qatar",
+    "lat": 25.2854,
+    "lon": 51.531,
+    "timezone": "Asia/Qatar",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Bucharest",
+    "region": "Bucharest",
+    "country": "Romania",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "timezone": "Europe/Bucharest",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Moscow",
+    "region": "Moscow",
+    "country": "Russia",
+    "lat": 55.755826,
+    "lon": 37.6173,
+    "timezone": "Europe/Moscow",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Mecca",
+    "region": "Makkah",
+    "country": "Saudi Arabia",
+    "lat": 21.389082,
+    "lon": 39.857912,
+    "timezone": "Asia/Riyadh",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Belgrade",
+    "region": "Belgrade",
+    "country": "Serbia",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "timezone": "Europe/Belgrade",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Singapore",
+    "region": "Singapore",
+    "country": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "timezone": "Asia/Singapore",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Johannesburg",
+    "region": "Gauteng",
+    "country": "South Africa",
+    "lat": -26.204103,
+    "lon": 28.047305,
+    "timezone": "Africa/Johannesburg",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Cape Town",
+    "region": "Western Cape",
+    "country": "South Africa",
+    "lat": -33.9249,
+    "lon": 18.4241,
+    "timezone": "Africa/Johannesburg",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Seoul",
+    "region": "Seoul",
+    "country": "South Korea",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "timezone": "Asia/Seoul",
+    "utcOffset": "UTC+09:00"
+  },
+  {
+    "name": "Barcelona",
+    "region": "Catalonia",
+    "country": "Spain",
+    "lat": 41.3874,
+    "lon": 2.1686,
+    "timezone": "Europe/Madrid",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Madrid",
+    "region": "Madrid",
+    "country": "Spain",
+    "lat": 40.416775,
+    "lon": -3.70379,
+    "timezone": "Europe/Madrid",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Valencia",
+    "region": "Valencian Community",
+    "country": "Spain",
+    "lat": 39.4699,
+    "lon": -0.3763,
+    "timezone": "Europe/Madrid",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Stockholm",
+    "region": "Stockholm",
+    "country": "Sweden",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "timezone": "Europe/Stockholm",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Geneva",
+    "region": "Geneva",
+    "country": "Switzerland",
+    "lat": 46.2044,
+    "lon": 6.1432,
+    "timezone": "Europe/Zurich",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Zurich",
+    "region": "Zürich",
+    "country": "Switzerland",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "timezone": "Europe/Zurich",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Taipei",
+    "region": "Taipei",
+    "country": "Taiwan",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "timezone": "Asia/Taipei",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Bangkok",
+    "region": "Bangkok",
+    "country": "Thailand",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "timezone": "Asia/Bangkok",
+    "utcOffset": "UTC+07:00"
+  },
+  {
+    "name": "Chiang Mai",
+    "region": "Chiang Mai",
+    "country": "Thailand",
+    "lat": 18.7883,
+    "lon": 98.9853,
+    "timezone": "Asia/Bangkok",
+    "utcOffset": "UTC+07:00"
+  },
+  {
+    "name": "Istanbul",
+    "region": "Istanbul",
+    "country": "Turkey",
+    "lat": 41.008238,
+    "lon": 28.978359,
+    "timezone": "Europe/Istanbul",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Greenwich UTC 0",
+    "region": "Prime Meridian",
+    "country": "UTC Reference",
+    "lat": 51.4826,
+    "lon": -0.0077,
+    "timezone": "UTC",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "Kyiv",
+    "region": "Kyiv",
+    "country": "Ukraine",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "timezone": "Europe/Kyiv",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Abu Dhabi",
+    "region": "Abu Dhabi",
+    "country": "United Arab Emirates",
+    "lat": 24.4539,
+    "lon": 54.3773,
+    "timezone": "Asia/Dubai",
+    "utcOffset": "UTC+04:00"
+  },
+  {
+    "name": "Dubai",
+    "region": "Dubai",
+    "country": "United Arab Emirates",
+    "lat": 25.204849,
+    "lon": 55.270783,
+    "timezone": "Asia/Dubai",
+    "utcOffset": "UTC+04:00"
+  },
+  {
+    "name": "Greenwich",
+    "region": "England",
+    "country": "United Kingdom",
+    "lat": 51.4826,
+    "lon": -0.0077,
+    "timezone": "Europe/London",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "London",
+    "region": "England",
+    "country": "United Kingdom",
+    "lat": 51.507218,
+    "lon": -0.127586,
+    "timezone": "Europe/London",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "Edinburgh",
+    "region": "Scotland",
+    "country": "United Kingdom",
+    "lat": 55.9533,
+    "lon": -3.1883,
+    "timezone": "Europe/London",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "Anchorage",
+    "region": "Alaska",
+    "country": "United States",
+    "lat": 61.2176,
+    "lon": -149.8997,
+    "timezone": "America/Anchorage",
+    "utcOffset": "UTC-09:00"
+  },
+  {
+    "name": "Phoenix",
+    "region": "Arizona",
+    "country": "United States",
+    "lat": 33.4484,
+    "lon": -112.074,
+    "timezone": "America/Phoenix",
+    "utcOffset": "UTC-07:00"
+  },
+  {
+    "name": "Los Angeles",
+    "region": "California",
+    "country": "United States",
+    "lat": 34.052234,
+    "lon": -118.243685,
+    "timezone": "America/Los_Angeles",
+    "utcOffset": "UTC-08:00"
+  },
+  {
+    "name": "San Francisco",
+    "region": "California",
+    "country": "United States",
+    "lat": 37.7749,
+    "lon": -122.4194,
+    "timezone": "America/Los_Angeles",
+    "utcOffset": "UTC-08:00"
+  },
+  {
+    "name": "Denver",
+    "region": "Colorado",
+    "country": "United States",
+    "lat": 39.7392,
+    "lon": -104.9903,
+    "timezone": "America/Denver",
+    "utcOffset": "UTC-07:00"
+  },
+  {
+    "name": "Washington",
+    "region": "District of Columbia",
+    "country": "United States",
+    "lat": 38.9072,
+    "lon": -77.0369,
+    "timezone": "America/New_York",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Miami",
+    "region": "Florida",
+    "country": "United States",
+    "lat": 25.76168,
+    "lon": -80.19179,
+    "timezone": "America/New_York",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Orlando",
+    "region": "Florida",
+    "country": "United States",
+    "lat": 28.5383,
+    "lon": -81.3792,
+    "timezone": "America/New_York",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Atlanta",
+    "region": "Georgia",
+    "country": "United States",
+    "lat": 33.749,
+    "lon": -84.388,
+    "timezone": "America/New_York",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Honolulu",
+    "region": "Hawaii",
+    "country": "United States",
+    "lat": 21.3069,
+    "lon": -157.8583,
+    "timezone": "Pacific/Honolulu",
+    "utcOffset": "UTC-10:00"
+  },
+  {
+    "name": "Chicago",
+    "region": "Illinois",
+    "country": "United States",
+    "lat": 41.878114,
+    "lon": -87.629798,
+    "timezone": "America/Chicago",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "Boston",
+    "region": "Massachusetts",
+    "country": "United States",
+    "lat": 42.3601,
+    "lon": -71.0589,
+    "timezone": "America/New_York",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Las Vegas",
+    "region": "Nevada",
+    "country": "United States",
+    "lat": 36.1699,
+    "lon": -115.1398,
+    "timezone": "America/Los_Angeles",
+    "utcOffset": "UTC-08:00"
+  },
+  {
+    "name": "New York City",
+    "region": "New York",
+    "country": "United States",
+    "lat": 40.712728,
+    "lon": -74.006015,
+    "timezone": "America/New_York",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "San Juan",
+    "region": "Puerto Rico",
+    "country": "United States",
+    "lat": 18.4655,
+    "lon": -66.1057,
+    "timezone": "America/Puerto_Rico",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Dallas",
+    "region": "Texas",
+    "country": "United States",
+    "lat": 32.7767,
+    "lon": -96.797,
+    "timezone": "America/Chicago",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "Houston",
+    "region": "Texas",
+    "country": "United States",
+    "lat": 29.7604,
+    "lon": -95.3698,
+    "timezone": "America/Chicago",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "Seattle",
+    "region": "Washington",
+    "country": "United States",
+    "lat": 47.6062,
+    "lon": -122.3321,
+    "timezone": "America/Los_Angeles",
+    "utcOffset": "UTC-08:00"
+  },
+  {
+    "name": "Montevideo",
+    "region": "Montevideo",
+    "country": "Uruguay",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "timezone": "America/Montevideo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Caracas",
+    "region": "Distrito Capital",
+    "country": "Venezuela",
+    "lat": 10.4806,
+    "lon": -66.9036,
+    "timezone": "America/Caracas",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Hanoi",
+    "region": "Hanoi",
+    "country": "Vietnam",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "timezone": "Asia/Bangkok",
+    "utcOffset": "UTC+07:00"
+  },
+  {
+    "name": "Ho Chi Minh City",
+    "region": "Ho Chi Minh",
+    "country": "Vietnam",
+    "lat": 10.8231,
+    "lon": 106.6297,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "utcOffset": "UTC+07:00"
+  },
+  {
+    "name": "Palmeira",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -25.429,
+    "lon": -50.0069,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Piracicaba",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -22.7338,
+    "lon": -47.6476,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Bauru",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -22.3145,
+    "lon": -49.0587,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Marília",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -22.2171,
+    "lon": -49.9501,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Presidente Prudente",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -22.1207,
+    "lon": -51.3925,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "São Carlos",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -22.0174,
+    "lon": -47.886,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Araraquara",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -21.7845,
+    "lon": -48.178,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Franca",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -20.5386,
+    "lon": -47.4009,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Barretos",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -20.5531,
+    "lon": -48.5698,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Taubaté",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -23.0264,
+    "lon": -45.5553,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Jundiaí",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -23.1857,
+    "lon": -46.8978,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Limeira",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -22.5649,
+    "lon": -47.4017,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Americana",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -22.7374,
+    "lon": -47.3331,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Indaiatuba",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -23.0816,
+    "lon": -47.2101,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Atibaia",
+    "region": "São Paulo",
+    "country": "Brazil",
+    "lat": -23.1171,
+    "lon": -46.5563,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Campos dos Goytacazes",
+    "region": "Rio de Janeiro",
+    "country": "Brazil",
+    "lat": -21.7622,
+    "lon": -41.3181,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Volta Redonda",
+    "region": "Rio de Janeiro",
+    "country": "Brazil",
+    "lat": -22.5202,
+    "lon": -44.0996,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Macaé",
+    "region": "Rio de Janeiro",
+    "country": "Brazil",
+    "lat": -22.3768,
+    "lon": -41.7855,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Juiz de Fora",
+    "region": "Minas Gerais",
+    "country": "Brazil",
+    "lat": -21.7595,
+    "lon": -43.3398,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Montes Claros",
+    "region": "Minas Gerais",
+    "country": "Brazil",
+    "lat": -16.7282,
+    "lon": -43.8578,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Uberaba",
+    "region": "Minas Gerais",
+    "country": "Brazil",
+    "lat": -19.7472,
+    "lon": -47.9381,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Governador Valadares",
+    "region": "Minas Gerais",
+    "country": "Brazil",
+    "lat": -18.8549,
+    "lon": -41.9559,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Ipatinga",
+    "region": "Minas Gerais",
+    "country": "Brazil",
+    "lat": -19.4703,
+    "lon": -42.5476,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Divinópolis",
+    "region": "Minas Gerais",
+    "country": "Brazil",
+    "lat": -20.1436,
+    "lon": -44.8907,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Poços de Caldas",
+    "region": "Minas Gerais",
+    "country": "Brazil",
+    "lat": -21.7878,
+    "lon": -46.5614,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Serra",
+    "region": "Espírito Santo",
+    "country": "Brazil",
+    "lat": -20.1287,
+    "lon": -40.3078,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Cachoeiro de Itapemirim",
+    "region": "Espírito Santo",
+    "country": "Brazil",
+    "lat": -20.8489,
+    "lon": -41.1128,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Guarapuava",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -25.3905,
+    "lon": -51.4623,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Paranaguá",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -25.5161,
+    "lon": -48.5254,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "São José dos Pinhais",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -25.5313,
+    "lon": -49.2031,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Colombo",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -25.2917,
+    "lon": -49.2242,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Araucária",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -25.5931,
+    "lon": -49.4103,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Campo Largo",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -25.4597,
+    "lon": -49.527,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Apucarana",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -23.5508,
+    "lon": -51.4608,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Toledo",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -24.725,
+    "lon": -53.7433,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Umuarama",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -23.7656,
+    "lon": -53.325,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Paranavaí",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -23.0731,
+    "lon": -52.465,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Cianorte",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -23.6633,
+    "lon": -52.605,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "União da Vitória",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -26.2278,
+    "lon": -51.0872,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Telêmaco Borba",
+    "region": "Paraná",
+    "country": "Brazil",
+    "lat": -24.3244,
+    "lon": -50.6156,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Chapecó",
+    "region": "Santa Catarina",
+    "country": "Brazil",
+    "lat": -27.1004,
+    "lon": -52.6152,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Criciúma",
+    "region": "Santa Catarina",
+    "country": "Brazil",
+    "lat": -28.6775,
+    "lon": -49.3697,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Lages",
+    "region": "Santa Catarina",
+    "country": "Brazil",
+    "lat": -27.815,
+    "lon": -50.3264,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Itajaí",
+    "region": "Santa Catarina",
+    "country": "Brazil",
+    "lat": -26.9101,
+    "lon": -48.6705,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Santa Maria",
+    "region": "Rio Grande do Sul",
+    "country": "Brazil",
+    "lat": -29.6842,
+    "lon": -53.8069,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Passo Fundo",
+    "region": "Rio Grande do Sul",
+    "country": "Brazil",
+    "lat": -28.2628,
+    "lon": -52.4068,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Canoas",
+    "region": "Rio Grande do Sul",
+    "country": "Brazil",
+    "lat": -29.9178,
+    "lon": -51.1836,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Anápolis",
+    "region": "Goiás",
+    "country": "Brazil",
+    "lat": -16.3281,
+    "lon": -48.953,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Rio Verde",
+    "region": "Goiás",
+    "country": "Brazil",
+    "lat": -17.7923,
+    "lon": -50.9192,
+    "timezone": "America/Sao_Paulo",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Rondonópolis",
+    "region": "Mato Grosso",
+    "country": "Brazil",
+    "lat": -16.4708,
+    "lon": -54.6356,
+    "timezone": "America/Cuiaba",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Sinop",
+    "region": "Mato Grosso",
+    "country": "Brazil",
+    "lat": -11.8604,
+    "lon": -55.5091,
+    "timezone": "America/Cuiaba",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Dourados",
+    "region": "Mato Grosso do Sul",
+    "country": "Brazil",
+    "lat": -22.2231,
+    "lon": -54.812,
+    "timezone": "America/Campo_Grande",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Vitória da Conquista",
+    "region": "Bahia",
+    "country": "Brazil",
+    "lat": -14.8619,
+    "lon": -40.8444,
+    "timezone": "America/Bahia",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Ilhéus",
+    "region": "Bahia",
+    "country": "Brazil",
+    "lat": -14.7936,
+    "lon": -39.045,
+    "timezone": "America/Bahia",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Itabuna",
+    "region": "Bahia",
+    "country": "Brazil",
+    "lat": -14.7876,
+    "lon": -39.2781,
+    "timezone": "America/Bahia",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Barreiras",
+    "region": "Bahia",
+    "country": "Brazil",
+    "lat": -12.1528,
+    "lon": -44.99,
+    "timezone": "America/Bahia",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Juazeiro do Norte",
+    "region": "Ceará",
+    "country": "Brazil",
+    "lat": -7.2131,
+    "lon": -39.3153,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Sobral",
+    "region": "Ceará",
+    "country": "Brazil",
+    "lat": -3.688,
+    "lon": -40.3482,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Caruaru",
+    "region": "Pernambuco",
+    "country": "Brazil",
+    "lat": -8.2833,
+    "lon": -35.9761,
+    "timezone": "America/Recife",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Petrolina",
+    "region": "Pernambuco",
+    "country": "Brazil",
+    "lat": -9.3891,
+    "lon": -40.5028,
+    "timezone": "America/Recife",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Mossoró",
+    "region": "Rio Grande do Norte",
+    "country": "Brazil",
+    "lat": -5.1875,
+    "lon": -37.3443,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Campina Grande",
+    "region": "Paraíba",
+    "country": "Brazil",
+    "lat": -7.2306,
+    "lon": -35.8811,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Parnaíba",
+    "region": "Piauí",
+    "country": "Brazil",
+    "lat": -2.905,
+    "lon": -41.7754,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Imperatriz",
+    "region": "Maranhão",
+    "country": "Brazil",
+    "lat": -5.5264,
+    "lon": -47.4917,
+    "timezone": "America/Fortaleza",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Santarém",
+    "region": "Pará",
+    "country": "Brazil",
+    "lat": -2.4385,
+    "lon": -54.6996,
+    "timezone": "America/Belem",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Marabá",
+    "region": "Pará",
+    "country": "Brazil",
+    "lat": -5.3686,
+    "lon": -49.1178,
+    "timezone": "America/Belem",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Ananindeua",
+    "region": "Pará",
+    "country": "Brazil",
+    "lat": -1.3656,
+    "lon": -48.3727,
+    "timezone": "America/Belem",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Parintins",
+    "region": "Amazonas",
+    "country": "Brazil",
+    "lat": -2.6283,
+    "lon": -56.735,
+    "timezone": "America/Manaus",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Ji-Paraná",
+    "region": "Rondônia",
+    "country": "Brazil",
+    "lat": -10.8853,
+    "lon": -61.951,
+    "timezone": "America/Porto_Velho",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Cruzeiro do Sul",
+    "region": "Acre",
+    "country": "Brazil",
+    "lat": -7.63,
+    "lon": -72.67,
+    "timezone": "America/Rio_Branco",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Araguaína",
+    "region": "Tocantins",
+    "country": "Brazil",
+    "lat": -7.1911,
+    "lon": -48.2072,
+    "timezone": "America/Araguaina",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Ramallah",
+    "region": "West Bank",
+    "country": "Palestinian Territory",
+    "lat": 31.9038,
+    "lon": 35.2034,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Hebron",
+    "region": "West Bank",
+    "country": "Palestinian Territory",
+    "lat": 31.5326,
+    "lon": 35.0998,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Nablus",
+    "region": "West Bank",
+    "country": "Palestinian Territory",
+    "lat": 32.2211,
+    "lon": 35.2544,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Jericho",
+    "region": "West Bank",
+    "country": "Palestinian Territory",
+    "lat": 31.8611,
+    "lon": 35.4608,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Jenin",
+    "region": "West Bank",
+    "country": "Palestinian Territory",
+    "lat": 32.4637,
+    "lon": 35.2955,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Tulkarm",
+    "region": "West Bank",
+    "country": "Palestinian Territory",
+    "lat": 32.3104,
+    "lon": 35.0286,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Qalqilya",
+    "region": "West Bank",
+    "country": "Palestinian Territory",
+    "lat": 32.1892,
+    "lon": 34.9708,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Beit Jala",
+    "region": "West Bank",
+    "country": "Palestinian Territory",
+    "lat": 31.7154,
+    "lon": 35.1878,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Beit Sahour",
+    "region": "West Bank",
+    "country": "Palestinian Territory",
+    "lat": 31.7009,
+    "lon": 35.3264,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Gaza",
+    "region": "Gaza Strip",
+    "country": "Palestinian Territory",
+    "lat": 31.5017,
+    "lon": 34.4668,
+    "timezone": "Asia/Gaza",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Khan Yunis",
+    "region": "Gaza Strip",
+    "country": "Palestinian Territory",
+    "lat": 31.3402,
+    "lon": 34.3063,
+    "timezone": "Asia/Gaza",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Rafah",
+    "region": "Gaza Strip",
+    "country": "Palestinian Territory",
+    "lat": 31.2969,
+    "lon": 34.2436,
+    "timezone": "Asia/Gaza",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Deir al-Balah",
+    "region": "Gaza Strip",
+    "country": "Palestinian Territory",
+    "lat": 31.417,
+    "lon": 34.35,
+    "timezone": "Asia/Gaza",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "East Jerusalem",
+    "region": "West Bank",
+    "country": "Palestinian Territory",
+    "lat": 31.7833,
+    "lon": 35.2333,
+    "timezone": "Asia/Hebron",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Haifa",
+    "region": "Haifa District",
+    "country": "Israel",
+    "lat": 32.794,
+    "lon": 34.9896,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Beersheba",
+    "region": "Southern District",
+    "country": "Israel",
+    "lat": 31.253,
+    "lon": 34.7915,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Nazareth",
+    "region": "Northern District",
+    "country": "Israel",
+    "lat": 32.6996,
+    "lon": 35.3035,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Eilat",
+    "region": "Southern District",
+    "country": "Israel",
+    "lat": 29.5577,
+    "lon": 34.9519,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Netanya",
+    "region": "Central District",
+    "country": "Israel",
+    "lat": 32.3215,
+    "lon": 34.8532,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Ashdod",
+    "region": "Southern District",
+    "country": "Israel",
+    "lat": 31.8044,
+    "lon": 34.6553,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Ashkelon",
+    "region": "Southern District",
+    "country": "Israel",
+    "lat": 31.6688,
+    "lon": 34.5743,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Tiberias",
+    "region": "Northern District",
+    "country": "Israel",
+    "lat": 32.7959,
+    "lon": 35.5312,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Acre",
+    "region": "Northern District",
+    "country": "Israel",
+    "lat": 32.9275,
+    "lon": 35.0818,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Rishon LeZion",
+    "region": "Central District",
+    "country": "Israel",
+    "lat": 31.973,
+    "lon": 34.7925,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Petah Tikva",
+    "region": "Central District",
+    "country": "Israel",
+    "lat": 32.084,
+    "lon": 34.8878,
+    "timezone": "Asia/Jerusalem",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Baghdad",
+    "region": "Baghdad",
+    "country": "Iraq",
+    "lat": 33.3152,
+    "lon": 44.3661,
+    "timezone": "Asia/Baghdad",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Riyadh",
+    "region": "Riyadh Region",
+    "country": "Saudi Arabia",
+    "lat": 24.7136,
+    "lon": 46.6753,
+    "timezone": "Asia/Riyadh",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Jeddah",
+    "region": "Makkah Region",
+    "country": "Saudi Arabia",
+    "lat": 21.4858,
+    "lon": 39.1925,
+    "timezone": "Asia/Riyadh",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Muscat",
+    "region": "Muscat",
+    "country": "Oman",
+    "lat": 23.588,
+    "lon": 58.3829,
+    "timezone": "Asia/Muscat",
+    "utcOffset": "UTC+04:00"
+  },
+  {
+    "name": "Kuwait City",
+    "region": "Al Asimah",
+    "country": "Kuwait",
+    "lat": 29.3759,
+    "lon": 47.9774,
+    "timezone": "Asia/Kuwait",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Damascus",
+    "region": "Damascus",
+    "country": "Syria",
+    "lat": 33.5138,
+    "lon": 36.2765,
+    "timezone": "Asia/Damascus",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Yerevan",
+    "region": "Yerevan",
+    "country": "Armenia",
+    "lat": 40.1792,
+    "lon": 44.4991,
+    "timezone": "Asia/Yerevan",
+    "utcOffset": "UTC+04:00"
+  },
+  {
+    "name": "Baku",
+    "region": "Baku",
+    "country": "Azerbaijan",
+    "lat": 40.4093,
+    "lon": 49.8671,
+    "timezone": "Asia/Baku",
+    "utcOffset": "UTC+04:00"
+  },
+  {
+    "name": "Tbilisi",
+    "region": "Tbilisi",
+    "country": "Georgia",
+    "lat": 41.7151,
+    "lon": 44.8271,
+    "timezone": "Asia/Tbilisi",
+    "utcOffset": "UTC+04:00"
+  },
+  {
+    "name": "Ankara",
+    "region": "Ankara",
+    "country": "Türkiye",
+    "lat": 39.9334,
+    "lon": 32.8597,
+    "timezone": "Europe/Istanbul",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Tashkent",
+    "region": "Tashkent",
+    "country": "Uzbekistan",
+    "lat": 41.2995,
+    "lon": 69.2401,
+    "timezone": "Asia/Tashkent",
+    "utcOffset": "UTC+05:00"
+  },
+  {
+    "name": "Almaty",
+    "region": "Almaty",
+    "country": "Kazakhstan",
+    "lat": 43.2383,
+    "lon": 76.9455,
+    "timezone": "Asia/Almaty",
+    "utcOffset": "UTC+05:00"
+  },
+  {
+    "name": "Phnom Penh",
+    "region": "Phnom Penh",
+    "country": "Cambodia",
+    "lat": 11.5564,
+    "lon": 104.9282,
+    "timezone": "Asia/Phnom_Penh",
+    "utcOffset": "UTC+07:00"
+  },
+  {
+    "name": "Yangon",
+    "region": "Yangon",
+    "country": "Myanmar",
+    "lat": 16.8409,
+    "lon": 96.1735,
+    "timezone": "Asia/Yangon",
+    "utcOffset": "UTC+06:30"
+  },
+  {
+    "name": "Penang",
+    "region": "Penang",
+    "country": "Malaysia",
+    "lat": 5.4164,
+    "lon": 100.3327,
+    "timezone": "Asia/Kuala_Lumpur",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Surabaya",
+    "region": "East Java",
+    "country": "Indonesia",
+    "lat": -7.2575,
+    "lon": 112.7521,
+    "timezone": "Asia/Jakarta",
+    "utcOffset": "UTC+07:00"
+  },
+  {
+    "name": "Denpasar",
+    "region": "Bali",
+    "country": "Indonesia",
+    "lat": -8.65,
+    "lon": 115.2167,
+    "timezone": "Asia/Makassar",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Cebu City",
+    "region": "Central Visayas",
+    "country": "Philippines",
+    "lat": 10.3157,
+    "lon": 123.8854,
+    "timezone": "Asia/Manila",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Busan",
+    "region": "Busan",
+    "country": "South Korea",
+    "lat": 35.1796,
+    "lon": 129.0756,
+    "timezone": "Asia/Seoul",
+    "utcOffset": "UTC+09:00"
+  },
+  {
+    "name": "Sapporo",
+    "region": "Hokkaido",
+    "country": "Japan",
+    "lat": 43.0618,
+    "lon": 141.3545,
+    "timezone": "Asia/Tokyo",
+    "utcOffset": "UTC+09:00"
+  },
+  {
+    "name": "Guangzhou",
+    "region": "Guangdong",
+    "country": "China",
+    "lat": 23.1291,
+    "lon": 113.2644,
+    "timezone": "Asia/Shanghai",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Shenzhen",
+    "region": "Guangdong",
+    "country": "China",
+    "lat": 22.5431,
+    "lon": 114.0579,
+    "timezone": "Asia/Shanghai",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Chengdu",
+    "region": "Sichuan",
+    "country": "China",
+    "lat": 30.5728,
+    "lon": 104.0668,
+    "timezone": "Asia/Shanghai",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Hong Kong",
+    "region": "Hong Kong",
+    "country": "Hong Kong",
+    "lat": 22.3193,
+    "lon": 114.1694,
+    "timezone": "Asia/Hong_Kong",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "New Delhi",
+    "region": "Delhi",
+    "country": "India",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "timezone": "Asia/Kolkata",
+    "utcOffset": "UTC+05:30"
+  },
+  {
+    "name": "Bengaluru",
+    "region": "Karnataka",
+    "country": "India",
+    "lat": 12.9716,
+    "lon": 77.5946,
+    "timezone": "Asia/Kolkata",
+    "utcOffset": "UTC+05:30"
+  },
+  {
+    "name": "Chennai",
+    "region": "Tamil Nadu",
+    "country": "India",
+    "lat": 13.0827,
+    "lon": 80.2707,
+    "timezone": "Asia/Kolkata",
+    "utcOffset": "UTC+05:30"
+  },
+  {
+    "name": "Kolkata",
+    "region": "West Bengal",
+    "country": "India",
+    "lat": 22.5726,
+    "lon": 88.3639,
+    "timezone": "Asia/Kolkata",
+    "utcOffset": "UTC+05:30"
+  },
+  {
+    "name": "Hyderabad",
+    "region": "Telangana",
+    "country": "India",
+    "lat": 17.385,
+    "lon": 78.4867,
+    "timezone": "Asia/Kolkata",
+    "utcOffset": "UTC+05:30"
+  },
+  {
+    "name": "Colombo",
+    "region": "Western Province",
+    "country": "Sri Lanka",
+    "lat": 6.9271,
+    "lon": 79.8612,
+    "timezone": "Asia/Colombo",
+    "utcOffset": "UTC+05:30"
+  },
+  {
+    "name": "Ulaanbaatar",
+    "region": "Ulaanbaatar",
+    "country": "Mongolia",
+    "lat": 47.9212,
+    "lon": 106.9186,
+    "timezone": "Asia/Ulaanbaatar",
+    "utcOffset": "UTC+08:00"
+  },
+  {
+    "name": "Adelaide",
+    "region": "South Australia",
+    "country": "Australia",
+    "lat": -34.9285,
+    "lon": 138.6007,
+    "timezone": "Australia/Adelaide",
+    "utcOffset": "UTC+10:30"
+  },
+  {
+    "name": "Canberra",
+    "region": "Australian Capital Territory",
+    "country": "Australia",
+    "lat": -35.2809,
+    "lon": 149.13,
+    "timezone": "Australia/Sydney",
+    "utcOffset": "UTC+11:00"
+  },
+  {
+    "name": "Darwin",
+    "region": "Northern Territory",
+    "country": "Australia",
+    "lat": -12.4634,
+    "lon": 130.8456,
+    "timezone": "Australia/Darwin",
+    "utcOffset": "UTC+09:30"
+  },
+  {
+    "name": "Hobart",
+    "region": "Tasmania",
+    "country": "Australia",
+    "lat": -42.8821,
+    "lon": 147.3272,
+    "timezone": "Australia/Hobart",
+    "utcOffset": "UTC+11:00"
+  },
+  {
+    "name": "Christchurch",
+    "region": "Canterbury",
+    "country": "New Zealand",
+    "lat": -43.5321,
+    "lon": 172.6362,
+    "timezone": "Pacific/Auckland",
+    "utcOffset": "UTC+13:00"
+  },
+  {
+    "name": "Alexandria",
+    "region": "Alexandria",
+    "country": "Egypt",
+    "lat": 31.2001,
+    "lon": 29.9187,
+    "timezone": "Africa/Cairo",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Marrakesh",
+    "region": "Marrakech-Safi",
+    "country": "Morocco",
+    "lat": 31.6295,
+    "lon": -7.9811,
+    "timezone": "Africa/Casablanca",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Tunis",
+    "region": "Tunis",
+    "country": "Tunisia",
+    "lat": 36.8065,
+    "lon": 10.1815,
+    "timezone": "Africa/Tunis",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Algiers",
+    "region": "Algiers",
+    "country": "Algeria",
+    "lat": 36.7538,
+    "lon": 3.0588,
+    "timezone": "Africa/Algiers",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Dakar",
+    "region": "Dakar",
+    "country": "Senegal",
+    "lat": 14.7167,
+    "lon": -17.4677,
+    "timezone": "Africa/Abidjan",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "Abuja",
+    "region": "Federal Capital Territory",
+    "country": "Nigeria",
+    "lat": 9.0765,
+    "lon": 7.3986,
+    "timezone": "Africa/Lagos",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Addis Ababa",
+    "region": "Addis Ababa",
+    "country": "Ethiopia",
+    "lat": 8.9806,
+    "lon": 38.7578,
+    "timezone": "Africa/Addis_Ababa",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Kampala",
+    "region": "Central Region",
+    "country": "Uganda",
+    "lat": 0.3476,
+    "lon": 32.5825,
+    "timezone": "Africa/Kampala",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Dar es Salaam",
+    "region": "Dar es Salaam",
+    "country": "Tanzania",
+    "lat": -6.7924,
+    "lon": 39.2083,
+    "timezone": "Africa/Dar_es_Salaam",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Durban",
+    "region": "KwaZulu-Natal",
+    "country": "South Africa",
+    "lat": -29.8587,
+    "lon": 31.0218,
+    "timezone": "Africa/Johannesburg",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Harare",
+    "region": "Harare",
+    "country": "Zimbabwe",
+    "lat": -17.8252,
+    "lon": 31.0335,
+    "timezone": "Africa/Harare",
+    "utcOffset": "UTC+02:00"
+  },
+  {
+    "name": "Manchester",
+    "region": "England",
+    "country": "United Kingdom",
+    "lat": 53.4808,
+    "lon": -2.2426,
+    "timezone": "Europe/London",
+    "utcOffset": "UTC+00:00"
+  },
+  {
+    "name": "Lyon",
+    "region": "Auvergne-Rhône-Alpes",
+    "country": "France",
+    "lat": 45.764,
+    "lon": 4.8357,
+    "timezone": "Europe/Paris",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Marseille",
+    "region": "Provence-Alpes-Côte d’Azur",
+    "country": "France",
+    "lat": 43.2965,
+    "lon": 5.3698,
+    "timezone": "Europe/Paris",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Seville",
+    "region": "Andalusia",
+    "country": "Spain",
+    "lat": 37.3891,
+    "lon": -5.9845,
+    "timezone": "Europe/Madrid",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Milan",
+    "region": "Lombardy",
+    "country": "Italy",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "timezone": "Europe/Rome",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Naples",
+    "region": "Campania",
+    "country": "Italy",
+    "lat": 40.8518,
+    "lon": 14.2681,
+    "timezone": "Europe/Rome",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Munich",
+    "region": "Bavaria",
+    "country": "Germany",
+    "lat": 48.1351,
+    "lon": 11.582,
+    "timezone": "Europe/Berlin",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Frankfurt",
+    "region": "Hesse",
+    "country": "Germany",
+    "lat": 50.1109,
+    "lon": 8.6821,
+    "timezone": "Europe/Berlin",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Hamburg",
+    "region": "Hamburg",
+    "country": "Germany",
+    "lat": 53.5511,
+    "lon": 9.9937,
+    "timezone": "Europe/Berlin",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Kraków",
+    "region": "Lesser Poland",
+    "country": "Poland",
+    "lat": 50.0647,
+    "lon": 19.945,
+    "timezone": "Europe/Warsaw",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Rotterdam",
+    "region": "South Holland",
+    "country": "Netherlands",
+    "lat": 51.9244,
+    "lon": 4.4777,
+    "timezone": "Europe/Amsterdam",
+    "utcOffset": "UTC+01:00"
+  },
+  {
+    "name": "Saint Petersburg",
+    "region": "Saint Petersburg",
+    "country": "Russia",
+    "lat": 59.9311,
+    "lon": 30.3609,
+    "timezone": "Europe/Moscow",
+    "utcOffset": "UTC+03:00"
+  },
+  {
+    "name": "Novosibirsk",
+    "region": "Novosibirsk Oblast",
+    "country": "Russia",
+    "lat": 55.0084,
+    "lon": 82.9357,
+    "timezone": "Asia/Novosibirsk",
+    "utcOffset": "UTC+07:00"
+  },
+  {
+    "name": "Vladivostok",
+    "region": "Primorsky Krai",
+    "country": "Russia",
+    "lat": 43.1155,
+    "lon": 131.8855,
+    "timezone": "Asia/Vladivostok",
+    "utcOffset": "UTC+10:00"
+  },
+  {
+    "name": "Ottawa",
+    "region": "Ontario",
+    "country": "Canada",
+    "lat": 45.4215,
+    "lon": -75.6972,
+    "timezone": "America/Toronto",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Calgary",
+    "region": "Alberta",
+    "country": "Canada",
+    "lat": 51.0447,
+    "lon": -114.0719,
+    "timezone": "America/Edmonton",
+    "utcOffset": "UTC-07:00"
+  },
+  {
+    "name": "Edmonton",
+    "region": "Alberta",
+    "country": "Canada",
+    "lat": 53.5461,
+    "lon": -113.4938,
+    "timezone": "America/Edmonton",
+    "utcOffset": "UTC-07:00"
+  },
+  {
+    "name": "Winnipeg",
+    "region": "Manitoba",
+    "country": "Canada",
+    "lat": 49.8951,
+    "lon": -97.1384,
+    "timezone": "America/Winnipeg",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "Halifax",
+    "region": "Nova Scotia",
+    "country": "Canada",
+    "lat": 44.6488,
+    "lon": -63.5752,
+    "timezone": "America/Halifax",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Guadalajara",
+    "region": "Jalisco",
+    "country": "Mexico",
+    "lat": 20.6597,
+    "lon": -103.3496,
+    "timezone": "America/Mexico_City",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "Monterrey",
+    "region": "Nuevo León",
+    "country": "Mexico",
+    "lat": 25.6866,
+    "lon": -100.3161,
+    "timezone": "America/Monterrey",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "Tijuana",
+    "region": "Baja California",
+    "country": "Mexico",
+    "lat": 32.5149,
+    "lon": -117.0382,
+    "timezone": "America/Tijuana",
+    "utcOffset": "UTC-08:00"
+  },
+  {
+    "name": "Guatemala City",
+    "region": "Guatemala Department",
+    "country": "Guatemala",
+    "lat": 14.6349,
+    "lon": -90.5069,
+    "timezone": "America/Guatemala",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "Kingston",
+    "region": "Surrey County",
+    "country": "Jamaica",
+    "lat": 17.9712,
+    "lon": -76.7936,
+    "timezone": "America/Jamaica",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Cali",
+    "region": "Valle del Cauca",
+    "country": "Colombia",
+    "lat": 3.4516,
+    "lon": -76.532,
+    "timezone": "America/Bogota",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Guayaquil",
+    "region": "Guayas",
+    "country": "Ecuador",
+    "lat": -2.17,
+    "lon": -79.9224,
+    "timezone": "America/Guayaquil",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Arequipa",
+    "region": "Arequipa",
+    "country": "Peru",
+    "lat": -16.409,
+    "lon": -71.5375,
+    "timezone": "America/Lima",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Santa Cruz de la Sierra",
+    "region": "Santa Cruz",
+    "country": "Bolivia",
+    "lat": -17.7833,
+    "lon": -63.1821,
+    "timezone": "America/La_Paz",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Valparaíso",
+    "region": "Valparaíso",
+    "country": "Chile",
+    "lat": -33.0472,
+    "lon": -71.6127,
+    "timezone": "America/Santiago",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Maracaibo",
+    "region": "Zulia",
+    "country": "Venezuela",
+    "lat": 10.6427,
+    "lon": -71.6125,
+    "timezone": "America/Caracas",
+    "utcOffset": "UTC-04:00"
+  },
+  {
+    "name": "Córdoba",
+    "region": "Córdoba",
+    "country": "Argentina",
+    "lat": -31.4201,
+    "lon": -64.1888,
+    "timezone": "America/Argentina/Cordoba",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Rosario",
+    "region": "Santa Fe",
+    "country": "Argentina",
+    "lat": -32.9442,
+    "lon": -60.6505,
+    "timezone": "America/Argentina/Cordoba",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Salta",
+    "region": "Salta",
+    "country": "Argentina",
+    "lat": -24.7821,
+    "lon": -65.4232,
+    "timezone": "America/Argentina/Salta",
+    "utcOffset": "UTC-03:00"
+  },
+  {
+    "name": "Philadelphia",
+    "region": "Pennsylvania",
+    "country": "United States",
+    "lat": 39.9526,
+    "lon": -75.1652,
+    "timezone": "America/New_York",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Detroit",
+    "region": "Michigan",
+    "country": "United States",
+    "lat": 42.3314,
+    "lon": -83.0458,
+    "timezone": "America/Detroit",
+    "utcOffset": "UTC-05:00"
+  },
+  {
+    "name": "Minneapolis",
+    "region": "Minnesota",
+    "country": "United States",
+    "lat": 44.9778,
+    "lon": -93.265,
+    "timezone": "America/Chicago",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "New Orleans",
+    "region": "Louisiana",
+    "country": "United States",
+    "lat": 29.9511,
+    "lon": -90.0715,
+    "timezone": "America/Chicago",
+    "utcOffset": "UTC-06:00"
+  },
+  {
+    "name": "San Diego",
+    "region": "California",
+    "country": "United States",
+    "lat": 32.7157,
+    "lon": -117.1611,
+    "timezone": "America/Los_Angeles",
+    "utcOffset": "UTC-08:00"
+  },
+  {
+    "name": "Portland",
+    "region": "Oregon",
+    "country": "United States",
+    "lat": 45.5152,
+    "lon": -122.6784,
+    "timezone": "America/Los_Angeles",
+    "utcOffset": "UTC-08:00"
+  }
+]

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- <svg width="16" height="16" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path style="clip-rule:nonzero;fill:none;stroke:#000;stroke-width:.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M1.366 4.384A1.25 1.25 0 1 1 3.5 3.5v5m5-3.75a1.25 1.25 0 0 1 2.5 0A3.75 3.75 0 0 1 7.25 8.5M6 3.5a1.25 1.25 0 0 1 2.5 0v5c0 .69.56 1.25 1.25 1.25M3.5 3.5a1.25 1.25 0 0 1 2.5 0v5"/></svg> -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 12 12"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="virgo.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     inkscape:zoom="50.5"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.75"
+       spacingy="0.75"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <path
+     style="clip-rule:nonzero;fill:none;stroke:#44c1a8;stroke-width:1.00629;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 1.6083381,4.2772626 A 1.1875861,1.3322854 0 1 1 3.635785,3.3350704 V 8.6642122 M 8.3861294,4.6673559 a 1.1875863,1.3322856 0 0 1 2.3751726,0 3.5627582,3.9968562 0 0 1 -3.5627588,3.9968563 M 6.0109571,3.3350704 a 1.1875861,1.3322856 0 0 1 2.3751723,0 v 5.3291418 c 0,0.7354215 0.5320384,1.3322864 1.1875859,1.3322864 M 3.635785,3.3350704 a 1.1875861,1.3322854 0 0 1 2.3751721,0 v 5.3291418"
+     id="path1" />
+</svg>

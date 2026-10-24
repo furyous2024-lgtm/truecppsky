@@ -1,0 +1,19 @@
+{
+  "name": "truesky-v1-node",
+  "version": "1.0.0",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "download:fixed-stars": "node scripts/download-fixed-stars-catalog.js",
+    "firebase:deploy": "firebase deploy",
+    "firebase:rules": "firebase deploy --only firestore:rules",
+    "firebase:emulators": "firebase emulators:start --only hosting,firestore"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "firebase": "^12.14.0",
+    "socket.io": "^4.7.5"
+  }
+}

@@ -1,0 +1,278 @@
+window.FIXED_STARS_CATALOG = [
+  {
+    "name": "Sirius",
+    "longitude": 104.07999999999998,
+    "eclipticLatitude": -39.61,
+    "magnitude": -1.46
+  },
+  {
+    "name": "Canopus",
+    "longitude": 95.99000000000001,
+    "eclipticLatitude": -75.7,
+    "magnitude": -0.74
+  },
+  {
+    "name": "Arcturus",
+    "longitude": 203.91999999999996,
+    "eclipticLatitude": 30.75,
+    "magnitude": -0.05
+  },
+  {
+    "name": "Vega",
+    "longitude": 285.31999999999994,
+    "eclipticLatitude": 61.73,
+    "magnitude": 0.03
+  },
+  {
+    "name": "Capella",
+    "longitude": 81.92000000000002,
+    "eclipticLatitude": 22.86,
+    "magnitude": 0.08
+  },
+  {
+    "name": "Rigel",
+    "longitude": 78.63,
+    "eclipticLatitude": -31.11,
+    "magnitude": 0.13
+  },
+  {
+    "name": "Procyon",
+    "longitude": 114.82999999999998,
+    "eclipticLatitude": -15.93,
+    "magnitude": 0.34
+  },
+  {
+    "name": "Betelgeuse",
+    "longitude": 88.75,
+    "eclipticLatitude": -16.03,
+    "magnitude": 0.42
+  },
+  {
+    "name": "Achernar",
+    "longitude": 29.410000000000025,
+    "eclipticLatitude": -58.79,
+    "magnitude": 0.46
+  },
+  {
+    "name": "Hadar",
+    "longitude": 210.96000000000004,
+    "eclipticLatitude": -39.99,
+    "magnitude": 0.61
+  },
+  {
+    "name": "Acrux",
+    "longitude": 187.78999999999996,
+    "eclipticLatitude": -52.47,
+    "magnitude": 0.76
+  },
+  {
+    "name": "Altair",
+    "longitude": 301.64,
+    "eclipticLatitude": 29.3,
+    "magnitude": 0.77
+  },
+  {
+    "name": "Aldebaran",
+    "longitude": 69.79000000000002,
+    "eclipticLatitude": -5.47,
+    "magnitude": 0.86
+  },
+  {
+    "name": "Spica",
+    "longitude": 203.84000000000003,
+    "eclipticLatitude": -2.05,
+    "magnitude": 0.97
+  },
+  {
+    "name": "Antares",
+    "longitude": 249.76,
+    "eclipticLatitude": -4.57,
+    "magnitude": 1.06
+  },
+  {
+    "name": "Pollux",
+    "longitude": 113.22000000000003,
+    "eclipticLatitude": 6.69,
+    "magnitude": 1.14
+  },
+  {
+    "name": "Fomalhaut",
+    "longitude": 334.06999999999994,
+    "eclipticLatitude": -21.14,
+    "magnitude": 1.16
+  },
+  {
+    "name": "Deneb",
+    "longitude": 335.11,
+    "eclipticLatitude": 59.92,
+    "magnitude": 1.25
+  },
+  {
+    "name": "Mimosa",
+    "longitude": 191.93000000000006,
+    "eclipticLatitude": -47.12,
+    "magnitude": 1.25
+  },
+  {
+    "name": "Regulus",
+    "longitude": 149.83000000000004,
+    "eclipticLatitude": 0.46,
+    "magnitude": 1.35
+  },
+  {
+    "name": "Adhara",
+    "longitude": 104.64999999999998,
+    "eclipticLatitude": -50.75,
+    "magnitude": 1.5
+  },
+  {
+    "name": "Castor",
+    "longitude": 113.95999999999998,
+    "eclipticLatitude": 10.08,
+    "magnitude": 1.58
+  },
+  {
+    "name": "Shaula",
+    "longitude": 263.8399999999999,
+    "eclipticLatitude": -13.78,
+    "magnitude": 1.62
+  },
+  {
+    "name": "Bellatrix",
+    "longitude": 80.32999999999998,
+    "eclipticLatitude": -17.33,
+    "magnitude": 1.64
+  },
+  {
+    "name": "Elnath",
+    "longitude": 82.74000000000001,
+    "eclipticLatitude": 5.39,
+    "magnitude": 1.65
+  },
+  {
+    "name": "Miaplacidus",
+    "longitude": 140.36,
+    "eclipticLatitude": -76.59,
+    "magnitude": 1.67
+  },
+  {
+    "name": "Alnilam",
+    "longitude": 84.05000000000001,
+    "eclipticLatitude": -25.29,
+    "magnitude": 1.69
+  },
+  {
+    "name": "Alnitak",
+    "longitude": 83,
+    "eclipticLatitude": -25.08,
+    "magnitude": 1.74
+  },
+  {
+    "name": "Dubhe",
+    "longitude": 135.8,
+    "eclipticLatitude": 49.28,
+    "magnitude": 1.79
+  },
+  {
+    "name": "Mirfak",
+    "longitude": 57.06,
+    "eclipticLatitude": 34.69,
+    "magnitude": 1.79
+  },
+  {
+    "name": "Wezen",
+    "longitude": 108.38,
+    "eclipticLatitude": -54.13,
+    "magnitude": 1.83
+  },
+  {
+    "name": "Kaus Australis",
+    "longitude": 276.99,
+    "eclipticLatitude": -6.36,
+    "magnitude": 1.85
+  },
+  {
+    "name": "Alkaid",
+    "longitude": 178.03999999999996,
+    "eclipticLatitude": 55.38,
+    "magnitude": 1.86
+  },
+  {
+    "name": "Avior",
+    "longitude": 125.75,
+    "eclipticLatitude": -74.23,
+    "magnitude": 1.86
+  },
+  {
+    "name": "Sargas",
+    "longitude": 264.37,
+    "eclipticLatitude": -19.34,
+    "magnitude": 1.86
+  },
+  {
+    "name": "Menkalinan",
+    "longitude": 89.14999999999998,
+    "eclipticLatitude": 21.53,
+    "magnitude": 1.9
+  },
+  {
+    "name": "Atria",
+    "longitude": 241.14999999999998,
+    "eclipticLatitude": -47.38,
+    "magnitude": 1.91
+  },
+  {
+    "name": "Alhena",
+    "longitude": 108.76999999999998,
+    "eclipticLatitude": -7.35,
+    "magnitude": 1.93
+  },
+  {
+    "name": "Peacock",
+    "longitude": 306.03999999999996,
+    "eclipticLatitude": -56.74,
+    "magnitude": 1.94
+  },
+  {
+    "name": "Mirzam",
+    "longitude": 101.17000000000002,
+    "eclipticLatitude": -39.18,
+    "magnitude": 1.98
+  },
+  {
+    "name": "Polaris",
+    "longitude": 87.94999999999999,
+    "eclipticLatitude": 66.1,
+    "magnitude": 1.98
+  },
+  {
+    "name": "Alphard",
+    "longitude": 142.16999999999996,
+    "eclipticLatitude": -16.23,
+    "magnitude": 1.99
+  },
+  {
+    "name": "Algol",
+    "longitude": 56.170000000000016,
+    "eclipticLatitude": 22.42,
+    "magnitude": 2.09
+  },
+  {
+    "name": "Denebola",
+    "longitude": 171.88,
+    "eclipticLatitude": 12.21,
+    "magnitude": 2.14
+  },
+  {
+    "name": "Alphecca",
+    "longitude": 222.39,
+    "eclipticLatitude": 44,
+    "magnitude": 2.22
+  },
+  {
+    "name": "Zosma",
+    "longitude": 160.83000000000004,
+    "eclipticLatitude": 14.22,
+    "magnitude": 2.56
+  }
+];

@@ -1,0 +1,86 @@
+{
+  "sun": {
+    "station": "Sun station periods concentrate the themes of vital life force, identity, confidence, and what energizes you. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "moon": {
+    "station": "Moon station periods concentrate the themes of inner world, emotions, needs, and what helps you feel secure. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "mercury": {
+    "station": "Mercury station periods concentrate the themes of mind, communication style, learning process, and practical understanding. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "venus": {
+    "station": "Venus station periods concentrate the themes of values, relationship style, attraction, harmony, and what you appreciate. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "mars": {
+    "station": "Mars station periods concentrate the themes of drive, action, courage, desire, and how you assert yourself. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "jupiter": {
+    "station": "Jupiter station periods concentrate the themes of growth, optimism, meaning, wisdom, and where life expands. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "saturn": {
+    "station": "Saturn station periods concentrate the themes of discipline, maturity, responsibility, boundaries, and long-term development. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "uranus": {
+    "station": "Uranus station periods concentrate the themes of originality, awakening, freedom, innovation, and needed change. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "neptune": {
+    "station": "Neptune station periods concentrate the themes of imagination, sensitivity, ideals, spirituality, and surrender. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "pluto": {
+    "station": "Pluto station periods concentrate the themes of depth, transformation, empowerment, shadow work, and regeneration. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "chiron": {
+    "station": "Chiron station periods concentrate the themes of sensitivity, healing, integration, and teaching through lived experience. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "north node": {
+    "station": "North Node station periods concentrate the themes of growth path, unfamiliar development, and the qualities life is inviting you to cultivate. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "south node": {
+    "station": "South Node station periods concentrate the themes of familiar patterns, natural tendencies, and gifts that need conscious balance. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "ascendant": {
+    "station": "Ascendant station periods concentrate the themes of developing personality, instinctive approach to life, and the qualities life helps you embody. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "midheaven": {
+    "station": "Midheaven station periods concentrate the themes of calling, public direction, vocation, reputation, and long-term contribution. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "descendant": {
+    "station": "Descendant station periods concentrate the themes of relationship mirror, partnership needs, and qualities encountered through others. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "imum coeli": {
+    "station": "Imum Coeli station periods concentrate the themes of roots, private life, family patterning, and the inner foundation. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "ceres": {
+    "station": "Ceres station periods concentrate the themes of nurturing style, care, nourishment, and how support is exchanged. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "vesta": {
+    "station": "Vesta station periods concentrate the themes of devotion, focus, sacred work, and what you are willing to dedicate yourself to. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "pallas": {
+    "station": "Pallas station periods concentrate the themes of strategy, pattern recognition, creative intelligence, and problem solving. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "juno": {
+    "station": "Juno station periods concentrate the themes of commitment, partnership agreements, loyalty, and relational expectations. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "lilith": {
+    "station": "Lilith station periods concentrate the themes of raw instinct, independence, taboo material, and unapologetic self-honesty. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "priapus": {
+    "station": "Priapus station periods concentrate the themes of magnetism, hunger, over-identification, and where balance is needed. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "part of fortune": {
+    "station": "Part of Fortune station periods concentrate the themes of ease, flow, embodied happiness, and where life can feel naturally fortunate. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "part of spirit": {
+    "station": "Part of Spirit station periods concentrate the themes of intention, will, inner fire, and conscious spiritual direction. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "vertex": {
+    "station": "Vertex station periods concentrate the themes of fated encounters, turning points, and experiences that redirect life perspective. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "anti-vertex": {
+    "station": "Anti-Vertex station periods concentrate the themes of self-directed encounters, personal agency, and the inner side of fated growth. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  },
+  "galactic center": {
+    "station": "Galactic Center station periods concentrate the themes of a collective point of inspiration, orientation, and connection to a larger perspective. The energy can feel stronger, more reflective, or more obvious as it changes direction, asking for awareness and adjustment."
+  }
+}

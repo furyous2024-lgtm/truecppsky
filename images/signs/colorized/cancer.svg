@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- <svg width="16" height="16" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path style="clip-rule:nonzero;fill:none;stroke:#000;stroke-width:.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M11 6a1.667 1.667 0 1 0-3.334 0A1.667 1.667 0 0 0 11 6zM1 6a1.667 1.667 0 1 0 3.334 0A1.667 1.667 0 0 0 1 6zm10 0a5 5 0 0 0-8.535-3.535M1 6a5 5 0 0 0 8.535 3.535"/></svg> -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 12 12"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="cancer.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     inkscape:zoom="50.5"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.75"
+       spacingy="0.75"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <path
+     style="clip-rule:nonzero;fill:none;stroke:#a5c16f;stroke-width:0.954083;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 10.772958,5.9999866 a 1.5913044,1.5896095 0 1 0 -3.1826083,0 1.5913044,1.5896095 0 0 0 3.1826083,0 z m -9.5459163,0 a 1.5913044,1.5896095 0 1 0 3.1826087,0 1.5913044,1.5896095 0 0 0 -3.1826087,0 z m 9.5459163,0 A 4.7729583,4.7678747 0 0 0 2.6255186,2.6290991 M 1.2270417,5.9999866 a 4.7729583,4.7678747 0 0 0 8.1474398,3.3708873"
+     id="path1" />
+</svg>

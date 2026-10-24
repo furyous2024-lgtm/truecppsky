@@ -1,0 +1,8 @@
+node_modules
+.git
+.firebase
+firebase-debug.log
+*.zip
+*.rar
+*.7z
+.env

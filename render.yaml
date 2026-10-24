@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: true-sky-astrologia-docker
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: DATA_DIR
+        value: /tmp/truesky-data
+      - key: PYTHON
+        value: python3
+      - key: ALLOWED_ORIGINS
+        value: https://truesky-ad5d6.web.app,https://truesky-ad5d6.firebaseapp.com,https://true-sky-astrologia.onrender.com,https://true-sky-astrologia-docker.onrender.com
+      - key: FIREBASE_AUTH_DOMAIN
+        value: true-sky-astrology.firebaseapp.com
+      - key: FIREBASE_PROJECT_ID
+        value: true-sky-astrology
+      - key: FIREBASE_STORAGE_BUCKET
+        value: true-sky-astrology.firebasestorage.app
+      - key: FIREBASE_API_KEY
+        value: AIzaSyC0rsz6oXGHtkmYgWz-S8iPFbko0lMe2vU
+      - key: FIREBASE_MESSAGING_SENDER_ID
+        value: "189355672778"
+      - key: FIREBASE_APP_ID
+        value: 1:189355672778:web:78590ccef247d81e006033

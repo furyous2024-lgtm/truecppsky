@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="True Sky custom zodiac favicon">
+  <defs>
+    <radialGradient id="sky" cx="35%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#eaf8ff"/>
+      <stop offset="45%" stop-color="#55c7d0"/>
+      <stop offset="100%" stop-color="#273a72"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="18" y1="18" x2="110" y2="110">
+      <stop offset="0%" stop-color="#f6d365"/>
+      <stop offset="48%" stop-color="#ff8a65"/>
+      <stop offset="100%" stop-color="#9b5de5"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="#0f172a"/>
+  <circle cx="64" cy="64" r="48" fill="url(#sky)"/>
+  <circle cx="64" cy="64" r="51" fill="none" stroke="url(#ring)" stroke-width="8"/>
+  <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M64 20v13M64 95v13M20 64h13M95 64h13" stroke-width="4" opacity=".9"/>
+    <path d="M38 38l9 9M81 81l9 9M90 38l-9 9M47 81l-9 9" stroke-width="3" opacity=".75"/>
+    <path d="M64 38c12 0 22 10 22 22 0 15-11 25-22 30-11-5-22-15-22-30 0-12 10-22 22-22z" fill="none" stroke-width="5"/>
+    <path d="M52 61c7 5 17 5 24 0" fill="none" stroke-width="4"/>
+  </g>
+  <circle cx="64" cy="64" r="4" fill="#fff"/>
+</svg>

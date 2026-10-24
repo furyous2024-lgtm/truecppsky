@@ -1,0 +1,1006 @@
+/* Simple Responsive Menu */
+
+@media (max-width: 700px) {
+  /* Add small padding to prevent elements touching screen edges */
+  body {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  /* Adjust menu container spacing */
+  .menu {
+    margin-bottom: 4px;
+    gap: 4px;
+  }
+
+  /* Shorten COMPOSITE to COMP on small devices */
+  #composite-button span {
+    font-size: 0;
+  }
+
+  #composite-button span::after {
+    content: "COMP";
+    font-size: clamp(10px, 2.5vw, 16px);
+  }
+
+  #composite-button span.active-composite::after {
+    font-size: clamp(11px, 2.7vw, 18px);
+  }
+
+  /* ----- Fluid full-width nav (app feel) -----
+     Buttons share width via calc(100% / 6) so top row fills exactly and
+     bottom row (5 buttons) centers with the SAME button width — keeps the
+     two rows visually aligned. Icons scale with button width via percentage,
+     text scales with viewport via clamp(). max-width caps at desktop sizing
+     so PC-sized windows above the breakpoint look identical to today. */
+  .menu-row {
+    width: 100%;
+  }
+
+  .menu button {
+    width: calc(100% / 6);
+    max-width: 108px;
+  }
+
+  .menu button img {
+    width: 80%;
+    height: auto;
+    max-width: 80px;
+    margin-top: -4px;
+  }
+
+  .menu button span {
+    font-size: clamp(10px, 2.5vw, 16px);
+    letter-spacing: -0.3px;
+    min-height: 18px;
+  }
+
+  /* Active state - slightly larger than inactive, also fluid */
+  .menu button span.active-main,
+  .menu button span.active-natal,
+  .menu button span.active-triwheel,
+  .menu button span.active-graph,
+  .menu button span.active-return,
+  .menu button span.active-community,
+  .menu button span.active-settings,
+  .menu button span.active-synastry,
+  .menu button span.active-composite,
+  .menu button span.active-help,
+  .menu button span.active-account,
+  .menu button span.active-map {
+    font-size: clamp(11px, 2.7vw, 18px);
+  }
+}
+
+@media (max-width: 400px) {
+  /* Further reduce spacing on very small screens */
+  .menu {
+    margin-bottom: 2px;
+    gap: 2px;
+  }
+
+  /* Update COMP text size for very small screens — matches the regular
+     label floor of 10px / 11px from the 700px block for visual consistency. */
+  #composite-button span::after {
+    font-size: 10px;
+  }
+
+  #composite-button span.active-composite::after {
+    font-size: 11px;
+  }
+
+}
+
+/* Shorten longer labels only when they actually start to overflow their
+   button. At 400px screen, labels still fit comfortably (~18px margin);
+   at 300px they start touching. Below 300px (e.g. Galaxy Fold folded
+   at 280px) they overflow without this.
+   SYNASTRY → SYN, SETTINGS → SET, ACCOUNT → ACC, TRANSIT → TRAN, RETURN → RET. */
+@media (max-width: 300px) {
+  #synastry-button span,
+  #settings-button span,
+  #account-button span,
+  #triwheel-button span,
+  #return-button span {
+    font-size: 0;
+  }
+
+  #synastry-button span::after {
+    content: "SYN";
+    font-size: 10px;
+  }
+
+  #synastry-button span.active-synastry::after {
+    font-size: 11px;
+  }
+
+  #settings-button span::after {
+    content: "SET";
+    font-size: 10px;
+  }
+
+  #settings-button span.active-settings::after {
+    font-size: 11px;
+  }
+
+  #account-button span::after {
+    content: "ACC";
+    font-size: 10px;
+  }
+
+  #account-button span.active-account::after {
+    font-size: 11px;
+  }
+
+  #triwheel-button span::after {
+    content: "TRAN";
+    font-size: 10px;
+  }
+
+  #triwheel-button span.active-triwheel::after {
+    font-size: 11px;
+  }
+
+  #return-button span::after {
+    content: "RET";
+    font-size: 10px;
+  }
+
+  #return-button span.active-return::after {
+    font-size: 11px;
+  }
+}
+
+/* Form Responsive Styles */
+@media (max-width: 600px) {
+  /* Scale down form grid proportionally */
+  .form {
+    font-size: 18px;
+    grid-template-columns: 180px 26px 1px 26px 60px 42px;
+    grid-gap: 8px;
+  }
+
+  /* Prevent Start Date: and End Date: from stacking */
+  .form-section {
+    white-space: nowrap;
+  }
+
+  .form
+    input:not(.lat-deg):not(.lat-min):not(.lat-sec):not(.long-deg):not(
+      .long-min
+    ):not(.long-sec):not(.custom-location-input) {
+    font-size: 16px;
+    height: 24px;
+  }
+
+  .form select:not(.lat-dir):not(.long-dir) {
+    font-size: 16px;
+  }
+
+  /* Shorten "month" to "m" in date label */
+  .date-label {
+    font-size: 0;
+  }
+
+  .date-label::after {
+    content: "Date (dd-m-yyyy):";
+    font-size: 18px;
+  }
+
+  /* Shorten location label */
+  .location-label {
+    font-size: 0;
+  }
+
+  .location-label::after {
+    content: "Location (city, region):";
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  /* Scale down form grid even more */
+  .form {
+    /* font-size: 14px; */
+    grid-template-columns: 80px 26px 1px 26px 55px 44px;
+    grid-gap: 6px;
+  }
+
+  .form
+    input:not(.lat-deg):not(.lat-min):not(.lat-sec):not(.long-deg):not(
+      .long-min
+    ):not(.long-sec):not(.custom-location-input) {
+    /* font-size: 14px; */
+    height: 22px;
+  }
+
+  .form select:not(.lat-dir):not(.long-dir) {
+    /* font-size: 14px; */
+    height: 22px;
+  }
+
+  /* Make DMS inputs smaller at 420px */
+  .form .lat-deg,
+  .form .lat-min,
+  .form .lat-sec,
+  .form .long-min,
+  .form .long-sec {
+    width: 24px;
+    font-size: 16px;
+    padding: 6px 2px;
+  }
+
+  .form .long-deg {
+    width: 32px;
+    font-size: 16px;
+    padding: 6px 2px;
+  }
+
+  .form .lat-dir,
+  .form .long-dir {
+    min-width: 24px;
+    font-size: 12px;
+    padding: 8px 2px;
+  }
+
+  .custom-location-input {
+    font-size: 12px;
+  }
+
+  /* Shorten "month" to "m" in date label */
+  .date-label::after {
+    content: "Date:";
+    font-size: 18px;
+  }
+
+  /* Shorten location label */
+  .location-label::after {
+    content: "Location:";
+    font-size: 18px;
+  }
+
+  /* Shorten location label */
+  .time-label {
+    font-size: 0;
+  }
+
+  .time-label::after {
+    content: "Time:";
+    font-size: 18px;
+  }
+}
+
+/* Settings & Account Pages Responsive */
+@media (max-width: 600px) {
+  /* === WHEEL SETTINGS SECTION === */
+
+  /* Planet Symbol/Aspects: 5 cols → 4 cols */
+  .planet-settings {
+    grid-template-columns: repeat(4, auto);
+  }
+
+  /* Aspects with orb dropdowns: keep at 4 cols (it has 7 items, fits in 2 rows) */
+  /* No change needed for .aspect-settings-natal */
+
+  /* Graph Aspects (different section): 7 cols → 5 cols */
+  .aspect-settings:not(.aspect-settings-natal) {
+    grid-template-columns: repeat(5, auto);
+  }
+
+  /* Smaller orb dropdown selects */
+  .aspect-orb {
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  /* Icons smaller */
+  .planet-icon,
+  .aspect-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Smaller gaps */
+  .planet-settings,
+  .degree-settings,
+  .aspect-settings,
+  .graph-planet-settings,
+  .graph-type-settings,
+  .system-settings,
+  .ascendant-override {
+    gap: 8px;
+  }
+
+  /* Settings form grid adjustment */
+  .settings-form {
+    grid-template-columns: 160px 24px 1px 24px 60px 120px;
+    grid-gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Make each div containing checkbox and label a grid */
+  .graph-type-settings > div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px;
+    align-items: start;
+  }
+}
+
+@media (max-width: 475px) {
+  /* Intermediate breakpoint for smoother aspect orb transition */
+  .aspect-settings-natal {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
+@media (max-width: 460px) {
+  /* Settings form further scaled */
+  .settings-form {
+    grid-template-columns: 60px 22px 1px 22px 50px 110px;
+    grid-gap: 4px;
+  }
+
+  .settings-form input {
+    height: 24px;
+  }
+
+  /* Shorten "Settings Name:" to "Name:" */
+  .settings-form .name-label {
+    font-size: 0;
+  }
+
+  .settings-form .name-label::after {
+    content: "Name:";
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  /* === WHEEL SETTINGS SECTION === */
+
+  /* Planet Symbol/Aspects: 4 cols → 3 cols */
+  .planet-settings {
+    grid-template-columns: repeat(3, auto);
+  }
+
+  /* Graph Aspects: 5 cols → 4 cols */
+  .aspect-settings:not(.aspect-settings-natal) {
+    grid-template-columns: repeat(4, auto);
+  }
+
+  /* Even smaller orb dropdowns */
+  .aspect-orb {
+    margin-left: 1px;
+    margin-right: 1px;
+  }
+
+  /* Smaller icons */
+  .planet-icon,
+  .aspect-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Tighter gaps */
+  .planet-settings,
+  .degree-settings,
+  .aspect-settings,
+  .graph-planet-settings,
+  .graph-type-settings,
+  .system-settings,
+  .ascendant-override {
+    gap: 6px;
+  }
+
+  /* Smaller checkboxes */
+  .planet-settings input[type="checkbox"],
+  .degree-settings input[type="checkbox"],
+  .aspect-settings input[type="checkbox"],
+  .graph-planet-settings input[type="checkbox"],
+  .graph-type-settings input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* System settings dropdowns narrower */
+  .system-settings select {
+    max-width: 160px;
+  }
+
+  .ascendant-override select {
+    width: 80px;
+  }
+
+  /* Stack checkbox above label for True Nodes/Lilith/Draconic */
+  .true-positions-row > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .true-positions-row .type-icon {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 360px) {
+  /* Reduce space between checkboxes within each planet group */
+  .graph-planet-settings > div {
+    display: flex;
+    gap: 2px;
+  }
+}
+
+@media (max-width: 350px) {
+  /* Make animation button text smaller */
+  .animation-control-btn {
+    font-size: 14px !important;
+    padding: 0px 12px !important;
+  }
+}
+
+/* Account Page - Fix wrapping behavior */
+@media (max-width: 500px) {
+  /* Center the confirm containers and let text wrap naturally */
+  .confirm-delete-container {
+    padding: 0 20px;
+    text-align: center;
+    display: block;
+  }
+
+  /* Make checkbox inline with text */
+  .confirm-delete-container input[type="checkbox"] {
+    display: inline;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .confirm-delete-container span {
+    display: inline;
+    vertical-align: middle;
+  }
+
+  /* Default location - convert to flexbox and center content */
+  .default-location {
+    padding: 0 20px;
+    display: flex;
+    align-items: flex-end; /* Changed from flex-start to align bottoms */
+    gap: 8px;
+    justify-content: center;
+  }
+
+  /* First div doesn't expand too much */
+  .default-location > div:first-child {
+    flex: 0 0 auto;
+    max-width: 300px;
+  }
+
+  /* Stack label above input within first div */
+  .default-location label {
+    display: block;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .default-location input {
+    width: 100%;
+  }
+
+  /* Button stays next to input */
+  #saveDefaultLocationBtn {
+    flex: 0 0 auto;
+  }
+}
+
+/* Graph popup/tooltip responsive - now handled in graph.js with zoom */
+
+@media (max-width: 420px) {
+  /* Planet description popup - position higher */
+  .planet-tooltip-instance {
+    position: relative;
+    top: -100px;
+    margin-bottom: -100px;
+  }
+
+  /* Cover the empty space at top with white */
+  .planet-tooltip-instance::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    height: 120px;
+    background: white;
+    z-index: -1;
+  }
+}
+
+/* Chat input layout fixes for mobile */
+@media (max-width: 600px) {
+  #chatInputRow {
+    gap: 5px; /* Reduce gap on mobile */
+    padding: 0 10px; /* Add padding so button doesn't touch edge */
+  }
+
+  #chatInput {
+    min-width: 0; /* Allow input to shrink properly */
+    flex: 1 1 auto; /* Ensure it can shrink */
+  }
+
+  #sendMessage {
+    flex-shrink: 0; /* Prevent button from shrinking */
+  }
+}
+
+/* Location suggestions box - make responsive on mobile */
+@media (max-width: 600px) {
+  .suggestions-box {
+    width: auto; /* Let it size based on left/right */
+    left: 8px; /* 8px from left edge */
+    right: 8px; /* 8px from right edge */
+    max-width: 448px; /* Keep original max width */
+    transform: none; /* Remove centering transform */
+  }
+}
+
+@media (max-width: 475px) {
+  .custom-location-input::placeholder {
+    opacity: 0;
+  }
+}
+/* More at 420px above */
+
+/* Custom Points Responsive Styles */
+@media (max-width: 600px) {
+  /* Custom points grid - smaller gaps to match other settings sections */
+  .custom-points-grid {
+    gap: 6px 12px;
+  }
+
+  /* Custom point row - smaller gap */
+  .custom-point-row {
+    gap: 3px;
+  }
+
+  /* Custom point row elements - smaller fonts */
+  .custom-point-number {
+    font-size: 18px;
+  }
+
+  .custom-point-name {
+    font-size: 16px;
+  }
+
+  .custom-point-delete {
+    font-size: 12px;
+    padding: 2px 5px;
+    margin-left: 2px;
+  }
+
+  /* Custom point input row - smaller gap */
+  .custompoint-input-row {
+    gap: 6px;
+  }
+
+  /* Custom point input - smaller */
+  .custom-point-input {
+    font-size: 16px;
+    width: 170px;
+  }
+
+  .custom-point-ghost {
+    font-size: 16px;
+  }
+
+  /* Error message smaller */
+  .errorMessageCustomPoints {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  /* Custom points grid - even smaller gaps to match other settings sections */
+  .custom-points-grid {
+    gap: 4px 8px;
+  }
+
+  /* Custom point row - even smaller gap */
+  .custom-point-row {
+    gap: 2px;
+  }
+
+  /* Custom point row elements - even smaller fonts */
+  .custom-point-number {
+    font-size: 16px;
+  }
+
+  .custom-point-name {
+    font-size: 14px;
+  }
+
+  .custom-point-delete {
+    font-size: 11px;
+    padding: 1px 4px;
+    margin-left: 2px;
+  }
+
+  /* Custom point row checkbox - match other settings checkboxes at this breakpoint */
+  .custom-point-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Custom point input row - even smaller gap */
+  .custompoint-input-row {
+    gap: 4px;
+  }
+
+  /* Custom point input - even smaller */
+  .custom-point-input {
+    font-size: 14px;
+    width: 140px;
+    padding: 2px 3px;
+  }
+
+  .custom-point-ghost {
+    font-size: 14px;
+    left: 4px;
+    top: 3px;
+  }
+
+  /* Error message smaller */
+  .errorMessageCustomPoints {
+    font-size: 16px;
+  }
+}
+
+/* --- Refined location, coordinate and time-zone controls --- */
+.form {
+  position: relative;
+}
+
+.local-chart-location-fields {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 14px;
+  margin-top: 4px;
+  padding: 14px;
+  border: 1px solid #d8e1ec;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(248, 251, 255, 0.98), rgba(243, 247, 252, 0.96));
+  box-shadow: 0 5px 18px rgba(32, 50, 72, 0.07);
+  color: #26384b;
+  font-size: 13px;
+}
+
+.local-coordinate-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 5px;
+}
+
+.local-coordinate-field > label {
+  font-size: 12px;
+  line-height: 1.35;
+  font-weight: 650;
+  color: #40536a;
+}
+
+.local-chart-location-fields input,
+.local-chart-location-fields select {
+  width: 100%;
+  min-width: 0;
+  height: 38px;
+  box-sizing: border-box;
+  border: 1px solid #c7d2df;
+  border-radius: 8px;
+  padding: 7px 10px;
+  background: #fff;
+  color: #203247;
+  font: inherit;
+  box-shadow: inset 0 1px 2px rgba(25, 45, 65, 0.035);
+}
+
+.local-chart-location-fields input:focus,
+.local-chart-location-fields select:focus {
+  outline: 2px solid rgba(91, 135, 190, 0.24);
+  outline-offset: 1px;
+  border-color: #7298c5;
+}
+
+.local-coordinate-field input:disabled {
+  background: #edf1f5;
+  color: #8390a0;
+  cursor: not-allowed;
+}
+
+.local-timezone-field {
+  grid-column: 1 / -1;
+}
+
+.location-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin-top: 1px;
+}
+
+.location-actions button {
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid #c4d1df;
+  border-radius: 9px;
+  background: #fff;
+  color: #2d4967;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.25;
+  cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.location-actions button:hover:not(:disabled) {
+  background: #edf5fd;
+  border-color: #86a6ca;
+  transform: translateY(-1px);
+}
+
+.location-actions button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.location-actions .search-location-button {
+  background: #2d4967;
+  border-color: #2d4967;
+  color: #fff;
+}
+
+.location-actions .search-location-button:hover:not(:disabled) {
+  background: #213b57;
+  border-color: #213b57;
+}
+
+.utc-offset-preview {
+  display: block;
+  flex: 1 1 100%;
+  min-width: 0;
+  margin-top: 2px;
+  padding: 9px 10px;
+  border: 1px solid #dce5ef;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #3b536d;
+  font-size: 12px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.utc-mode-help {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #5a6b7d;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.location-resolution-status {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin: 0;
+  color: #55687c;
+  font-size: 12px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.location-resolution-status:empty {
+  display: none;
+}
+
+.location-resolution-status[data-state="loading"] {
+  color: #526b8b;
+}
+
+.location-resolution-status[data-state="success"] {
+  color: #24654d;
+}
+
+.location-resolution-status[data-state="warning"] {
+  color: #855d1b;
+}
+
+.location-resolution-status[data-state="error"] {
+  color: #a13e3e;
+}
+
+.suggestions-box {
+  box-sizing: border-box;
+  width: min(600px, calc(100vw - 24px));
+  max-width: calc(100vw - 24px);
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #c7d2df;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(28, 43, 61, 0.16);
+  z-index: 100;
+}
+
+.suggestion-item {
+  padding: 8px 11px;
+  border-bottom: 1px solid #edf1f5;
+  color: #2a3c51;
+  font-size: 13px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.suggestion-item:last-child {
+  border-bottom: 0;
+}
+
+.suggestion-item:hover,
+.suggestion-item:focus-visible {
+  background: #eef5fc !important;
+  outline: none;
+}
+
+.lat-long-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e7edf4;
+}
+
+.lat-long-container input,
+.lat-long-container select {
+  box-sizing: border-box;
+  min-height: 32px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 4px 5px;
+  font-size: 12px;
+}
+
+.lat-long-container .custom-location-input {
+  flex: 1 1 120px;
+  width: auto;
+}
+
+.lat-long-container .lat-deg,
+.lat-long-container .lat-min,
+.lat-long-container .lat-sec,
+.lat-long-container .long-deg,
+.lat-long-container .long-min,
+.lat-long-container .long-sec {
+  width: 42px;
+}
+
+.lat-long-container .lat-long-button {
+  min-height: 32px;
+  border: 1px solid #a7bdd4;
+  border-radius: 7px;
+  background: #edf5fc;
+  color: #2d4967;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .local-chart-location-fields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    padding: 11px;
+    border-radius: 11px;
+  }
+
+  .local-timezone-field,
+  .location-actions,
+  .utc-mode-help,
+  .location-resolution-status {
+    grid-column: 1 / -1;
+  }
+
+  .location-actions button {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .suggestions-box {
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: calc(100vw - 32px);
+    max-height: 220px;
+    transform: none;
+  }
+}
+
+/* Explicit city-versus-coordinate mode for chart locations. */
+.coordinate-mode-control {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  padding: 11px 12px;
+  border: 1px solid #cbd8e6;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.coordinate-mode-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  min-width: 0;
+  color: #26384b;
+  cursor: pointer;
+}
+
+.coordinate-mode-option input[type="checkbox"] {
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: #406e9f;
+}
+
+.coordinate-mode-option span {
+  display: grid;
+  gap: 3px;
+}
+
+.coordinate-mode-option strong {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.coordinate-mode-option small {
+  color: #617185;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.apply-coordinates-button {
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid #9bb5d2;
+  border-radius: 8px;
+  color: #244565;
+  background: #edf5fd;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.apply-coordinates-button:hover {
+  background: #e0eefc;
+  border-color: #6f9bc9;
+}
+
+@media (max-width: 540px) {
+  .coordinate-mode-control {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .apply-coordinates-button {
+    width: 100%;
+  }
+}
