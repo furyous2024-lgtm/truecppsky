@@ -863,10 +863,6 @@ function initializeDefaultSettings() {
     resetFormToDefaults();
     const nameField = document.getElementById("settingsName");
     if (nameField) nameField.value = "Default Settings";
-    setFirebaseSettingsStatus(
-      "Preset padrão aplicado. Clique em um preset salvo para selecioná-lo; as alterações só são salvas pelos botões Save Settings.",
-      "info",
-    );
   } catch (err) {
     console.error("Não foi possível inicializar o preset padrão:", err);
   }
