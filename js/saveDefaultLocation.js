@@ -44,20 +44,31 @@ function applyAccountDefaultLocation(value) {
 async function loadAccountDefaultLocation() {
   let accountLocation = "";
   try {
-    const response = await fetch("/api/default-location", {
-      method: "GET",
-      credentials: "same-origin",
-      cache: "no-store",
-      headers: { "Accept": "application/json" },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      accountLocation = String(data.defaultLocation || data.default_location || "").trim();
-    } else {
-      console.warn("Não foi possível carregar a localização padrão da conta:", response.status);
+    // A sleeping or unreachable backend must not hold up chart startup forever.
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2200);
+    try {
+      const response = await fetch("/api/default-location", {
+        method: "GET",
+        credentials: "same-origin",
+        cache: "no-store",
+        headers: { "Accept": "application/json" },
+        signal: controller.signal,
+      });
+      if (response.ok) {
+        const data = await response.json();
+        accountLocation = String(data.defaultLocation || data.default_location || "").trim();
+      } else {
+        console.warn("Não foi possível carregar a localização padrão da conta:", response.status);
+      }
+    } finally {
+      // Keep the deadline active until the response body has also been read.
+      clearTimeout(timeoutId);
     }
   } catch (error) {
-    console.warn("Falha ao carregar a localização padrão da conta:", error);
+    if (error?.name !== "AbortError") {
+      console.warn("Falha ao carregar a localização padrão da conta:", error);
+    }
   }
 
   // Never use a location left in a chart form as a fallback. If the account has not

@@ -1797,6 +1797,19 @@ export function sharedNatal(
     const formData = new FormData(this); // Get the form data
     const formDataObj = Object.fromEntries(formData); // Convert form data to an object
 
+    // Never call the ephemeris service with an empty year. Startup fills missing
+    // defaults before submission; this guard protects manual and chained forms too.
+    const submittedYear = formDataObj.historicalYear ?? formDataObj.year ?? formDataObj.birthYear;
+    const hasYearField = formData.has("historicalYear") || formData.has("year") || formData.has("birthYear");
+    if (hasYearField && String(submittedYear ?? "").trim() === "") {
+      const errorElement = this.querySelector(".errorMessage");
+      if (errorElement) errorElement.textContent = "Missing chart year. Enter a year before calculating.";
+      const loadingOverlay = document.getElementById("loading-overlay");
+      if (loadingOverlay) loadingOverlay.style.display = "none";
+      console.error("Chart submission blocked: year is empty; Swiss Ephemeris was not called.");
+      return;
+    }
+
     // Add return chart location to determine if relocated
     formDataObj.preservedNatalLocation =
       document.getElementById("natalLocation")?.value;

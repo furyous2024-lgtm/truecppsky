@@ -746,6 +746,84 @@ async function fetchRecentSettings(options = {}) {
   }
 }
 
+// Make startup calculation independent of the order in which DOMContentLoaded
+// listeners run. preloadedCharts.js normally fills these fields, but this guard
+// ensures every automatically submitted chart has a complete date even if that
+// module runs later or fails to initialize one of its fields.
+function ensureStartupChartFields() {
+  const now = new Date();
+  const month = now.toLocaleString("en-US", { month: "long" });
+  const day = String(now.getDate());
+  const year = String(now.getFullYear());
+  const hour = String(now.getHours()).padStart(2, "0");
+  const minute = String(now.getMinutes()).padStart(2, "0");
+  const fallbackLocation =
+    document.getElementById("defaultLocation")?.value?.trim() ||
+    "New York City, New York, United States";
+
+  const defaults = {
+    natalName: "Today",
+    natalDay: day,
+    natalMonth: month,
+    natalYear: year,
+    natalHour: hour,
+    natalMinute: minute,
+    natalLocation: fallbackLocation,
+    triwheelDay: day,
+    triwheelMonth: month,
+    triwheelYear: year,
+    triwheelHour: hour,
+    triwheelMinute: minute,
+    triwheelLocation: fallbackLocation,
+    graphStartDay: day,
+    graphStartMonth: month,
+    graphStartYear: String(now.getFullYear() - 1),
+    graphStartHour: hour,
+    graphStartMinute: minute,
+    graphEndDay: day,
+    graphEndMonth: month,
+    graphEndYear: String(now.getFullYear() + 1),
+    graphEndHour: hour,
+    graphEndMinute: minute,
+    graphLocation: fallbackLocation,
+  };
+
+  Object.entries(defaults).forEach(([id, value]) => {
+    const field = document.getElementById(id);
+    if (field && String(field.value ?? "").trim() === "") {
+      field.value = value;
+    }
+  });
+
+  // Validate the main chart's year before calling requestSubmit(), so a missing
+  // year can never be forwarded to Swiss Ephemeris during automatic startup.
+  const yearValue = String(document.getElementById("natalYear")?.value ?? "").trim();
+  return /^-?\d{1,6}$/.test(yearValue);
+}
+
+// Do not let a slow default-location request prevent the page from opening its
+// initial chart. The location can settle for up to 2.5 seconds; after that the
+// built-in fallback is used so the initial calculation can proceed.
+async function waitForDefaultLocationReady(timeoutMs = 2500) {
+  const deadline = Date.now() + timeoutMs;
+  const waitFor = async (promise) => {
+    if (!promise || typeof promise.then !== "function") return;
+    const remaining = deadline - Date.now();
+    if (remaining <= 0) return;
+    let timeoutId;
+    await Promise.race([
+      Promise.resolve(promise).catch(() => {}),
+      new Promise((resolve) => { timeoutId = setTimeout(resolve, remaining); }),
+    ]);
+    if (timeoutId !== undefined) clearTimeout(timeoutId);
+  };
+
+  const first = window.TrueSkyDefaultLocationReady;
+  await waitFor(first);
+  const latest = window.TrueSkyDefaultLocationReady;
+  if (latest && latest !== first) await waitFor(latest);
+}
+
 // Wait until natal.js has initialized sharedNatal and attached the client-side
 // submit handler. Without this barrier, requestSubmit() can run earlier in the same
 // DOMContentLoaded dispatch and fall through to the form's native POST, which reloads
@@ -795,16 +873,9 @@ function initializeDefaultSettings() {
 
   (async () => {
     try {
-      const firstLocationReady = window.TrueSkyDefaultLocationReady;
-      if (firstLocationReady && typeof firstLocationReady.then === "function") {
-        await firstLocationReady;
-      }
-      // Wait once more if authentication refreshed the account's default location
-      // while the first request was still running.
-      const latestLocationReady = window.TrueSkyDefaultLocationReady;
-      if (latestLocationReady && latestLocationReady !== firstLocationReady && typeof latestLocationReady.then === "function") {
-        await latestLocationReady;
-      }
+      // Wait briefly for the account location, but never block the initial chart
+      // indefinitely if the backend is waking up or the request fails.
+      await waitForDefaultLocationReady(2500);
       if (typeof window.TrueSkyApplyAccountDefaultLocation === "function") {
         window.TrueSkyApplyAccountDefaultLocation();
       }
@@ -816,14 +887,17 @@ function initializeDefaultSettings() {
     // submission that would navigate away and recreate the initialization loop.
     const submitHandlerReady = await waitForNatalSubmitHandler();
     const natalForm = document.getElementById("natalForm");
-    if (submitHandlerReady && natalForm) {
+    const startupFieldsReady = ensureStartupChartFields();
+    if (submitHandlerReady && natalForm && startupFieldsReady) {
+      // The form now has a valid year/date even when preloadedCharts.js has not
+      // run its DOMContentLoaded callback yet. Submit only through the JS handler.
       natalForm.requestSubmit();
     } else {
-      setFirebaseSettingsStatus(
-        "O cálculo automático não foi iniciado porque o módulo do cálculo não terminou de inicializar. Recarregue a página e tente novamente.",
-        "warning",
-      );
-      console.error("O formulário natal não está pronto para calcular; envio automático cancelado para evitar recarregamento da página.");
+      const message = !startupFieldsReady
+        ? "O cálculo inicial foi cancelado porque o ano do mapa não é válido. Verifique o campo Year e tente novamente."
+        : "O cálculo automático não foi iniciado porque o módulo do cálculo não terminou de inicializar. Recarregue a página e tente novamente.";
+      setFirebaseSettingsStatus(message, "warning");
+      console.error(message);
     }
   })();
 }
