@@ -7,15 +7,44 @@
   const PENDING_KEY = "TRUESKY_AUTH_REDIRECT_PENDING";
   const PENDING_TIME_KEY = "TRUESKY_AUTH_PENDING_TIME";
   const LOGIN_EMAIL_KEY = "TRUESKY_LOGIN_EMAIL";
+  const BOUNCE_KEY = "TRUESKY_AUTH_GUARD_BOUNCE_AT";
+  const BOUNCE_MAX_MS = 60 * 1000;
   const MANUAL_MAX_MS = 30 * 24 * 60 * 60 * 1000;
   let auth = null;
   let db = null;
   let ready = false;
   let redirecting = false;
+  let finishingLogin = false;
+  let loginActionInProgress = false;
 
   function $(id) { return document.getElementById(id); }
   function show(el, active) { if (el) el.classList.toggle("active", !!active); }
   function normalizeEmail(email) { return String(email || "").trim().toLowerCase(); }
+
+  function hasRecentGuardBounce() {
+    let raw = null;
+    try { raw = sessionStorage.getItem(BOUNCE_KEY) || localStorage.getItem(BOUNCE_KEY); } catch (_) {}
+    const stamp = Number(raw || 0);
+    const age = Date.now() - stamp;
+    return Number.isFinite(stamp) && stamp > 0 && age >= 0 && age < BOUNCE_MAX_MS;
+  }
+
+  function clearGuardBounce() {
+    try { sessionStorage.removeItem(BOUNCE_KEY); } catch (_) {}
+    try { localStorage.removeItem(BOUNCE_KEY); } catch (_) {}
+  }
+
+  function showSessionRecovery(user) {
+    const box = $("signed-in-box");
+    const email = $("signed-in-email");
+    const options = $("login-options");
+    const emailSection = $("email-section");
+    if (email) email.textContent = (user && (user.email || user.displayName)) || "Conta conectada";
+    if (box) box.style.display = "block";
+    if (options) options.style.display = "none";
+    if (emailSection) emailSection.classList.remove("active");
+    setMessage("Sua sessão está conectada, mas a página principal não conseguiu confirmá-la. O redirecionamento automático foi pausado para evitar um ciclo. Clique em Entrar uma vez para tentar novamente.");
+  }
 
   function setMessage(message, type) {
     const error = $("login-error");
@@ -165,8 +194,11 @@
       setMessage("O Firebase não retornou usuário. Tente novamente.");
       return;
     }
+    if (finishingLogin || redirecting) return;
+    finishingLogin = true;
     markManual(user);
     setPending();
+    clearGuardBounce();
     setMessage("Login concluído. Entrando...", "success");
     saveProfile(user, method);
     try { await user.getIdToken(true); } catch (_) {}
@@ -210,6 +242,7 @@
 
   window.trueskyGoogleLogin = async function () {
     if (!(await initFirebase())) return;
+    loginActionInProgress = true;
     const btn = $("google-login-btn");
     if (btn) { btn.disabled = true; btn.textContent = "Abrindo Google..."; }
     setMessage("");
@@ -234,6 +267,7 @@
           setMessage(firebaseError(redirectErr));
         }
       } else {
+        loginActionInProgress = false;
         clearPending();
         setMessage(firebaseError(err));
       }
@@ -272,6 +306,7 @@
 
   window.trueskyContinueToSite = function () {
     markManual(auth && auth.currentUser);
+    clearGuardBounce();
     enterSite();
   };
 
@@ -302,6 +337,7 @@
         let email = localStorage.getItem(EMAIL_KEY) || "";
         if (!email) email = normalizeEmail(window.prompt("Confirme seu email para concluir o login:"));
         if (email) {
+          loginActionInProgress = true;
           const result = await auth.signInWithEmailLink(email, window.location.href);
           localStorage.removeItem(EMAIL_KEY);
           window.history.replaceState({}, document.title, "/login");
@@ -315,8 +351,20 @@
     }
 
     auth.onAuthStateChanged(async (user) => {
-      if (redirecting) return;
+      if (redirecting || finishingLogin) return;
       if (user) {
+        // If the protected page just sent us back, do not automatically send
+        // the same session there again. A single explicit click retries it.
+        const googleRedirectPending = sessionStorage.getItem("TRUESKY_GOOGLE_REDIRECT_PENDING") === "1" || localStorage.getItem("TRUESKY_GOOGLE_REDIRECT_PENDING") === "1";
+        if (!loginActionInProgress && !googleRedirectPending && hasRecentGuardBounce()) {
+          showSessionRecovery(user);
+          updateSignedBox(user);
+          const box = $("signed-in-box");
+          if (box) box.style.display = "block";
+          const options = $("login-options");
+          if (options) options.style.display = "none";
+          return;
+        }
         await finishLogin(user, "firebase_session");
         return;
       }
