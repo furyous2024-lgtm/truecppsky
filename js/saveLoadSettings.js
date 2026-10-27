@@ -801,10 +801,9 @@ function ensureStartupChartFields() {
   return /^-?\d{1,6}$/.test(yearValue);
 }
 
-// Do not let a slow default-location request prevent the page from opening its
-// initial chart. The location can settle for up to 2.5 seconds; after that the
-// built-in fallback is used so the initial calculation can proceed.
-async function waitForDefaultLocationReady(timeoutMs = 2500) {
+// Give Firebase auth and the account-location lookup enough time to settle before
+// calculating the initial chart. The bounded wait still prevents startup from hanging.
+async function waitForDefaultLocationReady(timeoutMs = 8000) {
   const deadline = Date.now() + timeoutMs;
   const waitFor = async (promise) => {
     if (!promise || typeof promise.then !== "function") return;
@@ -869,9 +868,9 @@ function initializeDefaultSettings() {
 
   (async () => {
     try {
-      // Wait briefly for the account location, but never block the initial chart
-      // indefinitely if the backend is waking up or the request fails.
-      await waitForDefaultLocationReady(2500);
+      // Wait for the account location long enough to avoid a false New York fallback,
+      // but never block the initial chart indefinitely if auth/network is unavailable.
+      await waitForDefaultLocationReady(8000);
       if (typeof window.TrueSkyApplyAccountDefaultLocation === "function") {
         window.TrueSkyApplyAccountDefaultLocation();
       }
