@@ -713,6 +713,9 @@ const EXPLICIT_SETTINGS_MARKER = "__trueSkyExplicitlySaved";
 
 function serializeExplicitSettings() {
   const settings = getSettingsData();
+  // Location is deliberately excluded from named presets and saved preferences.
+  // The account Default Location remains managed separately by its own control.
+  delete settings.locationSettings;
   // The marker distinguishes settings saved with an explicit button click from
   // older records created by the removed autosave behavior.
   settings[EXPLICIT_SETTINGS_MARKER] = true;
@@ -1354,29 +1357,9 @@ function loadSettingsIntoForm(settings) {
   }
   syncCustomAyanamsaField();
 
-  // Restore the location mode and coordinate/time-zone values from saved preferences.
-  const savedLocation = settings.locationSettings;
-  if (savedLocation && typeof savedLocation === "object") {
-    const locationFields = {
-      location: document.querySelector('#natalForm [name="location"]'),
-      lat: document.querySelector('#natalForm [name="lat"]'),
-      long: document.querySelector('#natalForm [name="long"]'),
-      timezone: document.querySelector('#natalForm [name="timezone"]'),
-      utcMode: document.querySelector('#natalForm [name="utcMode"]'),
-      utcOffset: document.querySelector('#natalForm [name="utcOffset"]'),
-    };
-    Object.entries(locationFields).forEach(([key, element]) => {
-      if (element && savedLocation[key] !== undefined && savedLocation[key] !== null) {
-        element.value = String(savedLocation[key]);
-      }
-    });
-    const coordinateToggle = document.querySelector('#natalForm [name="useCoordinates"]');
-    if (coordinateToggle) coordinateToggle.checked = savedLocation.useCoordinates === true || savedLocation.useCoordinates === "true";
-    locationFields.lat && (locationFields.lat.dataset.manual = coordinateToggle?.checked ? "true" : "false");
-    locationFields.long && (locationFields.long.dataset.manual = coordinateToggle?.checked ? "true" : "false");
-    locationFields.utcMode?.dispatchEvent(new Event("change", { bubbles: true }));
-  }
-
+  // Never restore location from a saved preset, including legacy presets that
+  // still contain locationSettings. Keep the active/account Default Location
+  // and its coordinates/time zone unchanged when applying settings.
   // Load graph planet settings
   for (const planet in settings.graphSettings.planetSettings) {
     const graphPlanet = settings.graphSettings.planetSettings[planet];
