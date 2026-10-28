@@ -1,4 +1,56 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" aria-label="scorpio zodiac sign">
-  <path d="M767 -191 786 -118H741Q668 -118 625.0 -88.0Q582 -58 563.0 6.5Q544 71 544 176V532Q544 568 536.0 604.5Q528 641 514 663Q500 651 480.0 624.5Q460 598 440.5 566.0Q421 534 406.5 505.5Q392 477 390 462V0H320V517Q320 554 313.0 591.0Q306 628 290 663Q276 651 256.0 624.5Q236 598 216.5 566.0Q197 534 182.5 505.5Q168 477 166 462V0H96V525Q96 596 51 714H104Q118 692 132.5 657.5Q147 623 160 575Q169 592 187.5 618.0Q206 644 227.0 670.5Q248 697 266 714H325Q343 688 359.5 647.5Q376 607 382 575Q391 593 410.0 618.5Q429 644 451.5 670.0Q474 696 492 714H551Q585 668 599.5 623.0Q614 578 614 528V176Q614 87 626.5 36.5Q639 -14 667.0 -35.0Q695 -56 741 -56H786L767 17L903 -87Z" transform="translate(4.671823 74.849724) scale(0.095028 -0.095028)" fill="#000000"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- <svg width="16" height="16" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path style="fill:none;stroke:#000;stroke-width:.600201;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M10.012 8.24V6.99h1.25M1.367 4.383A1.25 1.25 0 1 1 3.5 3.5v5m0-5a1.25 1.25 0 0 1 2.5 0v5m0-5a1.25 1.25 0 0 1 2.5 0v5a1.25 1.25 0 1 0 2.134-.884l-.5-.5"/></svg> -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 12 12"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="scorpio.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     inkscape:zoom="50.5"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.75"
+       spacingy="0.75"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1.00366;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 9.8020463,8.3964215 V 7.0677068 H 10.986629 M 1.6094775,4.2965392 a 1.1845819,1.3287147 0 1 1 2.0213708,-0.938604 v 5.3148591 m 0,-5.3148591 a 1.1845821,1.328715 0 0 1 2.369164,0 v 5.3148591 m 0,-5.3148591 a 1.1845819,1.3287149 0 0 1 2.3691638,0 V 8.6727943 A 1.1845819,1.3287147 0 1 0 10.391494,7.7331271 L 9.9176616,7.2016413"
+     id="path1" />
 </svg>

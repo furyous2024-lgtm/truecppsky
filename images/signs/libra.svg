@@ -1,4 +1,56 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" aria-label="libra zodiac sign">
-  <path d="M51 233V303H317Q280 332 257.5 377.5Q235 423 235 467Q235 531 266.0 582.5Q297 634 350.5 665.0Q404 696 469 696Q534 696 587.0 665.0Q640 634 671.5 582.5Q703 531 703 467Q703 424 681.5 379.0Q660 334 621 303H887V233H516V310Q567 327 600.0 371.0Q633 415 633 467Q633 514 611.5 551.0Q590 588 553.0 609.5Q516 631 469 631Q422 631 385.0 609.0Q348 587 326.5 550.0Q305 513 305 467Q305 414 338.5 370.0Q372 326 422 310V233ZM51 0V70H886V0Z" transform="translate(1.753589 85.799043) scale(0.102871 -0.102871)" fill="#000000"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- <svg width="16" height="16" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path style="clip-rule:nonzero;fill:none;stroke:#000;stroke-width:.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M1 6h2.5a2.5 2.5 0 0 1 5 0H11M1 8.5h10"/></svg> -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 12 12"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="libra.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     inkscape:zoom="50.5"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.75"
+       spacingy="0.75"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <path
+     style="clip-rule:nonzero;fill:none;stroke:#000000;stroke-width:1.0224;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 0.75,5.9999976 h 2.6249999 a 2.6249999,2.4887985 0 0 1 5.2499998,0 H 11.25 M 0.75,8.4887961 h 10.5"
+     id="path1" />
 </svg>
