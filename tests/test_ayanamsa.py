@@ -111,6 +111,41 @@ class AyanamsaTests(unittest.TestCase):
             service.swe.get_ayanamsa_ut(jd),
         )
 
+    def test_tropical_precessed_uses_zero_at_j2000_and_precesses_ancient_dates(self):
+        j2000 = service.swe.julday(2000, 1, 1, 12.0, service.swe.GREG_CAL)
+        modern_jd = service.swe.julday(2026, 11, 5, 12.0, service.swe.GREG_CAL)
+        bce_jd = service.swe.julday(-499, 1, 1, 12.0, service.swe.GREG_CAL)
+
+        self.assertAlmostEqual(
+            self.resolve(
+                "Tropical Precessed",
+                historicalYear=2000,
+                month=1,
+                day=1,
+                hour=12,
+            ),
+            0.0,
+            places=6,
+        )
+
+        modern_value = self.resolve(
+            "Tropical Precessed",
+            historicalYear=2026,
+            month=11,
+            day=5,
+            hour=12,
+        )
+        bce_value = self.resolve(
+            "Tropical Precessed",
+            historicalYear=-500,
+            hour=12,
+        )
+        service.swe.set_sid_mode(service.swe.SIDM_USER, j2000, 0.0)
+        self.assertAlmostEqual(modern_value, service.swe.get_ayanamsa_ut(modern_jd))
+        self.assertAlmostEqual(bce_value, service.swe.get_ayanamsa_ut(bce_jd))
+        self.assertGreater(modern_value, 0.0)
+        self.assertNotAlmostEqual(bce_value, 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()

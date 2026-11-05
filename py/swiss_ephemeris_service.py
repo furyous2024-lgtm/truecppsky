@@ -162,6 +162,7 @@ AYANAMSA_MODES = {
 
 RESERVED_AYANAMSA_NAMES = {
     'tropical',
+    'tropical precessed',
     'custom',
     'custom precessed',
     *(name.casefold() for name, _ in AYANAMSA_MODES.values()),
@@ -173,6 +174,7 @@ def current_ayanamsa_values(req, now_jd=None):
     if now_jd is None:
         now_jd = julday(datetime.datetime.now(datetime.timezone.utc))
     values = {'Tropical': 0.0}
+    values['Tropical Precessed'] = precess_custom_ayanamsa(0.0, now_jd)
     try:
         custom_value = parse_float_field(req, ['customAyanamsa'], default=0.0)
     except ValueError:
@@ -329,6 +331,8 @@ def resolve_ayanamsa(req, jd):
     ).strip()
     if selected_ayanamsa:
         ayanamsa_name = selected_ayanamsa.lower()
+        if ayanamsa_name == 'tropical precessed':
+            return precess_custom_ayanamsa(0.0, jd)
         if ayanamsa_name in ('custom', 'custom precessed'):
             if req.get('customAyanamsa') in (None, ''):
                 raise ValueError('customAyanamsa is required when using the Custom ayanamsa system')
