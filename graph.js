@@ -447,9 +447,6 @@ document.getElementById("graphForm").addEventListener("submit", async function (
   const selectedZodiacSystem = document.querySelector(
     '#system-settings select[name="zodiacSystem"]'
   ).value;
-  const selectedZodiacBase = document.querySelector(
-    '#system-settings select[name="zodiacBase"]'
-  ).value;
   const selectedAyanamsaSystem = document.querySelector(
     '#system-settings select[name="ayanamsaSystem"]'
   ).value;
@@ -474,11 +471,9 @@ document.getElementById("graphForm").addEventListener("submit", async function (
     ).map((select) => [select.dataset.aspect, Number(select.value)])
   );
   combinedData.selectedZodiacSystem = selectedZodiacSystem;
-  combinedData.selectedZodiacBase = selectedZodiacBase;
   combinedData.selectedAyanamsaSystem = selectedAyanamsaSystem;
   if (
-    selectedAyanamsaSystem === "Custom" ||
-    selectedAyanamsaSystem === "Custom Raw"
+    selectedAyanamsaSystem === "Custom"
   ) {
     combinedData.customAyanamsa = customAyanamsa;
   }

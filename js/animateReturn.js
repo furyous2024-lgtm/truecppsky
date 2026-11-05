@@ -138,13 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedZodiacSystem = zodiacSystemEl
       ? zodiacSystemEl.value
       : "Tropical";
-    const zodiacBaseEl = document.querySelector(
-      "#system-settings select[name='zodiacBase']"
-    );
-    const selectedZodiacBase = zodiacBaseEl
-      ? zodiacBaseEl.value
-      : "Tropical";
-
     // grab the user’s coordinate system choice (Geocentric vs Topocentric)
     const coordinateSystemEl = document.querySelector(
       "#system-settings select[name='coordinateSystem']"
@@ -169,7 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
       returnLocation: locationField.value || natalData.location,
       returnType,
       selectedZodiacSystem,
-      selectedZodiacBase,
       selectedCoordinateSystem,
     };
 

@@ -1893,9 +1893,6 @@ export function sharedNatal(
     const selectedZodiacSystem = document.querySelector(
       '#system-settings select[name="zodiacSystem"]',
     ).value;
-    const selectedZodiacBase = document.querySelector(
-      '#system-settings select[name="zodiacBase"]',
-    ).value;
 
     const selectedHouseSystem = document.querySelector(
       '#system-settings select[name="houseSystem"]',
@@ -1913,7 +1910,6 @@ export function sharedNatal(
     formDataObj.selectedPlanetsAspects = selectedPlanetsAspects;
     formDataObj.selectedAspects = selectedAspects;
     formDataObj.selectedZodiacSystem = selectedZodiacSystem;
-    formDataObj.selectedZodiacBase = selectedZodiacBase;
     formDataObj.selectedHouseSystem = selectedHouseSystem;
     formDataObj.selectedCoordinateSystem = selectedCoordinateSystem;
     formDataObj.ascendantOverride = ascendantOverride;
@@ -1964,7 +1960,6 @@ export function sharedNatal(
         selectedPlanetsAspects,
         selectedAspects,
         zodiacSystem: selectedZodiacSystem,
-        zodiacBase: selectedZodiacBase,
         houseSystem: selectedHouseSystem,
         coordinateSystem: selectedCoordinateSystem,
         ascendantOverride,
@@ -3604,9 +3599,6 @@ export function sharedNatal(
         const zEl = document.querySelector(
           '#system-settings select[name="zodiacSystem"]',
         );
-        const zbEl = document.querySelector(
-          '#system-settings select[name="zodiacBase"]',
-        );
         const ayEl = document.querySelector(
           '#system-settings select[name="ayanamsaSystem"]',
         );
@@ -3684,7 +3676,6 @@ export function sharedNatal(
 
         const stale =
           (zEl && stored.zodiacSystem !== zEl.value) ||
-          (zbEl && (stored.zodiacBase || "Tropical") !== zbEl.value) ||
           (ayEl && (stored.ayanamsaSystem || "Tropical") !== ayEl.value) ||
           (ayEl &&
             ayEl.value === "Custom" &&
@@ -3779,9 +3770,6 @@ export function sharedNatal(
     const selectedZodiacSystem = document.querySelector(
       '#system-settings select[name="zodiacSystem"]',
     ).value;
-    const selectedZodiacBase = document.querySelector(
-      '#system-settings select[name="zodiacBase"]',
-    ).value;
 
     const selectedHouseSystem = document.querySelector(
       '#system-settings select[name="houseSystem"]',
@@ -3797,8 +3785,6 @@ export function sharedNatal(
 
     formDataObj.selectedZodiacSystem = selectedZodiacSystem;
     combinedData.selectedZodiacSystem = selectedZodiacSystem;
-    formDataObj.selectedZodiacBase = selectedZodiacBase;
-    combinedData.selectedZodiacBase = selectedZodiacBase;
 
     formDataObj.selectedHouseSystem = selectedHouseSystem;
     combinedData.selectedHouseSystem = selectedHouseSystem;

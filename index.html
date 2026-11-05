@@ -1314,14 +1314,6 @@
 <hr class="section-divider" />
 
 <div id="system-settings" class="system-settings">
-  <label class="type-icon" for="zodiacBase">
-    Zodiac base:
-  </label>
-  <select id="zodiacBase" name="zodiacBase">
-    <option value="Tropical" selected>Tropical</option>
-    <option value="J2000">J2000</option>
-  </select>
-
   <label class="type-icon">
     Zodiac system:
   </label>
@@ -1339,56 +1331,68 @@
     name="ayanamsaSystem"
     title="Named presets can be added in json/customAyanamsas.json"
   >
-    <option value="Tropical" selected>Tropical</option>
-    <option value="Fagan/Bradley">Fagan/Bradley</option>
-    <option value="Lahiri">Lahiri</option>
-    <option value="DeLuce">DeLuce</option>
-    <option value="Raman">Raman</option>
-    <option value="Babylonian/Eta Piscium">Babylonian/Eta Piscium</option>
-    <option value="Babylonian/Aldebaran = 15 Tau">Babylonian/Aldebaran = 15 Tau</option>
-    <option value="Galact. Center = 0 Sag">Galact. Center = 0 Sag</option>
-    <option value="J2000">J2000</option>
-    <option value="Custom">Custom</option>
-    <option value="Usha/Shashi">Usha/Shashi</option>
-    <option value="Krishnamurti">Krishnamurti</option>
-    <option value="Djwhal Khul">Djwhal Khul</option>
-    <option value="Yukteshwar">Yukteshwar</option>
-    <option value="J.N. Bhasin">J.N. Bhasin</option>
-    <option value="Babylonian/Kugler 1">Babylonian/Kugler 1</option>
-    <option value="Babylonian/Kugler 2">Babylonian/Kugler 2</option>
-    <option value="Babylonian/Kugler 3">Babylonian/Kugler 3</option>
-    <option value="Babylonian/Huber">Babylonian/Huber</option>
-    <option value="Hipparchos">Hipparchos</option>
-    <option value="Sassanian">Sassanian</option>
-    <option value="J1900">J1900</option>
-    <option value="B1950">B1950</option>
-    <option value="Suryasiddhanta">Suryasiddhanta</option>
-    <option value="Suryasiddhanta, mean Sun">Suryasiddhanta, mean Sun</option>
-    <option value="Aryabhata">Aryabhata</option>
-    <option value="Aryabhata, mean Sun">Aryabhata, mean Sun</option>
-    <option value="SS Revati">SS Revati</option>
-    <option value="SS Citra">SS Citra</option>
-    <option value="True Citra">True Citra</option>
-    <option value="True Revati">True Revati</option>
-    <option value="True Pushya">True Pushya</option>
-    <option value="Galactic Center (Gil Brand)">Galactic Center (Gil Brand)</option>
-    <option value="Galactic Equator (IAU 1958)">Galactic Equator (IAU 1958)</option>
-    <option value="Galactic Equator (True)">Galactic Equator (True)</option>
-    <option value="Galactic Equator (Mula)">Galactic Equator (Mula)</option>
-    <option value="Galactic Alignment (Mardyks)">Galactic Alignment (Mardyks)</option>
-    <option value="True Mula">True Mula</option>
-    <option value="Galactic Center (Mula/Wilhelm)">Galactic Center (Mula/Wilhelm)</option>
-    <option value="Aryabhata 522">Aryabhata 522</option>
-    <option value="Babylonian/Britton">Babylonian/Britton</option>
-    <option value="True Sheoran">True Sheoran</option>
-    <option value="Galactic Center (Cochrane)">Galactic Center (Cochrane)</option>
-    <option value="Galactic Equator (Fiorenza)">Galactic Equator (Fiorenza)</option>
-    <option value="Valens Moon">Valens Moon</option>
-    <option value="Lahiri 1940">Lahiri 1940</option>
-    <option value="Lahiri VP285">Lahiri VP285</option>
-    <option value="Krishnamurti VP291">Krishnamurti VP291</option>
-    <option value="Lahiri ICRC">Lahiri ICRC</option>
-    <option value="Custom Raw" title="Valor personalizado relativo à base zodiacal selecionada">Custom Raw (selected zodiac base)</option>
+    <optgroup label="Standard">
+      <option value="Tropical" selected>Tropical</option>
+      <option value="J2000">J2000</option>
+      <option value="Custom">Custom</option>
+    </optgroup>
+    <optgroup label="Popular sidereal">
+      <option value="Lahiri">Lahiri</option>
+      <option value="Fagan/Bradley">Fagan/Bradley</option>
+      <option value="Raman">Raman</option>
+      <option value="Krishnamurti">Krishnamurti</option>
+      <option value="DeLuce">DeLuce</option>
+      <option value="Lahiri 1940">Lahiri 1940</option>
+      <option value="Lahiri VP285">Lahiri VP285</option>
+      <option value="Lahiri ICRC">Lahiri ICRC</option>
+      <option value="Krishnamurti VP291">Krishnamurti VP291</option>
+    </optgroup>
+    <optgroup label="Indian traditions">
+      <option value="Usha/Shashi">Usha/Shashi</option>
+      <option value="Yukteshwar">Yukteshwar</option>
+      <option value="J.N. Bhasin">J.N. Bhasin</option>
+      <option value="Djwhal Khul">Djwhal Khul</option>
+      <option value="Suryasiddhanta">Suryasiddhanta</option>
+      <option value="Suryasiddhanta, mean Sun">Suryasiddhanta, mean Sun</option>
+      <option value="Aryabhata">Aryabhata</option>
+      <option value="Aryabhata, mean Sun">Aryabhata, mean Sun</option>
+      <option value="Aryabhata 522">Aryabhata 522</option>
+    </optgroup>
+    <optgroup label="Babylonian">
+      <option value="Babylonian/Eta Piscium">Babylonian/Eta Piscium</option>
+      <option value="Babylonian/Aldebaran = 15 Tau">Babylonian/Aldebaran = 15 Tau</option>
+      <option value="Babylonian/Kugler 1">Babylonian/Kugler 1</option>
+      <option value="Babylonian/Kugler 2">Babylonian/Kugler 2</option>
+      <option value="Babylonian/Kugler 3">Babylonian/Kugler 3</option>
+      <option value="Babylonian/Huber">Babylonian/Huber</option>
+      <option value="Babylonian/Britton">Babylonian/Britton</option>
+    </optgroup>
+    <optgroup label="Historical and epoch-based">
+      <option value="Hipparchos">Hipparchos</option>
+      <option value="Sassanian">Sassanian</option>
+      <option value="J1900">J1900</option>
+      <option value="B1950">B1950</option>
+      <option value="Valens Moon">Valens Moon</option>
+    </optgroup>
+    <optgroup label="Star and galactic reference">
+      <option value="Galact. Center = 0 Sag">Galact. Center = 0 Sag</option>
+      <option value="SS Revati">SS Revati</option>
+      <option value="SS Citra">SS Citra</option>
+      <option value="True Citra">True Citra</option>
+      <option value="True Revati">True Revati</option>
+      <option value="True Pushya">True Pushya</option>
+      <option value="True Mula">True Mula</option>
+      <option value="True Sheoran">True Sheoran</option>
+      <option value="Galactic Center (Gil Brand)">Galactic Center (Gil Brand)</option>
+      <option value="Galactic Center (Mula/Wilhelm)">Galactic Center (Mula/Wilhelm)</option>
+      <option value="Galactic Center (Cochrane)">Galactic Center (Cochrane)</option>
+      <option value="Galactic Equator (IAU 1958)">Galactic Equator (IAU 1958)</option>
+      <option value="Galactic Equator (True)">Galactic Equator (True)</option>
+      <option value="Galactic Equator (Mula)">Galactic Equator (Mula)</option>
+      <option value="Galactic Equator (Fiorenza)">Galactic Equator (Fiorenza)</option>
+      <option value="Galactic Alignment (Mardyks)">Galactic Alignment (Mardyks)</option>
+    </optgroup>
+    <optgroup label="Custom presets" data-custom-ayanamsas hidden></optgroup>
   </select>
 
   <label class="type-icon custom-ayanamsa-label" for="customAyanamsa" hidden>

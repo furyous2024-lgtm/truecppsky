@@ -24,29 +24,16 @@ function syncCustomAyanamsaField() {
   const input = document.querySelector(
     '#system-settings input[name="customAyanamsa"]',
   );
-  const zodiacBaseSelect = document.querySelector(
-    '#system-settings select[name="zodiacBase"]',
-  );
   const label = document.querySelector("#system-settings .custom-ayanamsa-label");
   const field = document.querySelector("#system-settings .custom-ayanamsa-field");
   if (!select || !input || !field || !label) return;
 
   const customSelected = select.value === "Custom";
-  const rawSelected = select.value === "Custom Raw";
-  const fieldSelected = customSelected || rawSelected;
-  const rawBase = zodiacBaseSelect?.value || "Tropical";
-  input.required = fieldSelected;
-  input.setAttribute(
-    "aria-label",
-    rawSelected
-      ? `Custom raw ayanamsa base at ${rawBase} in degrees`
-      : "Custom ayanamsa in degrees",
-  );
-  label.textContent = rawSelected
-    ? `Custom raw base at ${rawBase}:`
-    : "Custom ayanamsa:";
-  field.hidden = !fieldSelected;
-  label.hidden = !fieldSelected;
+  input.required = customSelected;
+  input.setAttribute("aria-label", "Custom ayanamsa in degrees");
+  label.textContent = "Custom ayanamsa:";
+  field.hidden = !customSelected;
+  label.hidden = !customSelected;
 }
 
 async function loadCustomAyanamsaPresets() {
@@ -63,6 +50,12 @@ async function loadCustomAyanamsaPresets() {
     '#system-settings select[name="ayanamsaSystem"]',
   );
   if (!select) return;
+  const customPresetsGroup = select.querySelector(
+    "optgroup[data-custom-ayanamsas]",
+  );
+  if (!customPresetsGroup) {
+    throw new Error("Custom ayanamsa presets group is missing.");
+  }
 
   const existingValues = new Set(
     Array.from(select.options, (option) => option.value.toLowerCase()),
@@ -79,7 +72,8 @@ async function loadCustomAyanamsaPresets() {
     ) {
       throw new Error(`Invalid or duplicate custom ayanamsa preset: ${name}`);
     }
-    select.add(new Option(name, name));
+    customPresetsGroup.append(new Option(name, name));
+    customPresetsGroup.hidden = false;
     existingValues.add(name.toLowerCase());
   }
 }
@@ -148,9 +142,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   syncCustomAyanamsaField();
   document
     .querySelector('#system-settings select[name="ayanamsaSystem"]')
-    ?.addEventListener("change", syncCustomAyanamsaField);
-  document
-    .querySelector('#system-settings select[name="zodiacBase"]')
     ?.addEventListener("change", syncCustomAyanamsaField);
 });
 
@@ -1367,7 +1358,6 @@ function loadSettingsIntoForm(settings) {
 
   // Load system settings, migrating older profiles that stored ayanamsa in zodiacSystem.
   const zodiacSelect = document.querySelector(`select[name="zodiacSystem"]`);
-  const zodiacBaseSelect = document.querySelector(`select[name="zodiacBase"]`);
   const ayanamsaSelect = document.querySelector(
     `select[name="ayanamsaSystem"]`,
   );
@@ -1392,16 +1382,6 @@ function loadSettingsIntoForm(settings) {
 
   if (zodiacSelect) {
     zodiacSelect.value = zodiacValue;
-  }
-  if (zodiacBaseSelect) {
-    const zodiacBaseOptions = Array.from(
-      zodiacBaseSelect.options,
-      (option) => option.value,
-    );
-    const savedZodiacBase = savedSystemSettings.zodiacBase || "Tropical";
-    zodiacBaseSelect.value = zodiacBaseOptions.includes(savedZodiacBase)
-      ? savedZodiacBase
-      : "Tropical";
   }
   if (ayanamsaSelect) {
     ayanamsaSelect.value = ayanamsaOptions.includes(ayanamsaValue)
@@ -1771,7 +1751,6 @@ function getSettingsData() {
       })),
     },
     systemSettings: {
-      zodiacBase: document.querySelector('select[name="zodiacBase"]').value,
       zodiacSystem: document.querySelector('select[name="zodiacSystem"]').value,
       ayanamsaSystem: document.querySelector(
         'select[name="ayanamsaSystem"]',
@@ -2187,7 +2166,6 @@ function resetFormToDefaults() {
     "3";
 
   // Reset system settings to default values (first option is default)
-  document.querySelector('select[name="zodiacBase"]').value = "Tropical";
   document.querySelector('select[name="zodiacSystem"]').value = "Tropical";
   document.querySelector('select[name="ayanamsaSystem"]').value = "Tropical";
   document.querySelector('input[name="customAyanamsa"]').value = "0";
