@@ -1360,6 +1360,7 @@ function loadSettingsIntoForm(settings) {
 
   // Load system settings, migrating older profiles that stored ayanamsa in zodiacSystem.
   const zodiacSelect = document.querySelector(`select[name="zodiacSystem"]`);
+  const zodiacBaseSelect = document.querySelector(`select[name="zodiacBase"]`);
   const ayanamsaSelect = document.querySelector(
     `select[name="ayanamsaSystem"]`,
   );
@@ -1384,6 +1385,16 @@ function loadSettingsIntoForm(settings) {
 
   if (zodiacSelect) {
     zodiacSelect.value = zodiacValue;
+  }
+  if (zodiacBaseSelect) {
+    const zodiacBaseOptions = Array.from(
+      zodiacBaseSelect.options,
+      (option) => option.value,
+    );
+    const savedZodiacBase = savedSystemSettings.zodiacBase || "Tropical";
+    zodiacBaseSelect.value = zodiacBaseOptions.includes(savedZodiacBase)
+      ? savedZodiacBase
+      : "Tropical";
   }
   if (ayanamsaSelect) {
     ayanamsaSelect.value = ayanamsaOptions.includes(ayanamsaValue)
@@ -1753,6 +1764,7 @@ function getSettingsData() {
       })),
     },
     systemSettings: {
+      zodiacBase: document.querySelector('select[name="zodiacBase"]').value,
       zodiacSystem: document.querySelector('select[name="zodiacSystem"]').value,
       ayanamsaSystem: document.querySelector(
         'select[name="ayanamsaSystem"]',
@@ -2168,6 +2180,7 @@ function resetFormToDefaults() {
     "3";
 
   // Reset system settings to default values (first option is default)
+  document.querySelector('select[name="zodiacBase"]').value = "Tropical";
   document.querySelector('select[name="zodiacSystem"]').value = "Tropical";
   document.querySelector('select[name="ayanamsaSystem"]').value = "Tropical";
   document.querySelector('input[name="customAyanamsa"]').value = "0";

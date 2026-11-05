@@ -620,6 +620,9 @@ export async function prepareSwissRequest(request, form = null) {
   const zodiacSelect = document.querySelector(
     '#system-settings select[name="zodiacSystem"]',
   );
+  const zodiacBaseSelect = document.querySelector(
+    '#system-settings select[name="zodiacBase"]',
+  );
   const ayanamsaSelect = document.querySelector(
     '#system-settings select[name="ayanamsaSystem"]',
   );
@@ -628,6 +631,11 @@ export async function prepareSwissRequest(request, form = null) {
   );
   payload.selectedZodiacSystem =
     zodiacSelect?.value || payload.selectedZodiacSystem || natal.zodiacSystem || "Tropical";
+  payload.selectedZodiacBase =
+    zodiacBaseSelect?.value ||
+    payload.selectedZodiacBase ||
+    natal.zodiacBase ||
+    "Tropical";
   payload.selectedAyanamsaSystem =
     ayanamsaSelect?.value ||
     payload.selectedAyanamsaSystem ||
@@ -1060,6 +1068,7 @@ async function chartDataFromSwiss(result, request) {
     lat: request.lat,
     long: request.long,
     zodiacSystem,
+    zodiacBase: request.selectedZodiacBase || "Tropical",
     ...(zodiacBoundaries ? { zodiacBoundaries } : {}),
     ayanamsaSystem: request.selectedAyanamsaSystem || "Tropical",
     ...(request.selectedAyanamsaSystem === "Custom" ||

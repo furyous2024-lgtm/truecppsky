@@ -119,6 +119,17 @@ J2000_JD = swe.julday(2000, 1, 1, 12.0, swe.GREG_CAL)
 def j2000_precession_delta(jd):
     return j2000_precession_ayanamsa(jd) - j2000_precession_ayanamsa(J2000_JD)
 
+def zodiac_base_offset(req, jd):
+    base = str(
+        req.get('selectedZodiacBase') or req.get('zodiacBase') or 'Tropical'
+    ).strip().lower()
+    if base == 'tropical':
+        return 0.0
+    if base == 'j2000':
+        return j2000_precession_delta(jd)
+    selected_base = req.get('selectedZodiacBase') or req.get('zodiacBase')
+    raise ValueError(f'Unsupported zodiac base: {selected_base}')
+
 AYANAMSA_MODES = {
     'fagan/bradley': ('Fagan/Bradley', swe.SIDM_FAGAN_BRADLEY),
     'lahiri': ('Lahiri', swe.SIDM_LAHIRI),
@@ -181,21 +192,23 @@ if any(name.casefold() in RESERVED_AYANAMSA_NAMES for name in CUSTOM_AYANAMSA_PR
 def current_ayanamsa_values(req, now_jd=None):
     if now_jd is None:
         now_jd = julday(datetime.datetime.now(datetime.timezone.utc))
-    values = {'Tropical': 0.0}
+    base_offset = zodiac_base_offset(req, now_jd)
+    values = {'Tropical': base_offset}
     try:
         custom_value = parse_float_field(req, ['customAyanamsa'], default=0.0)
     except ValueError:
         custom_value = None
     if custom_value is not None and math.isfinite(custom_value) and -360 <= custom_value <= 360:
-        values['Custom'] = custom_value
+        values['Custom'] = custom_value + base_offset
 
     for preset_name, preset_value in CUSTOM_AYANAMSA_PRESETS.items():
-        values[preset_name] = float(preset_value)
+        values[preset_name] = float(preset_value) + base_offset
 
     for key, (display_name, mode) in AYANAMSA_MODES.items():
         swe.set_sid_mode(mode)
-        values[display_name] = swe.get_ayanamsa_ut(now_jd)
+        values[display_name] = swe.get_ayanamsa_ut(now_jd) + base_offset
 
+    # Custom Raw already applies J2000 precession to its J2000-epoch value.
     values['Custom Raw'] = (
         custom_value if custom_value is not None else 0.0
     ) + j2000_precession_delta(now_jd)
@@ -330,6 +343,7 @@ def point_with_latitude(jd, body, ayan, flags=None):
 
 def resolve_ayanamsa(req, jd):
     zodiac = str(req.get('selectedZodiacSystem') or req.get('zodiacSystem') or 'Tropical').strip().lower()
+    base_offset = zodiac_base_offset(req, jd)
     selected_ayanamsa = str(
         req.get('selectedAyanamsaSystem') or req.get('ayanamsaSystem') or ''
     ).strip()
@@ -341,43 +355,43 @@ def resolve_ayanamsa(req, jd):
             custom_value = parse_float_field(req, ['customAyanamsa'])
             if not math.isfinite(custom_value) or not -360 <= custom_value <= 360:
                 raise ValueError('customAyanamsa must be a finite value between -360 and 360 degrees')
-            return custom_value
+            return custom_value + base_offset
         if ayanamsa_name == 'custom raw':
             raw_base = parse_float_field(req, ['customAyanamsa'], default=0.0)
             if not math.isfinite(raw_base) or not -360 <= raw_base <= 360:
                 raise ValueError('customAyanamsa must be a finite value between -360 and 360 degrees')
             return raw_base + j2000_precession_delta(jd)
         if ayanamsa_name in ('tropical', 'none'):
-            return 0.0
+            return base_offset
         for preset_name, preset_value in CUSTOM_AYANAMSA_PRESETS.items():
             if ayanamsa_name == preset_name.casefold():
-                return float(preset_value)
+                return float(preset_value) + base_offset
         mode = AYANAMSA_MODES.get(ayanamsa_name)
         if mode is None:
             raise ValueError(f'Unsupported ayanamsa system: {selected_ayanamsa}')
         swe.set_sid_mode(mode[1])
-        return swe.get_ayanamsa_ut(jd)
+        return swe.get_ayanamsa_ut(jd) + base_offset
 
     # Older clients used the zodiac field for both wheel and ayanamsa selection.
     if zodiac == '13 equal':
         swe.set_sid_mode(swe.SIDM_GALCENT_0SAG)
-        return swe.get_ayanamsa_ut(jd)
+        return swe.get_ayanamsa_ut(jd) + base_offset
     if zodiac == 'iau real constellations':
-        return 0.0
+        return base_offset
     if req.get('ayanamsa') not in (None, ''):
-        return parse_float_field(req, ['ayanamsa'], default=0)
+        return parse_float_field(req, ['ayanamsa'], default=0) + base_offset
     if zodiac in (
         'tropical',
         'midpoint',
         'midpoint (true sidereal)',
     ):
-        return 0.0
+        return base_offset
 
     mode = AYANAMSA_MODES.get(zodiac)
     if mode is None:
         raise ValueError(f'Unsupported zodiac system for Swiss Ephemeris: {req.get("selectedZodiacSystem")}')
     swe.set_sid_mode(mode[1])
-    return swe.get_ayanamsa_ut(jd)
+    return swe.get_ayanamsa_ut(jd) + base_offset
 
 def calculate_payload(req):
     jd = julday_from_request(req)
@@ -604,6 +618,7 @@ def calculate_return_date(req):
     natal_req = {
         **natal,
         'selectedZodiacSystem': req.get('selectedZodiacSystem') or natal.get('zodiacSystem') or 'Tropical',
+        'selectedZodiacBase': req.get('selectedZodiacBase') or natal.get('zodiacBase') or 'Tropical',
         'selectedAyanamsaSystem': req.get('selectedAyanamsaSystem') or natal.get('ayanamsaSystem') or 'Tropical',
         'customAyanamsa': req.get('customAyanamsa', natal.get('customAyanamsa')),
         'selectedHouseSystem': req.get('selectedHouseSystem') or natal.get('houseSystem') or 'Placidus',
@@ -1248,6 +1263,7 @@ def calculate_transit_graph(req):
     natal_req = {
         **natal,
         'selectedZodiacSystem': req.get('selectedZodiacSystem') or natal.get('zodiacSystem') or 'Tropical',
+        'selectedZodiacBase': req.get('selectedZodiacBase') or natal.get('zodiacBase') or 'Tropical',
         'selectedAyanamsaSystem': req.get('selectedAyanamsaSystem') or natal.get('ayanamsaSystem') or 'Tropical',
         'customAyanamsa': req.get('customAyanamsa', natal.get('customAyanamsa')),
         'selectedHouseSystem': req.get('selectedHouseSystem') or natal.get('houseSystem') or 'Placidus',
