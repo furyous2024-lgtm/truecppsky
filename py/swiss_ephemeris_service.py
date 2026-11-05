@@ -163,6 +163,7 @@ AYANAMSA_MODES = {
 RESERVED_AYANAMSA_NAMES = {
     'tropical',
     'custom',
+    'custom precessed',
     *(name.casefold() for name, _ in AYANAMSA_MODES.values()),
 }
 if any(name.casefold() in RESERVED_AYANAMSA_NAMES for name in CUSTOM_AYANAMSA_PRESETS):
@@ -178,6 +179,7 @@ def current_ayanamsa_values(req, now_jd=None):
         custom_value = None
     if custom_value is not None and math.isfinite(custom_value) and -360 <= custom_value <= 360:
         values['Custom'] = custom_value
+        values['Custom Precessed'] = precess_custom_ayanamsa(custom_value, now_jd)
 
     for preset_name, preset_value in CUSTOM_AYANAMSA_PRESETS.items():
         values[preset_name] = float(preset_value)
@@ -187,6 +189,11 @@ def current_ayanamsa_values(req, now_jd=None):
         values[display_name] = swe.get_ayanamsa_ut(now_jd)
 
     return values
+
+def precess_custom_ayanamsa(value, jd):
+    j2000_jd = swe.julday(2000, 1, 1, 12.0, swe.GREG_CAL)
+    swe.set_sid_mode(swe.SIDM_USER, j2000_jd, value)
+    return swe.get_ayanamsa_ut(jd)
 
 def kepler_solve(M_rad, e):
     E = M_rad
@@ -322,12 +329,14 @@ def resolve_ayanamsa(req, jd):
     ).strip()
     if selected_ayanamsa:
         ayanamsa_name = selected_ayanamsa.lower()
-        if ayanamsa_name == 'custom':
+        if ayanamsa_name in ('custom', 'custom precessed'):
             if req.get('customAyanamsa') in (None, ''):
                 raise ValueError('customAyanamsa is required when using the Custom ayanamsa system')
             custom_value = parse_float_field(req, ['customAyanamsa'])
             if not math.isfinite(custom_value) or not -360 <= custom_value <= 360:
                 raise ValueError('customAyanamsa must be a finite value between -360 and 360 degrees')
+            if ayanamsa_name == 'custom precessed':
+                return precess_custom_ayanamsa(custom_value, jd)
             return custom_value
         if ayanamsa_name in ('tropical', 'none'):
             return 0.0

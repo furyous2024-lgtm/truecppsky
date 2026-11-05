@@ -22,7 +22,12 @@ class AyanamsaTests(unittest.TestCase):
         }
         if custom_value is not None:
             request["customAyanamsa"] = custom_value
-        return service.resolve_ayanamsa(request, self.jd)
+        jd = (
+            service.julday_from_request(request)
+            if any(key in request for key in ("historicalYear", "year", "birthYear"))
+            else self.jd
+        )
+        return service.resolve_ayanamsa(request, jd)
 
     def test_j2000_is_resolved_as_a_swiss_ayanamsa(self):
         service.swe.set_sid_mode(service.swe.SIDM_J2000)
@@ -50,6 +55,60 @@ class AyanamsaTests(unittest.TestCase):
         self.assertAlmostEqual(
             self.resolve("Custom", 12.5, selectedZodiacBase="J2000"),
             12.5,
+        )
+
+    def test_precessed_custom_ayanamsa_uses_j2000_value_for_modern_and_bce_dates(self):
+        j2000 = service.swe.julday(2000, 1, 1, 12.0, service.swe.GREG_CAL)
+        self.assertAlmostEqual(
+            self.resolve(
+                "Custom Precessed",
+                12.5,
+                historicalYear=2000,
+                month=1,
+                day=1,
+                hour=12,
+            ),
+            12.5,
+            places=6,
+        )
+
+        modern_jd = service.swe.julday(2026, 11, 5, 12.0, service.swe.GREG_CAL)
+        bce_jd = service.swe.julday(-499, 1, 1, 12.0, service.swe.GREG_CAL)
+        service.swe.set_sid_mode(service.swe.SIDM_USER, j2000, 12.5)
+        self.assertAlmostEqual(
+            self.resolve(
+                "Custom Precessed",
+                12.5,
+                historicalYear=2026,
+                month=11,
+                day=5,
+                hour=12,
+            ),
+            service.swe.get_ayanamsa_ut(modern_jd),
+        )
+        self.assertAlmostEqual(
+            self.resolve("Custom Precessed", 12.5, historicalYear=-500, hour=12),
+            service.swe.get_ayanamsa_ut(bce_jd),
+        )
+        self.assertNotAlmostEqual(
+            self.resolve("Custom Precessed", 12.5, historicalYear=-500, hour=12),
+            12.5,
+        )
+
+    def test_custom_precessed_ayanamsa_is_included_in_display_values(self):
+        jd = service.swe.julday(-499, 1, 1, 12.0, service.swe.GREG_CAL)
+        values = service.current_ayanamsa_values(
+            {"customAyanamsa": 12.5},
+            jd,
+        )
+        service.swe.set_sid_mode(
+            service.swe.SIDM_USER,
+            service.swe.julday(2000, 1, 1, 12.0, service.swe.GREG_CAL),
+            12.5,
+        )
+        self.assertAlmostEqual(
+            values["Custom Precessed"],
+            service.swe.get_ayanamsa_ut(jd),
         )
 
 

@@ -3678,7 +3678,7 @@ export function sharedNatal(
           (zEl && stored.zodiacSystem !== zEl.value) ||
           (ayEl && (stored.ayanamsaSystem || "Tropical") !== ayEl.value) ||
           (ayEl &&
-            ayEl.value === "Custom" &&
+            ["Custom", "Custom Precessed"].includes(ayEl.value) &&
             customAyEl &&
             Number(stored.customAyanamsa) !== Number(customAyEl.value)) ||
           (hEl && stored.houseSystem !== hEl.value) ||

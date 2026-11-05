@@ -473,7 +473,8 @@ document.getElementById("graphForm").addEventListener("submit", async function (
   combinedData.selectedZodiacSystem = selectedZodiacSystem;
   combinedData.selectedAyanamsaSystem = selectedAyanamsaSystem;
   if (
-    selectedAyanamsaSystem === "Custom"
+    selectedAyanamsaSystem === "Custom" ||
+    selectedAyanamsaSystem === "Custom Precessed"
   ) {
     combinedData.customAyanamsa = customAyanamsa;
   }

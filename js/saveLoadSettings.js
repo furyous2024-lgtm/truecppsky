@@ -26,14 +26,24 @@ function syncCustomAyanamsaField() {
   );
   const label = document.querySelector("#system-settings .custom-ayanamsa-label");
   const field = document.querySelector("#system-settings .custom-ayanamsa-field");
+  const help = document.querySelector("#system-settings .custom-ayanamsa-help");
   if (!select || !input || !field || !label) return;
 
-  const customSelected = select.value === "Custom";
+  const customSelected = ["Custom", "Custom Precessed"].includes(select.value);
+  const precessedSelected = select.value === "Custom Precessed";
   input.required = customSelected;
-  input.setAttribute("aria-label", "Custom ayanamsa in degrees");
-  label.textContent = "Custom ayanamsa:";
+  input.setAttribute(
+    "aria-label",
+    precessedSelected
+      ? "Custom ayanamsa in degrees at J2000"
+      : "Custom ayanamsa in degrees",
+  );
+  label.textContent = precessedSelected
+    ? "Custom ayanamsa at J2000:"
+    : "Custom ayanamsa:";
   field.hidden = !customSelected;
   label.hidden = !customSelected;
+  if (help) help.hidden = !precessedSelected;
 }
 
 async function loadCustomAyanamsaPresets() {

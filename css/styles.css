@@ -1059,8 +1059,14 @@ body::before {
 
 .custom-ayanamsa-field {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 4px;
+}
+
+.custom-ayanamsa-help {
+  flex-basis: 100%;
+  font-size: 12px;
 }
 
 .custom-ayanamsa-field[hidden],

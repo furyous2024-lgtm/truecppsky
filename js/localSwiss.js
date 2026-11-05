@@ -643,7 +643,10 @@ export async function prepareSwissRequest(request, form = null) {
     payload.selectedAyanamsaSystem ||
     natal.ayanamsaSystem ||
     "Tropical";
-  if (payload.selectedAyanamsaSystem === "Custom") {
+  if (
+    payload.selectedAyanamsaSystem === "Custom" ||
+    payload.selectedAyanamsaSystem === "Custom Precessed"
+  ) {
     payload.customAyanamsa =
       customAyanamsaInput?.value ?? payload.customAyanamsa;
   }
@@ -1069,7 +1072,8 @@ async function chartDataFromSwiss(result, request) {
     zodiacSystem,
     ...(zodiacBoundaries ? { zodiacBoundaries } : {}),
     ayanamsaSystem: request.selectedAyanamsaSystem || "Tropical",
-    ...(request.selectedAyanamsaSystem === "Custom"
+    ...(request.selectedAyanamsaSystem === "Custom" ||
+    request.selectedAyanamsaSystem === "Custom Precessed"
       ? { customAyanamsa: Number(request.customAyanamsa) }
       : {}),
     houseSystem: request.selectedHouseSystem || "Placidus",
