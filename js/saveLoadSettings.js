@@ -24,6 +24,9 @@ function syncCustomAyanamsaField() {
   const input = document.querySelector(
     '#system-settings input[name="customAyanamsa"]',
   );
+  const zodiacBaseSelect = document.querySelector(
+    '#system-settings select[name="zodiacBase"]',
+  );
   const label = document.querySelector("#system-settings .custom-ayanamsa-label");
   const field = document.querySelector("#system-settings .custom-ayanamsa-field");
   if (!select || !input || !field || !label) return;
@@ -31,15 +34,16 @@ function syncCustomAyanamsaField() {
   const customSelected = select.value === "Custom";
   const rawSelected = select.value === "Custom Raw";
   const fieldSelected = customSelected || rawSelected;
+  const rawBase = zodiacBaseSelect?.value || "Tropical";
   input.required = fieldSelected;
   input.setAttribute(
     "aria-label",
     rawSelected
-      ? "Custom raw ayanamsa base at J2000 in degrees"
+      ? `Custom raw ayanamsa base at ${rawBase} in degrees`
       : "Custom ayanamsa in degrees",
   );
   label.textContent = rawSelected
-    ? "Custom raw base at J2000:"
+    ? `Custom raw base at ${rawBase}:`
     : "Custom ayanamsa:";
   field.hidden = !fieldSelected;
   label.hidden = !fieldSelected;
@@ -144,6 +148,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   syncCustomAyanamsaField();
   document
     .querySelector('#system-settings select[name="ayanamsaSystem"]')
+    ?.addEventListener("change", syncCustomAyanamsaField);
+  document
+    .querySelector('#system-settings select[name="zodiacBase"]')
     ?.addEventListener("change", syncCustomAyanamsaField);
 });
 

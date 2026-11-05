@@ -208,10 +208,9 @@ def current_ayanamsa_values(req, now_jd=None):
         swe.set_sid_mode(mode)
         values[display_name] = swe.get_ayanamsa_ut(now_jd) + base_offset
 
-    # Custom Raw already applies J2000 precession to its J2000-epoch value.
     values['Custom Raw'] = (
         custom_value if custom_value is not None else 0.0
-    ) + j2000_precession_delta(now_jd)
+    ) + base_offset
     return values
 
 def kepler_solve(M_rad, e):
@@ -360,7 +359,7 @@ def resolve_ayanamsa(req, jd):
             raw_base = parse_float_field(req, ['customAyanamsa'], default=0.0)
             if not math.isfinite(raw_base) or not -360 <= raw_base <= 360:
                 raise ValueError('customAyanamsa must be a finite value between -360 and 360 degrees')
-            return raw_base + j2000_precession_delta(jd)
+            return raw_base + base_offset
         if ayanamsa_name in ('tropical', 'none'):
             return base_offset
         for preset_name, preset_value in CUSTOM_AYANAMSA_PRESETS.items():

@@ -42,10 +42,12 @@ class ZodiacBaseTests(unittest.TestCase):
                 j2000_value = self.resolve("J2000", ayanamsa, 12.5)
                 self.assertAlmostEqual(j2000_value - tropical_value, self.delta)
 
-    def test_custom_raw_applies_j2000_precession_only_once(self):
-        expected = 12.5 + self.delta
-        self.assertAlmostEqual(self.resolve("Tropical", "Custom Raw", 12.5), expected)
-        self.assertAlmostEqual(self.resolve("J2000", "Custom Raw", 12.5), expected)
+    def test_custom_raw_uses_the_selected_zodiac_base(self):
+        self.assertAlmostEqual(self.resolve("Tropical", "Custom Raw", 12.5), 12.5)
+        self.assertAlmostEqual(
+            self.resolve("J2000", "Custom Raw", 12.5),
+            12.5 + self.delta,
+        )
 
     def test_unknown_base_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "Unsupported zodiac base"):
@@ -58,8 +60,16 @@ class ZodiacBaseTests(unittest.TestCase):
         )
         self.assertAlmostEqual(values["Tropical"], self.delta)
         self.assertAlmostEqual(values["Custom"], self.delta)
+        self.assertAlmostEqual(values["Custom Raw"], self.delta)
         for name, _ in service.AYANAMSA_MODES.values():
             self.assertTrue(math.isfinite(values[name]))
+
+    def test_displayed_custom_raw_uses_tropical_base_when_selected(self):
+        values = service.current_ayanamsa_values(
+            {"selectedZodiacBase": "Tropical", "customAyanamsa": 12.5},
+            self.jd,
+        )
+        self.assertAlmostEqual(values["Custom Raw"], 12.5)
 
 
 if __name__ == "__main__":
