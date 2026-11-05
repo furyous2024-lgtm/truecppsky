@@ -443,7 +443,10 @@ document.getElementById("graphForm").addEventListener("submit", async function (
   );
   combinedData.selectedZodiacSystem = selectedZodiacSystem;
   combinedData.selectedAyanamsaSystem = selectedAyanamsaSystem;
-  if (selectedAyanamsaSystem === "Custom") {
+  if (
+    selectedAyanamsaSystem === "Custom" ||
+    selectedAyanamsaSystem === "Custom Raw"
+  ) {
     combinedData.customAyanamsa = customAyanamsa;
   }
   combinedData.selectedHouseSystem = selectedHouseSystem;

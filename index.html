@@ -1327,7 +1327,10 @@
   <label class="type-icon">
     Ayanamsa:
   </label>
-  <select name="ayanamsaSystem">
+  <select
+    name="ayanamsaSystem"
+    title="Named presets can be added in json/customAyanamsas.json"
+  >
     <option value="Tropical" selected>Tropical</option>
     <option value="Fagan/Bradley">Fagan/Bradley</option>
     <option value="Lahiri">Lahiri</option>
@@ -1377,7 +1380,7 @@
     <option value="Lahiri VP285">Lahiri VP285</option>
     <option value="Krishnamurti VP291">Krishnamurti VP291</option>
     <option value="Lahiri ICRC">Lahiri ICRC</option>
-    <option value="Custom Raw" title="Precessao tropical calculada desde J2000 ate a data UTC atual">Custom Raw (J2000 to today)</option>
+    <option value="Custom Raw" title="Valor-base personalizado em J2000, acrescido da precessão até a data do mapa">Custom Raw (J2000 base + precession)</option>
   </select>
 
   <label class="type-icon custom-ayanamsa-label" for="customAyanamsa" hidden>

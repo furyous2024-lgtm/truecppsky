@@ -29,9 +29,55 @@ function syncCustomAyanamsaField() {
   if (!select || !input || !field || !label) return;
 
   const customSelected = select.value === "Custom";
-  input.required = customSelected;
-  field.hidden = !customSelected;
-  label.hidden = !customSelected;
+  const rawSelected = select.value === "Custom Raw";
+  const fieldSelected = customSelected || rawSelected;
+  input.required = fieldSelected;
+  input.setAttribute(
+    "aria-label",
+    rawSelected
+      ? "Custom raw ayanamsa base at J2000 in degrees"
+      : "Custom ayanamsa in degrees",
+  );
+  label.textContent = rawSelected
+    ? "Custom raw base at J2000:"
+    : "Custom ayanamsa:";
+  field.hidden = !fieldSelected;
+  label.hidden = !fieldSelected;
+}
+
+async function loadCustomAyanamsaPresets() {
+  const response = await fetch("/json/customAyanamsas.json");
+  if (!response.ok) {
+    throw new Error(`Could not load custom ayanamsa presets (${response.status}).`);
+  }
+  const presets = await response.json();
+  if (!presets || typeof presets !== "object" || Array.isArray(presets)) {
+    throw new Error("Custom ayanamsa presets must be a name-to-degree object.");
+  }
+
+  const select = document.querySelector(
+    '#system-settings select[name="ayanamsaSystem"]',
+  );
+  if (!select) return;
+
+  const existingValues = new Set(
+    Array.from(select.options, (option) => option.value.toLowerCase()),
+  );
+  for (const [name, rawValue] of Object.entries(presets)) {
+    const value = Number(rawValue);
+    if (
+      !name.trim() ||
+      existingValues.has(name.toLowerCase()) ||
+      typeof rawValue !== "number" ||
+      !Number.isFinite(value) ||
+      value < -360 ||
+      value > 360
+    ) {
+      throw new Error(`Invalid or duplicate custom ayanamsa preset: ${name}`);
+    }
+    select.add(new Option(name, name));
+    existingValues.add(name.toLowerCase());
+  }
 }
 
 // Load custom points JSON on page load
@@ -59,7 +105,7 @@ const clearSettingsMessage = (delay = 5000) => {
 };
 
 // On page load, fetch recent settings & prevent the form from submitting on enter key press
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const settingsForm = document.querySelector(".settings-form");
   if (settingsForm) {
     settingsForm.addEventListener("submit", (e) => {
@@ -76,6 +122,16 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("settingsSave").click();
       }
     });
+  }
+
+  try {
+    await loadCustomAyanamsaPresets();
+  } catch (error) {
+    console.error("Failed to load custom ayanamsa presets:", error);
+    const errorElem = document.querySelector(".errorMessageSettings");
+    if (errorElem) {
+      errorElem.textContent = "Custom ayanamsa presets could not be loaded.";
+    }
   }
 
   // Render editor controls first, then always initialize with the built-in Default preset.
