@@ -162,7 +162,7 @@ AYANAMSA_MODES = {
 
 RESERVED_AYANAMSA_NAMES = {
     'tropical',
-    'tropical precessed',
+    'custom tropical precessed',
     'custom',
     'custom precessed',
     *(name.casefold() for name, _ in AYANAMSA_MODES.values()),
@@ -174,7 +174,6 @@ def current_ayanamsa_values(req, now_jd=None):
     if now_jd is None:
         now_jd = julday(datetime.datetime.now(datetime.timezone.utc))
     values = {'Tropical': 0.0}
-    values['Tropical Precessed'] = precess_custom_ayanamsa(0.0, now_jd)
     try:
         custom_value = parse_float_field(req, ['customAyanamsa'], default=0.0)
     except ValueError:
@@ -182,6 +181,9 @@ def current_ayanamsa_values(req, now_jd=None):
     if custom_value is not None and math.isfinite(custom_value) and -360 <= custom_value <= 360:
         values['Custom'] = custom_value
         values['Custom Precessed'] = precess_custom_ayanamsa(custom_value, now_jd)
+        values['Custom Tropical Precessed'] = (
+            precess_custom_ayanamsa(0.0, now_jd) + custom_value
+        )
 
     for preset_name, preset_value in CUSTOM_AYANAMSA_PRESETS.items():
         values[preset_name] = float(preset_value)
@@ -331,8 +333,16 @@ def resolve_ayanamsa(req, jd):
     ).strip()
     if selected_ayanamsa:
         ayanamsa_name = selected_ayanamsa.lower()
-        if ayanamsa_name == 'tropical precessed':
-            return precess_custom_ayanamsa(0.0, jd)
+        if ayanamsa_name in ('custom tropical precessed', 'tropical precessed'):
+            if (
+                ayanamsa_name == 'custom tropical precessed'
+                and req.get('customAyanamsa') in (None, '')
+            ):
+                raise ValueError('customAyanamsa is required when using the Custom ayanamsa system')
+            custom_value = parse_float_field(req, ['customAyanamsa'], default=0.0)
+            if not math.isfinite(custom_value) or not -360 <= custom_value <= 360:
+                raise ValueError('customAyanamsa must be a finite value between -360 and 360 degrees')
+            return precess_custom_ayanamsa(0.0, jd) + custom_value
         if ayanamsa_name in ('custom', 'custom precessed'):
             if req.get('customAyanamsa') in (None, ''):
                 raise ValueError('customAyanamsa is required when using the Custom ayanamsa system')

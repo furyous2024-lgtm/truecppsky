@@ -27,23 +27,30 @@ function syncCustomAyanamsaField() {
   const label = document.querySelector("#system-settings .custom-ayanamsa-label");
   const field = document.querySelector("#system-settings .custom-ayanamsa-field");
   const help = document.querySelector("#system-settings .custom-ayanamsa-help");
+  const tropicalHelp = document.querySelector(
+    "#system-settings .custom-tropical-ayanamsa-help",
+  );
   if (!select || !input || !field || !label) return;
 
-  const customSelected = ["Custom", "Custom Precessed"].includes(select.value);
+  const customSelected = [
+    "Custom",
+    "Custom Precessed",
+    "Custom Tropical Precessed",
+  ].includes(select.value);
   const precessedSelected = select.value === "Custom Precessed";
+  const tropicalPrecessedSelected =
+    select.value === "Custom Tropical Precessed";
   input.required = customSelected;
-  input.setAttribute(
-    "aria-label",
-    precessedSelected
-      ? "Custom ayanamsa in degrees at J2000"
-      : "Custom ayanamsa in degrees",
-  );
+  input.setAttribute("aria-label", "Custom ayanamsa in degrees");
   label.textContent = precessedSelected
     ? "Custom ayanamsa at J2000:"
-    : "Custom ayanamsa:";
+    : tropicalPrecessedSelected
+      ? "Custom ayanamsa offset from tropical zero:"
+      : "Custom ayanamsa:";
   field.hidden = !customSelected;
   label.hidden = !customSelected;
   if (help) help.hidden = !precessedSelected;
+  if (tropicalHelp) tropicalHelp.hidden = !tropicalPrecessedSelected;
 }
 
 async function loadCustomAyanamsaPresets() {

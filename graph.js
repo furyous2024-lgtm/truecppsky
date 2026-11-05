@@ -474,7 +474,8 @@ document.getElementById("graphForm").addEventListener("submit", async function (
   combinedData.selectedAyanamsaSystem = selectedAyanamsaSystem;
   if (
     selectedAyanamsaSystem === "Custom" ||
-    selectedAyanamsaSystem === "Custom Precessed"
+    selectedAyanamsaSystem === "Custom Precessed" ||
+    selectedAyanamsaSystem === "Custom Tropical Precessed"
   ) {
     combinedData.customAyanamsa = customAyanamsa;
   }
