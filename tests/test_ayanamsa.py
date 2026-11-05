@@ -164,6 +164,23 @@ class AyanamsaTests(unittest.TestCase):
             places=6,
         )
 
+    def test_custom_tropical_precessed_zero_is_exact_tropical_on_reference_day(self):
+        reference_jd = service.swe.julday(2026, 11, 5, 12.0, service.swe.GREG_CAL)
+        request = {
+            "selectedAyanamsaSystem": "Custom Tropical Precessed",
+            "customAyanamsa": 0.0,
+            "historicalYear": 2026,
+            "month": 11,
+            "day": 5,
+            "hour": 6,
+        }
+        with patch.object(service, "precession_reference_jd", return_value=reference_jd):
+            ayanamsa = service.resolve_ayanamsa(request, service.julday_from_request(request))
+            values = service.current_ayanamsa_values(request, service.julday_from_request(request))
+
+        self.assertEqual(ayanamsa, 0.0)
+        self.assertEqual(values["Custom Tropical Precessed"], 0.0)
+
     def test_custom_tropical_precessed_does_not_use_j2000_as_reference(self):
         reference_jd = service.swe.julday(2026, 11, 5, 12.0, service.swe.GREG_CAL)
         ancient_jd = service.swe.julday(-499, 1, 1, 12.0, service.swe.GREG_CAL)

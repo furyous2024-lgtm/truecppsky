@@ -203,6 +203,8 @@ def precession_reference_jd():
 def precess_custom_ayanamsa(value, jd, reference_jd=None):
     if reference_jd is None:
         reference_jd = swe.julday(2000, 1, 1, 12.0, swe.GREG_CAL)
+    if swe.revjul(jd, swe.GREG_CAL)[:3] == swe.revjul(reference_jd, swe.GREG_CAL)[:3]:
+        return value
     swe.set_sid_mode(swe.SIDM_USER, reference_jd, value)
     return swe.get_ayanamsa_ut(jd)
 
