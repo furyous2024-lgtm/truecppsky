@@ -972,6 +972,20 @@ async function chartDataFromSwiss(result, request) {
   if (!result || result.success !== true || !result.positions) {
     throw new Error(result?.error || "Swiss Ephemeris returned no chart positions.");
   }
+  const ayanamsaSelect =
+    typeof document === "undefined"
+      ? null
+      : document.querySelector(
+          '#system-settings select[name="ayanamsaSystem"]',
+        );
+  if (ayanamsaSelect && result.ayanamsaValues) {
+    for (const option of ayanamsaSelect.options) {
+      const value = Number(result.ayanamsaValues[option.value]);
+      if (!Number.isFinite(value)) continue;
+      option.dataset.baseLabel ||= option.textContent;
+      option.textContent = `${option.dataset.baseLabel} (${value.toFixed(10)}°)`;
+    }
+  }
   if (!Array.isArray(result.houseCusps) || result.houseCusps.length !== 12) {
     throw new Error("Swiss Ephemeris did not return all 12 house cusps.");
   }

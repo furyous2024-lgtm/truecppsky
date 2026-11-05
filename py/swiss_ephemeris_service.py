@@ -92,6 +92,78 @@ def parse_month_field(req):
 
 def norm(x): return x % 360.0
 
+def j2000_precession_ayanamsa(jd):
+    swe.set_sid_mode(swe.SIDM_J2000)
+    return swe.get_ayanamsa_ut(jd)
+
+AYANAMSA_MODES = {
+    'fagan/bradley': ('Fagan/Bradley', swe.SIDM_FAGAN_BRADLEY),
+    'lahiri': ('Lahiri', swe.SIDM_LAHIRI),
+    'deluce': ('DeLuce', swe.SIDM_DELUCE),
+    'raman': ('Raman', swe.SIDM_RAMAN),
+    'usha/shashi': ('Usha/Shashi', swe.SIDM_USHASHASHI),
+    'krishnamurti': ('Krishnamurti', swe.SIDM_KRISHNAMURTI),
+    'djwhal khul': ('Djwhal Khul', swe.SIDM_DJWHAL_KHUL),
+    'yukteshwar': ('Yukteshwar', swe.SIDM_YUKTESHWAR),
+    'j.n. bhasin': ('J.N. Bhasin', swe.SIDM_JN_BHASIN),
+    'babylonian/kugler 1': ('Babylonian/Kugler 1', swe.SIDM_BABYL_KUGLER1),
+    'babylonian/kugler 2': ('Babylonian/Kugler 2', swe.SIDM_BABYL_KUGLER2),
+    'babylonian/kugler 3': ('Babylonian/Kugler 3', swe.SIDM_BABYL_KUGLER3),
+    'babylonian/huber': ('Babylonian/Huber', swe.SIDM_BABYL_HUBER),
+    'babylonian/eta piscium': ('Babylonian/Eta Piscium', swe.SIDM_BABYL_ETPSC),
+    'babylonian/aldebaran = 15 tau': ('Babylonian/Aldebaran = 15 Tau', swe.SIDM_ALDEBARAN_15TAU),
+    'hipparchos': ('Hipparchos', swe.SIDM_HIPPARCHOS),
+    'sassanian': ('Sassanian', swe.SIDM_SASSANIAN),
+    'galact. center = 0 sag': ('Galact. Center = 0 Sag', swe.SIDM_GALCENT_0SAG),
+    'j2000': ('J2000', swe.SIDM_J2000),
+    'j1900': ('J1900', swe.SIDM_J1900),
+    'b1950': ('B1950', swe.SIDM_B1950),
+    'suryasiddhanta': ('Suryasiddhanta', swe.SIDM_SURYASIDDHANTA),
+    'suryasiddhanta, mean sun': ('Suryasiddhanta, mean Sun', swe.SIDM_SURYASIDDHANTA_MSUN),
+    'aryabhata': ('Aryabhata', swe.SIDM_ARYABHATA),
+    'aryabhata, mean sun': ('Aryabhata, mean Sun', swe.SIDM_ARYABHATA_MSUN),
+    'ss revati': ('SS Revati', swe.SIDM_SS_REVATI),
+    'ss citra': ('SS Citra', swe.SIDM_SS_CITRA),
+    'true citra': ('True Citra', swe.SIDM_TRUE_CITRA),
+    'true revati': ('True Revati', swe.SIDM_TRUE_REVATI),
+    'true pushya': ('True Pushya', swe.SIDM_TRUE_PUSHYA),
+    'galactic center (gil brand)': ('Galactic Center (Gil Brand)', swe.SIDM_GALCENT_RGILBRAND),
+    'galactic equator (iau 1958)': ('Galactic Equator (IAU 1958)', swe.SIDM_GALEQU_IAU1958),
+    'galactic equator (true)': ('Galactic Equator (True)', swe.SIDM_GALEQU_TRUE),
+    'galactic equator (mula)': ('Galactic Equator (Mula)', swe.SIDM_GALEQU_MULA),
+    'galactic alignment (mardyks)': ('Galactic Alignment (Mardyks)', swe.SIDM_GALALIGN_MARDYKS),
+    'true mula': ('True Mula', swe.SIDM_TRUE_MULA),
+    'galactic center (mula/wilhelm)': ('Galactic Center (Mula/Wilhelm)', swe.SIDM_GALCENT_MULA_WILHELM),
+    'aryabhata 522': ('Aryabhata 522', swe.SIDM_ARYABHATA_522),
+    'babylonian/britton': ('Babylonian/Britton', swe.SIDM_BABYL_BRITTON),
+    'true sheoran': ('True Sheoran', swe.SIDM_TRUE_SHEORAN),
+    'galactic center (cochrane)': ('Galactic Center (Cochrane)', swe.SIDM_GALCENT_COCHRANE),
+    'galactic equator (fiorenza)': ('Galactic Equator (Fiorenza)', swe.SIDM_GALEQU_FIORENZA),
+    'valens moon': ('Valens Moon', swe.SIDM_VALENS_MOON),
+    'lahiri 1940': ('Lahiri 1940', swe.SIDM_LAHIRI_1940),
+    'lahiri vp285': ('Lahiri VP285', swe.SIDM_LAHIRI_VP285),
+    'krishnamurti vp291': ('Krishnamurti VP291', swe.SIDM_KRISHNAMURTI_VP291),
+    'lahiri icrc': ('Lahiri ICRC', swe.SIDM_LAHIRI_ICRC),
+}
+
+def current_ayanamsa_values(req, now_jd=None):
+    if now_jd is None:
+        now_jd = julday(datetime.datetime.now(datetime.timezone.utc))
+    values = {'Tropical': 0.0}
+    try:
+        custom_value = parse_float_field(req, ['customAyanamsa'], default=0.0)
+    except ValueError:
+        custom_value = None
+    if custom_value is not None and math.isfinite(custom_value) and -360 <= custom_value <= 360:
+        values['Custom'] = custom_value
+
+    for key, (display_name, mode) in AYANAMSA_MODES.items():
+        swe.set_sid_mode(mode)
+        values[display_name] = swe.get_ayanamsa_ut(now_jd)
+
+    values['Custom Raw'] = j2000_precession_ayanamsa(now_jd)
+    return values
+
 def kepler_solve(M_rad, e):
     E = M_rad
     for _ in range(20):
@@ -219,7 +291,7 @@ def point_with_latitude(jd, body, ayan, flags=None):
     speed = float(xx[3]) if len(xx) > 3 else 0.0
     return longitude, latitude, speed
 
-def resolve_ayanamsa(req, jd):
+def resolve_ayanamsa(req, jd, current_jd=None):
     zodiac = str(req.get('selectedZodiacSystem') or req.get('zodiacSystem') or 'Tropical').strip().lower()
     selected_ayanamsa = str(
         req.get('selectedAyanamsaSystem') or req.get('ayanamsaSystem') or ''
@@ -233,22 +305,16 @@ def resolve_ayanamsa(req, jd):
             if not math.isfinite(custom_value) or not -360 <= custom_value <= 360:
                 raise ValueError('customAyanamsa must be a finite value between -360 and 360 degrees')
             return custom_value
+        if ayanamsa_name == 'custom raw':
+            if current_jd is None:
+                current_jd = julday(datetime.datetime.now(datetime.timezone.utc))
+            return j2000_precession_ayanamsa(current_jd)
         if ayanamsa_name in ('tropical', 'none'):
             return 0.0
-        selected_modes = {
-            'fagan/bradley': swe.SIDM_FAGAN_BRADLEY,
-            'lahiri': swe.SIDM_LAHIRI,
-            'deluce': swe.SIDM_DELUCE,
-            'raman': swe.SIDM_RAMAN,
-            'babylonian/eta piscium': swe.SIDM_BABYL_ETPSC,
-            'babylonian/aldebaran = 15 tau': swe.SIDM_ALDEBARAN_15TAU,
-            'galact. center = 0 sag': swe.SIDM_GALCENT_0SAG,
-            'j2000': swe.SIDM_J2000,
-        }
-        mode = selected_modes.get(ayanamsa_name)
+        mode = AYANAMSA_MODES.get(ayanamsa_name)
         if mode is None:
             raise ValueError(f'Unsupported ayanamsa system: {selected_ayanamsa}')
-        swe.set_sid_mode(mode)
+        swe.set_sid_mode(mode[1])
         return swe.get_ayanamsa_ut(jd)
 
     # Older clients used the zodiac field for both wheel and ayanamsa selection.
@@ -266,27 +332,18 @@ def resolve_ayanamsa(req, jd):
     ):
         return 0.0
 
-    sidereal_modes = {
-        'fagan/bradley': swe.SIDM_FAGAN_BRADLEY,
-        'lahiri': swe.SIDM_LAHIRI,
-        'deluce': swe.SIDM_DELUCE,
-        'raman': swe.SIDM_RAMAN,
-        'babylonian/eta piscium': swe.SIDM_BABYL_ETPSC,
-        'babylonian/aldebaran = 15 tau': swe.SIDM_ALDEBARAN_15TAU,
-        'galact. center = 0 sag': swe.SIDM_GALCENT_0SAG,
-        'j2000': swe.SIDM_J2000,
-    }
-    mode = sidereal_modes.get(zodiac)
+    mode = AYANAMSA_MODES.get(zodiac)
     if mode is None:
         raise ValueError(f'Unsupported zodiac system for Swiss Ephemeris: {req.get("selectedZodiacSystem")}')
-    swe.set_sid_mode(mode)
+    swe.set_sid_mode(mode[1])
     return swe.get_ayanamsa_ut(jd)
 
 def calculate_payload(req):
     jd = julday_from_request(req)
     lat = parse_float_field(req, ['lat','latitude'], default=0)
     lon = parse_float_field(req, ['long','lon','longitude'], default=0)
-    ayan = resolve_ayanamsa(req, jd)
+    current_jd = julday(datetime.datetime.now(datetime.timezone.utc))
+    ayan = resolve_ayanamsa(req, jd, current_jd)
     coordinate_system = str(req.get('selectedCoordinateSystem') or 'Geocentric').strip().lower()
     calculation_flags = swe.FLG_SWIEPH | swe.FLG_SPEED
     if coordinate_system == 'topocentric':
@@ -305,7 +362,7 @@ def calculate_payload(req):
         req.get('houseSystemCode') or house_codes.get(selected_house) or 'P'
     )[:1].encode('ascii', 'ignore') or b'P'
 
-    out = {"success": True, "engine": "Swiss Ephemeris / pyswisseph", "julianDay": jd, "ayanamsa": ayan, "positions": {}, "houseCusps": [], "fixedStars": []}
+    out = {"success": True, "engine": "Swiss Ephemeris / pyswisseph", "julianDay": jd, "ayanamsa": ayan, "ayanamsaValues": current_ayanamsa_values(req, current_jd), "positions": {}, "houseCusps": [], "fixedStars": []}
 
     bodies = {
         'Sun': swe.SUN, 'Moon': swe.MOON, 'Mercury': swe.MERCURY, 'Venus': swe.VENUS,
