@@ -1057,29 +1057,6 @@ body::before {
   font-size: 16px;
 }
 
-.custom-ayanamsa-field {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
-}
-
-.custom-ayanamsa-help {
-  flex-basis: 100%;
-  font-size: 12px;
-}
-
-.custom-ayanamsa-field[hidden],
-.custom-ayanamsa-label[hidden] {
-  display: none;
-}
-
-.custom-ayanamsa-field input {
-  box-sizing: border-box;
-  width: 120px;
-  font: inherit;
-}
-
 .ascendant-override select {
   width: 96px;
 }

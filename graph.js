@@ -450,9 +450,6 @@ document.getElementById("graphForm").addEventListener("submit", async function (
   const selectedAyanamsaSystem = document.querySelector(
     '#system-settings select[name="ayanamsaSystem"]'
   ).value;
-  const customAyanamsa = document.querySelector(
-    '#system-settings input[name="customAyanamsa"]'
-  ).value;
   const selectedHouseSystem = document.querySelector(
     '#system-settings select[name="houseSystem"]'
   ).value;
@@ -472,13 +469,6 @@ document.getElementById("graphForm").addEventListener("submit", async function (
   );
   combinedData.selectedZodiacSystem = selectedZodiacSystem;
   combinedData.selectedAyanamsaSystem = selectedAyanamsaSystem;
-  if (
-    selectedAyanamsaSystem === "Custom" ||
-    selectedAyanamsaSystem === "Custom Precessed" ||
-    selectedAyanamsaSystem === "Custom Tropical Precessed"
-  ) {
-    combinedData.customAyanamsa = customAyanamsa;
-  }
   combinedData.selectedHouseSystem = selectedHouseSystem;
   combinedData.selectedCoordinateSystem = selectedCoordinateSystem;
 

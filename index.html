@@ -1327,16 +1327,13 @@
   <label class="type-icon">
     Ayanamsa:
   </label>
-  <select
-    name="ayanamsaSystem"
-    title="Named presets can be added in json/customAyanamsas.json"
-  >
+  <select name="ayanamsaSystem">
     <optgroup label="Standard">
       <option value="Tropical" selected>Tropical</option>
       <option value="J2000">J2000</option>
-      <option value="Custom">Custom</option>
-      <option value="Custom Precessed">Custom (precessed from J2000)</option>
-      <option value="Custom Tropical Precessed">Valor Personalizado</option>
+    </optgroup>
+    <optgroup label="Named sidereal">
+      <option value="Pistak">Pistak</option>
     </optgroup>
     <optgroup label="Popular sidereal">
       <option value="Lahiri">Lahiri</option>
@@ -1394,32 +1391,7 @@
       <option value="Galactic Equator (Fiorenza)">Galactic Equator (Fiorenza)</option>
       <option value="Galactic Alignment (Mardyks)">Galactic Alignment (Mardyks)</option>
     </optgroup>
-    <optgroup label="Custom presets" data-custom-ayanamsas hidden></optgroup>
   </select>
-
-  <label class="type-icon custom-ayanamsa-label" for="customAyanamsa" hidden>
-    Custom ayanamsa:
-  </label>
-  <div class="custom-ayanamsa-field" hidden>
-    <input
-      type="number"
-      id="customAyanamsa"
-      name="customAyanamsa"
-      min="-360"
-      max="360"
-      step="any"
-      value="0"
-      aria-label="Custom ayanamsa in degrees"
-    />
-    <span>°</span>
-    <small class="custom-ayanamsa-help" hidden>
-      Enter the raw value at J2000; precession is applied for the chart date.
-    </small>
-    <small class="custom-tropical-ayanamsa-help" hidden>
-      Used as the raw ayanamsa at the current epoch; precession is applied to
-      the chart date.
-    </small>
-  </div>
 
   <label class="type-icon">
     House:

@@ -10,24 +10,6 @@ except Exception as exc:
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 EPHE = os.path.join(ROOT, 'ephe')
 swe.set_ephe_path(EPHE)
-CUSTOM_AYANAMSA_PRESETS_PATH = os.path.join(ROOT, 'json', 'customAyanamsas.json')
-
-with open(CUSTOM_AYANAMSA_PRESETS_PATH, encoding='utf-8') as presets_file:
-    CUSTOM_AYANAMSA_PRESETS = json.load(presets_file)
-if not isinstance(CUSTOM_AYANAMSA_PRESETS, dict):
-    raise ValueError('customAyanamsas.json must contain a name-to-degree object')
-for preset_name, preset_value in CUSTOM_AYANAMSA_PRESETS.items():
-    if (
-        not isinstance(preset_name, str)
-        or not preset_name.strip()
-        or not isinstance(preset_value, (int, float))
-        or isinstance(preset_value, bool)
-        or not math.isfinite(preset_value)
-        or not -360 <= preset_value <= 360
-    ):
-        raise ValueError(f'invalid custom ayanamsa preset: {preset_name!r}')
-if len({name.casefold() for name in CUSTOM_AYANAMSA_PRESETS}) != len(CUSTOM_AYANAMSA_PRESETS):
-    raise ValueError('custom ayanamsa preset names must be unique, ignoring case')
 
 SIGNS = {
     'Aries':0,'Taurus':30,'Gemini':60,'Cancer':90,'Leo':120,'Virgo':150,
@@ -160,53 +142,22 @@ AYANAMSA_MODES = {
     'lahiri icrc': ('Lahiri ICRC', swe.SIDM_LAHIRI_ICRC),
 }
 
-RESERVED_AYANAMSA_NAMES = {
-    'tropical',
-    'custom tropical precessed',
-    'custom',
-    'custom precessed',
-    *(name.casefold() for name, _ in AYANAMSA_MODES.values()),
+NAMED_AYANAMSA_VALUES = {
+    'pistak': ('Pistak', 27.3490208119),
 }
-if any(name.casefold() in RESERVED_AYANAMSA_NAMES for name in CUSTOM_AYANAMSA_PRESETS):
-    raise ValueError('custom ayanamsa preset names cannot replace built-in systems')
 
-def current_ayanamsa_values(req, now_jd=None):
+def current_ayanamsa_values(now_jd=None):
     if now_jd is None:
         now_jd = julday(datetime.datetime.now(datetime.timezone.utc))
     values = {'Tropical': 0.0}
-    try:
-        custom_value = parse_float_field(req, ['customAyanamsa'], default=0.0)
-    except ValueError:
-        custom_value = None
-    if custom_value is not None and math.isfinite(custom_value) and -360 <= custom_value <= 360:
-        values['Custom'] = custom_value
-        values['Custom Precessed'] = precess_custom_ayanamsa(custom_value, now_jd)
-        values['Custom Tropical Precessed'] = precess_custom_ayanamsa(
-            custom_value,
-            now_jd,
-            precession_reference_jd(),
-        )
-
-    for preset_name, preset_value in CUSTOM_AYANAMSA_PRESETS.items():
-        values[preset_name] = float(preset_value)
+    for display_name, value in NAMED_AYANAMSA_VALUES.values():
+        values[display_name] = value
 
     for key, (display_name, mode) in AYANAMSA_MODES.items():
         swe.set_sid_mode(mode)
         values[display_name] = swe.get_ayanamsa_ut(now_jd)
 
     return values
-
-def precession_reference_jd():
-    today = datetime.datetime.now(datetime.timezone.utc)
-    return swe.julday(today.year, today.month, today.day, 12.0, swe.GREG_CAL)
-
-def precess_custom_ayanamsa(value, jd, reference_jd=None):
-    if reference_jd is None:
-        reference_jd = swe.julday(2000, 1, 1, 12.0, swe.GREG_CAL)
-    if swe.revjul(jd, swe.GREG_CAL)[:3] == swe.revjul(reference_jd, swe.GREG_CAL)[:3]:
-        return value
-    swe.set_sid_mode(swe.SIDM_USER, reference_jd, value)
-    return swe.get_ayanamsa_ut(jd)
 
 def kepler_solve(M_rad, e):
     E = M_rad
@@ -339,37 +290,14 @@ def resolve_ayanamsa(req, jd):
     zodiac = str(req.get('selectedZodiacSystem') or req.get('zodiacSystem') or 'Tropical').strip().lower()
     selected_ayanamsa = str(
         req.get('selectedAyanamsaSystem') or req.get('ayanamsaSystem') or ''
-    ).strip()
+    ).strip(    )
     if selected_ayanamsa:
         ayanamsa_name = selected_ayanamsa.lower()
-        if ayanamsa_name in ('custom tropical precessed', 'tropical precessed'):
-            if (
-                ayanamsa_name == 'custom tropical precessed'
-                and req.get('customAyanamsa') in (None, '')
-            ):
-                raise ValueError('customAyanamsa is required when using the Custom ayanamsa system')
-            custom_value = parse_float_field(req, ['customAyanamsa'], default=0.0)
-            if not math.isfinite(custom_value) or not -360 <= custom_value <= 360:
-                raise ValueError('customAyanamsa must be a finite value between -360 and 360 degrees')
-            return precess_custom_ayanamsa(
-                custom_value,
-                jd,
-                precession_reference_jd(),
-            )
-        if ayanamsa_name in ('custom', 'custom precessed'):
-            if req.get('customAyanamsa') in (None, ''):
-                raise ValueError('customAyanamsa is required when using the Custom ayanamsa system')
-            custom_value = parse_float_field(req, ['customAyanamsa'])
-            if not math.isfinite(custom_value) or not -360 <= custom_value <= 360:
-                raise ValueError('customAyanamsa must be a finite value between -360 and 360 degrees')
-            if ayanamsa_name == 'custom precessed':
-                return precess_custom_ayanamsa(custom_value, jd)
-            return custom_value
         if ayanamsa_name in ('tropical', 'none'):
             return 0.0
-        for preset_name, preset_value in CUSTOM_AYANAMSA_PRESETS.items():
-            if ayanamsa_name == preset_name.casefold():
-                return float(preset_value)
+        named_value = NAMED_AYANAMSA_VALUES.get(ayanamsa_name)
+        if named_value is not None:
+            return named_value[1]
         mode = AYANAMSA_MODES.get(ayanamsa_name)
         if mode is None:
             raise ValueError(f'Unsupported ayanamsa system: {selected_ayanamsa}')
@@ -420,7 +348,7 @@ def calculate_payload(req):
         req.get('houseSystemCode') or house_codes.get(selected_house) or 'P'
     )[:1].encode('ascii', 'ignore') or b'P'
 
-    out = {"success": True, "engine": "Swiss Ephemeris / pyswisseph", "julianDay": jd, "ayanamsa": ayan, "ayanamsaValues": current_ayanamsa_values(req, jd), "positions": {}, "houseCusps": [], "fixedStars": []}
+    out = {"success": True, "engine": "Swiss Ephemeris / pyswisseph", "julianDay": jd, "ayanamsa": ayan, "ayanamsaValues": current_ayanamsa_values(jd), "positions": {}, "houseCusps": [], "fixedStars": []}
 
     bodies = {
         'Sun': swe.SUN, 'Moon': swe.MOON, 'Mercury': swe.MERCURY, 'Venus': swe.VENUS,
@@ -623,7 +551,6 @@ def calculate_return_date(req):
         **natal,
         'selectedZodiacSystem': req.get('selectedZodiacSystem') or natal.get('zodiacSystem') or 'Tropical',
         'selectedAyanamsaSystem': req.get('selectedAyanamsaSystem') or natal.get('ayanamsaSystem') or 'Tropical',
-        'customAyanamsa': req.get('customAyanamsa', natal.get('customAyanamsa')),
         'selectedHouseSystem': req.get('selectedHouseSystem') or natal.get('houseSystem') or 'Placidus',
         'selectedCoordinateSystem': req.get('selectedCoordinateSystem') or natal.get('coordinateSystem') or 'Geocentric',
         'fixedStars': False,
@@ -1267,7 +1194,6 @@ def calculate_transit_graph(req):
         **natal,
         'selectedZodiacSystem': req.get('selectedZodiacSystem') or natal.get('zodiacSystem') or 'Tropical',
         'selectedAyanamsaSystem': req.get('selectedAyanamsaSystem') or natal.get('ayanamsaSystem') or 'Tropical',
-        'customAyanamsa': req.get('customAyanamsa', natal.get('customAyanamsa')),
         'selectedHouseSystem': req.get('selectedHouseSystem') or natal.get('houseSystem') or 'Placidus',
         'selectedCoordinateSystem': req.get('selectedCoordinateSystem') or natal.get('coordinateSystem') or 'Geocentric',
     }

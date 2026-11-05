@@ -3602,9 +3602,6 @@ export function sharedNatal(
         const ayEl = document.querySelector(
           '#system-settings select[name="ayanamsaSystem"]',
         );
-        const customAyEl = document.querySelector(
-          '#system-settings input[name="customAyanamsa"]',
-        );
         const hEl = document.querySelector(
           '#system-settings select[name="houseSystem"]',
         );
@@ -3677,12 +3674,6 @@ export function sharedNatal(
         const stale =
           (zEl && stored.zodiacSystem !== zEl.value) ||
           (ayEl && (stored.ayanamsaSystem || "Tropical") !== ayEl.value) ||
-          (ayEl &&
-            ["Custom", "Custom Precessed", "Custom Tropical Precessed"].includes(
-              ayEl.value,
-            ) &&
-            customAyEl &&
-            Number(stored.customAyanamsa) !== Number(customAyEl.value)) ||
           (hEl && stored.houseSystem !== hEl.value) ||
           (cEl && stored.coordinateSystem !== cEl.value) ||
           (aoEl && stored.ascendantOverride !== aoEl.value) ||

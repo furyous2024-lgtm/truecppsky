@@ -17,84 +17,6 @@ let activeCustomPoints = []; // Array of {num, name, display, aspect}
 // existing users' settings JSON is untouched when this field is absent.
 let activeCustomAspects = []; // Array of {angle, orb, enabled}
 
-function syncCustomAyanamsaField() {
-  const select = document.querySelector(
-    '#system-settings select[name="ayanamsaSystem"]',
-  );
-  const input = document.querySelector(
-    '#system-settings input[name="customAyanamsa"]',
-  );
-  const label = document.querySelector("#system-settings .custom-ayanamsa-label");
-  const field = document.querySelector("#system-settings .custom-ayanamsa-field");
-  const help = document.querySelector("#system-settings .custom-ayanamsa-help");
-  const tropicalHelp = document.querySelector(
-    "#system-settings .custom-tropical-ayanamsa-help",
-  );
-  if (!select || !input || !field || !label) return;
-
-  const customSelected = [
-    "Custom",
-    "Custom Precessed",
-    "Custom Tropical Precessed",
-  ].includes(select.value);
-  const precessedSelected = select.value === "Custom Precessed";
-  const tropicalPrecessedSelected =
-    select.value === "Custom Tropical Precessed";
-  input.required = customSelected;
-  input.setAttribute("aria-label", "Custom ayanamsa in degrees");
-  label.textContent = precessedSelected
-    ? "Custom ayanamsa at J2000:"
-    : tropicalPrecessedSelected
-      ? "Valor Personalizado:"
-      : "Custom ayanamsa:";
-  field.hidden = !customSelected;
-  label.hidden = !customSelected;
-  if (help) help.hidden = !precessedSelected;
-  if (tropicalHelp) tropicalHelp.hidden = !tropicalPrecessedSelected;
-}
-
-async function loadCustomAyanamsaPresets() {
-  const response = await fetch("/json/customAyanamsas.json");
-  if (!response.ok) {
-    throw new Error(`Could not load custom ayanamsa presets (${response.status}).`);
-  }
-  const presets = await response.json();
-  if (!presets || typeof presets !== "object" || Array.isArray(presets)) {
-    throw new Error("Custom ayanamsa presets must be a name-to-degree object.");
-  }
-
-  const select = document.querySelector(
-    '#system-settings select[name="ayanamsaSystem"]',
-  );
-  if (!select) return;
-  const customPresetsGroup = select.querySelector(
-    "optgroup[data-custom-ayanamsas]",
-  );
-  if (!customPresetsGroup) {
-    throw new Error("Custom ayanamsa presets group is missing.");
-  }
-
-  const existingValues = new Set(
-    Array.from(select.options, (option) => option.value.toLowerCase()),
-  );
-  for (const [name, rawValue] of Object.entries(presets)) {
-    const value = Number(rawValue);
-    if (
-      !name.trim() ||
-      existingValues.has(name.toLowerCase()) ||
-      typeof rawValue !== "number" ||
-      !Number.isFinite(value) ||
-      value < -360 ||
-      value > 360
-    ) {
-      throw new Error(`Invalid or duplicate custom ayanamsa preset: ${name}`);
-    }
-    customPresetsGroup.append(new Option(name, name));
-    customPresetsGroup.hidden = false;
-    existingValues.add(name.toLowerCase());
-  }
-}
-
 // Load custom points JSON on page load
 fetch("/json/customPoints.json")
   .then((res) => res.json())
@@ -120,7 +42,7 @@ const clearSettingsMessage = (delay = 5000) => {
 };
 
 // On page load, fetch recent settings & prevent the form from submitting on enter key press
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
   const settingsForm = document.querySelector(".settings-form");
   if (settingsForm) {
     settingsForm.addEventListener("submit", (e) => {
@@ -139,16 +61,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  try {
-    await loadCustomAyanamsaPresets();
-  } catch (error) {
-    console.error("Failed to load custom ayanamsa presets:", error);
-    const errorElem = document.querySelector(".errorMessageSettings");
-    if (errorElem) {
-      errorElem.textContent = "Custom ayanamsa presets could not be loaded.";
-    }
-  }
-
   // Render editor controls first, then always initialize with the built-in Default preset.
   renderCustomPointsList();
   renderCustomAspectsList();
@@ -156,10 +68,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Loading the list is read-only and must never apply a saved preset automatically.
   fetchRecentSettings();
-  syncCustomAyanamsaField();
-  document
-    .querySelector('#system-settings select[name="ayanamsaSystem"]')
-    ?.addEventListener("change", syncCustomAyanamsaField);
 });
 
 // Helper to clear custom points error message
@@ -1405,12 +1313,6 @@ function loadSettingsIntoForm(settings) {
       ? ayanamsaValue
       : "Tropical";
   }
-  const customAyanamsaInput = document.querySelector(
-    'input[name="customAyanamsa"]',
-  );
-  if (customAyanamsaInput) {
-    customAyanamsaInput.value = savedSystemSettings.customAyanamsa ?? "0";
-  }
   const houseSelect = document.querySelector(`select[name="houseSystem"]`);
   if (houseSelect) {
     houseSelect.value = savedSystemSettings.houseSystem;
@@ -1426,8 +1328,6 @@ function loadSettingsIntoForm(settings) {
     ascendantOverrideSelect.value =
       savedSystemSettings.ascendantOverride || "Normal";
   }
-  syncCustomAyanamsaField();
-
   // Never restore location from a saved preset, including legacy presets that
   // still contain locationSettings. Keep the active/account Default Location
   // and its coordinates/time zone unchanged when applying settings.
@@ -1771,9 +1671,6 @@ function getSettingsData() {
       zodiacSystem: document.querySelector('select[name="zodiacSystem"]').value,
       ayanamsaSystem: document.querySelector(
         'select[name="ayanamsaSystem"]',
-      ).value,
-      customAyanamsa: document.querySelector(
-        'input[name="customAyanamsa"]',
       ).value,
       houseSystem: document.querySelector('select[name="houseSystem"]').value,
       coordinateSystem: document.querySelector(
@@ -2185,8 +2082,6 @@ function resetFormToDefaults() {
   // Reset system settings to default values (first option is default)
   document.querySelector('select[name="zodiacSystem"]').value = "Tropical";
   document.querySelector('select[name="ayanamsaSystem"]').value = "Tropical";
-  document.querySelector('input[name="customAyanamsa"]').value = "0";
-  syncCustomAyanamsaField();
   document.querySelector('select[name="houseSystem"]').value = "Placidus";
   document.querySelector('select[name="coordinateSystem"]').value =
     "Geocentric";
