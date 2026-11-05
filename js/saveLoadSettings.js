@@ -45,7 +45,7 @@ function syncCustomAyanamsaField() {
   label.textContent = precessedSelected
     ? "Custom ayanamsa at J2000:"
     : tropicalPrecessedSelected
-      ? "Custom ayanamsa offset from tropical zero:"
+      ? "Valor Personalizado:"
       : "Custom ayanamsa:";
   field.hidden = !customSelected;
   label.hidden = !customSelected;

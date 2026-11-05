@@ -2,6 +2,7 @@ import importlib.util
 import math
 import pathlib
 import unittest
+from unittest.mock import patch
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -111,72 +112,75 @@ class AyanamsaTests(unittest.TestCase):
             service.swe.get_ayanamsa_ut(jd),
         )
 
-    def test_custom_tropical_precessed_adds_input_to_precessed_zero_reference(self):
-        j2000 = service.swe.julday(2000, 1, 1, 12.0, service.swe.GREG_CAL)
+    def test_custom_tropical_precessed_uses_current_raw_value_then_precesses(self):
         modern_jd = service.swe.julday(2026, 11, 5, 12.0, service.swe.GREG_CAL)
         bce_jd = service.swe.julday(-499, 1, 1, 12.0, service.swe.GREG_CAL)
+        reference_jd = service.swe.julday(2026, 11, 5, 12.0, service.swe.GREG_CAL)
 
-        self.assertAlmostEqual(
-            self.resolve(
+        with patch.object(service, "precession_reference_jd", return_value=reference_jd):
+            modern_value = self.resolve(
                 "Custom Tropical Precessed",
-                12.5,
-                historicalYear=2000,
-                month=1,
-                day=1,
-                hour=12,
-            ),
-            12.5,
-            places=6,
-        )
-
-        modern_base = self.resolve(
-            "Custom Tropical Precessed",
-            0.0,
-            historicalYear=2026,
-            month=11,
-            day=5,
-            hour=12,
-        )
-        bce_base = self.resolve(
-            "Custom Tropical Precessed",
-            0.0,
-            historicalYear=-500,
-            hour=12,
-        )
-        service.swe.set_sid_mode(service.swe.SIDM_USER, j2000, 0.0)
-        self.assertAlmostEqual(modern_base, service.swe.get_ayanamsa_ut(modern_jd))
-        self.assertAlmostEqual(bce_base, service.swe.get_ayanamsa_ut(bce_jd))
-        self.assertAlmostEqual(
-            self.resolve(
-                "Custom Tropical Precessed",
-                12.5,
+                27.3490208119,
                 historicalYear=2026,
                 month=11,
                 day=5,
                 hour=12,
-            ),
-            modern_base + 12.5,
-        )
-        self.assertAlmostEqual(
-            self.resolve(
+            )
+            bce_value = self.resolve(
                 "Custom Tropical Precessed",
-                12.5,
+                27.3490208119,
                 historicalYear=-500,
                 hour=12,
-            ),
-            bce_base + 12.5,
-        )
+            )
 
-    def test_custom_tropical_precessed_is_listed_with_calculated_value(self):
-        values = service.current_ayanamsa_values(
-            {"customAyanamsa": 12.5},
-            self.jd,
+        service.swe.set_sid_mode(
+            service.swe.SIDM_USER,
+            reference_jd,
+            27.3490208119,
         )
-        reference = service.precess_custom_ayanamsa(0.0, self.jd)
+        self.assertAlmostEqual(
+            modern_value,
+            service.swe.get_ayanamsa_ut(modern_jd),
+            places=6,
+        )
+        self.assertAlmostEqual(
+            modern_value,
+            27.3490208119,
+            places=6,
+        )
+        self.assertAlmostEqual(bce_value, service.swe.get_ayanamsa_ut(bce_jd))
+        self.assertNotAlmostEqual(bce_value, 27.3490208119)
+
+    def test_custom_tropical_precessed_value_is_displayed_as_calculated(self):
+        reference_jd = service.swe.julday(2026, 11, 5, 12.0, service.swe.GREG_CAL)
+        with patch.object(service, "precession_reference_jd", return_value=reference_jd):
+            values = service.current_ayanamsa_values(
+                {"customAyanamsa": 27.3490208119},
+                reference_jd,
+            )
         self.assertAlmostEqual(
             values["Custom Tropical Precessed"],
-            reference + 12.5,
+            27.3490208119,
+            places=6,
         )
+
+    def test_custom_tropical_precessed_does_not_use_j2000_as_reference(self):
+        reference_jd = service.swe.julday(2026, 11, 5, 12.0, service.swe.GREG_CAL)
+        ancient_jd = service.swe.julday(-499, 1, 1, 12.0, service.swe.GREG_CAL)
+        service.swe.set_sid_mode(
+            service.swe.SIDM_USER,
+            reference_jd,
+            27.3490208119,
+        )
+        expected = service.swe.get_ayanamsa_ut(ancient_jd)
+        with patch.object(service, "precession_reference_jd", return_value=reference_jd):
+            actual = self.resolve(
+                "Custom Tropical Precessed",
+                27.3490208119,
+                historicalYear=-500,
+                hour=12,
+            )
+        self.assertAlmostEqual(actual, expected)
 
     def test_custom_tropical_precessed_requires_an_input_value(self):
         with self.assertRaisesRegex(ValueError, "customAyanamsa is required"):

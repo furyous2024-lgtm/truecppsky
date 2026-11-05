@@ -181,8 +181,10 @@ def current_ayanamsa_values(req, now_jd=None):
     if custom_value is not None and math.isfinite(custom_value) and -360 <= custom_value <= 360:
         values['Custom'] = custom_value
         values['Custom Precessed'] = precess_custom_ayanamsa(custom_value, now_jd)
-        values['Custom Tropical Precessed'] = (
-            precess_custom_ayanamsa(0.0, now_jd) + custom_value
+        values['Custom Tropical Precessed'] = precess_custom_ayanamsa(
+            custom_value,
+            now_jd,
+            precession_reference_jd(),
         )
 
     for preset_name, preset_value in CUSTOM_AYANAMSA_PRESETS.items():
@@ -194,9 +196,14 @@ def current_ayanamsa_values(req, now_jd=None):
 
     return values
 
-def precess_custom_ayanamsa(value, jd):
-    j2000_jd = swe.julday(2000, 1, 1, 12.0, swe.GREG_CAL)
-    swe.set_sid_mode(swe.SIDM_USER, j2000_jd, value)
+def precession_reference_jd():
+    today = datetime.datetime.now(datetime.timezone.utc)
+    return swe.julday(today.year, today.month, today.day, 12.0, swe.GREG_CAL)
+
+def precess_custom_ayanamsa(value, jd, reference_jd=None):
+    if reference_jd is None:
+        reference_jd = swe.julday(2000, 1, 1, 12.0, swe.GREG_CAL)
+    swe.set_sid_mode(swe.SIDM_USER, reference_jd, value)
     return swe.get_ayanamsa_ut(jd)
 
 def kepler_solve(M_rad, e):
@@ -342,7 +349,11 @@ def resolve_ayanamsa(req, jd):
             custom_value = parse_float_field(req, ['customAyanamsa'], default=0.0)
             if not math.isfinite(custom_value) or not -360 <= custom_value <= 360:
                 raise ValueError('customAyanamsa must be a finite value between -360 and 360 degrees')
-            return precess_custom_ayanamsa(0.0, jd) + custom_value
+            return precess_custom_ayanamsa(
+                custom_value,
+                jd,
+                precession_reference_jd(),
+            )
         if ayanamsa_name in ('custom', 'custom precessed'):
             if req.get('customAyanamsa') in (None, ''):
                 raise ValueError('customAyanamsa is required when using the Custom ayanamsa system')
