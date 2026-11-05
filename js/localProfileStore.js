@@ -125,7 +125,27 @@
       write(CHARTS_KEY, charts); return { success: true, recentCharts: recent(charts) };
     }
     if (path === "/export-charts") return read(CHARTS_KEY);
-    if (path === "/import-charts" && method === "POST") return { success: true, recentCharts: recent(mergeCharts(body.charts || body.recentCharts || [])) };
+    if (path === "/import-charts" && method === "POST") {
+      const incoming = Array.isArray(body) ? body : (body.charts || body.recentCharts || []);
+      const currentCharts = read(CHARTS_KEY).map(normalizeChart);
+      const existingKeys = new Set(currentCharts.map(chartKey));
+      const normalizedIncoming = incoming.map(normalizeChart);
+      const newCharts = [];
+      const seenKeys = new Set();
+
+      for (const chart of normalizedIncoming) {
+        const key = chartKey(chart);
+        if (existingKeys.has(key) || seenKeys.has(key)) continue;
+        if (currentCharts.length + newCharts.length >= MAX_ITEMS) break;
+        newCharts.push(chart);
+        existingKeys.add(key);
+        seenKeys.add(key);
+      }
+
+      const charts = [...currentCharts, ...newCharts];
+      write(CHARTS_KEY, charts.slice(0, MAX_ITEMS));
+      return { success: true, imported: newCharts.length, total: incoming.length, recentCharts: recent(charts.slice(0, MAX_ITEMS)) };
+    }
 
     if (path === "/recent-profiles") return { success: true, recentProfiles: recent(read(MAIN_PROFILES_KEY)) };
     if (path === "/save-profile" && method === "POST") {

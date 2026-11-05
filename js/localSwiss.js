@@ -54,6 +54,7 @@ const HOUSE_CODES = {
   Regiomontanus: "R",
   Campanus: "C",
 };
+const SWISS_REQUEST_TIMEOUT_MS = 60000;
 
 function normalize(value) {
   return String(value || "")
@@ -229,9 +230,18 @@ function normalizeCityMatch(value) {
 
 async function fetchWithTimeout(url, options = {}, timeoutMs = 7000) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  let timedOut = false;
+  const timeout = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, timeoutMs);
   try {
     return await fetch(url, { ...options, signal: controller.signal });
+  } catch (error) {
+    if (timedOut) {
+      throw new Error(`Request timed out after ${Math.ceil(timeoutMs / 1000)} seconds.`);
+    }
+    throw error;
   } finally {
     clearTimeout(timeout);
   }
@@ -1133,14 +1143,34 @@ async function chartDataFromSwiss(result, request) {
   return data;
 }
 
+async function postSwissRequest(payload) {
+  const controller = new AbortController();
+  let timedOut = false;
+  const timeout = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, SWISS_REQUEST_TIMEOUT_MS);
+  try {
+    const response = await fetch(swissEphemerisUrl(), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+    return { response, responseBody: await response.text() };
+  } catch (error) {
+    if (timedOut) {
+      throw new Error("Swiss Ephemeris calculation timed out after 60 seconds. Try again.");
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 export async function requestSwissChart(request, form = null) {
   const payload = await prepareSwissRequest(request, form);
-  const response = await fetch(swissEphemerisUrl(), {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  const responseBody = await response.text();
+  const { response, responseBody } = await postSwissRequest(payload);
   let result;
   try {
     result = responseBody ? JSON.parse(responseBody) : null;
@@ -1162,12 +1192,10 @@ export async function requestSwissChart(request, form = null) {
 
 export async function requestSwissReturnDate(request, form = null) {
   const payload = await prepareSwissRequest(request, form);
-  const response = await fetch(swissEphemerisUrl(), {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...payload, action: "find-return-date" }),
+  const { response, responseBody } = await postSwissRequest({
+    ...payload,
+    action: "find-return-date",
   });
-  const responseBody = await response.text();
   let result;
   try {
     result = responseBody ? JSON.parse(responseBody) : null;

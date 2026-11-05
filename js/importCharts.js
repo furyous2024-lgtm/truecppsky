@@ -32,6 +32,111 @@ const hideLoading = () => {
 // Import Charts Handler
 const fileInput = document.getElementById("chartFileInput");
 const importBtn = document.getElementById("importChartsBtn");
+const exportBtn = document.getElementById("exportChartsBtn");
+const importResults = document.getElementById("importResults");
+
+function showImportResult(message) {
+  importResults.innerText = message;
+  clearImportMessage("importResults");
+}
+
+async function fetchWithTimeout(url, options = {}, timeoutMs = 60000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } catch (error) {
+    if (error.name === "AbortError") {
+      throw new Error(`Request timed out after ${Math.ceil(timeoutMs / 1000)} seconds.`);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function parseCsvLine(line) {
+  const fields = [];
+  let field = "";
+  let quoted = false;
+
+  for (let index = 0; index < line.length; index += 1) {
+    const character = line[index];
+    if (character === '"') {
+      if (quoted && line[index + 1] === '"') {
+        field += '"';
+        index += 1;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (character === "," && !quoted) {
+      fields.push(field.trim());
+      field = "";
+    } else {
+      field += character;
+    }
+  }
+  fields.push(field.trim());
+  return fields;
+}
+
+function parseChartsFile(fileContent) {
+  let parsed;
+  try {
+    parsed = JSON.parse(fileContent);
+  } catch {
+    parsed = null;
+  }
+
+  const charts = Array.isArray(parsed)
+    ? parsed
+    : Array.isArray(parsed?.charts)
+      ? parsed.charts
+      : Array.isArray(parsed?.recentCharts)
+        ? parsed.recentCharts
+        : null;
+
+  if (charts) return charts;
+
+  return String(fileContent)
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line, index) => {
+      const fields = parseCsvLine(line);
+      const [name, year, month, day, time, utc, location, longitude, latitude] =
+        fields;
+      const timeParts = String(time || "").split(":");
+      if (
+        fields.length < 9 ||
+        !name ||
+        !year ||
+        !month ||
+        !day ||
+        !timeParts[0] ||
+        !timeParts[1] ||
+        !location ||
+        !Number.isFinite(Number(longitude)) ||
+        !Number.isFinite(Number(latitude))
+      ) {
+        throw new Error(`Invalid chart data on line ${index + 1}.`);
+      }
+
+      return {
+        name,
+        year,
+        month,
+        day,
+        hour: timeParts[0],
+        minute: timeParts[1],
+        utcOffset: utc,
+        location,
+        long: Number(longitude),
+        lat: Number(latitude),
+        profile_type: "natal",
+      };
+    });
+}
 
 // When the import button is clicked, trigger a click on the hidden file input
 importBtn.addEventListener("click", () => {
@@ -46,7 +151,7 @@ fileInput.addEventListener("change", () => {
     return;
   }
   const file = fileInput.files[0];
-  const MAX_FILE_SIZE_BYTES = 204800; // 200KB
+  const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
 
   // Validate file extension
   if (!file.name.toLowerCase().endsWith(".txt")) {
@@ -58,98 +163,100 @@ fileInput.addEventListener("change", () => {
 
   if (file.size > MAX_FILE_SIZE_BYTES) {
     document.getElementById("importResults").innerText =
-      "File size exceeds maximum allowed (200KB).";
+      "File size exceeds maximum allowed (10MB).";
     clearImportMessage("importResults");
     return;
   }
 
   const reader = new FileReader();
   reader.onload = (e) => {
-    const fileContent = e.target.result;
+    let charts;
+    try {
+      charts = parseChartsFile(e.target.result);
+      if (!charts.length || charts.length > 5000) {
+        throw new Error("Import must contain between 1 and 5000 charts.");
+      }
+      if (charts.some((chart) => !chart || typeof chart !== "object" || Array.isArray(chart))) {
+        throw new Error("The selected file contains invalid chart data.");
+      }
+    } catch (error) {
+      showImportResult(error.message);
+      fileInput.value = "";
+      return;
+    }
+
     showLoading();
-    fetch("/import-charts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // Send both fileContent and fileName to the server
-      body: JSON.stringify({ fileContent, fileName: file.name }),
-      credentials: 'same-origin'
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // If the server returns a redirectUrl, redirect the browser to Stripe Checkout
-        if (data.redirectUrl) {
-          hideLoading();
-          window.location.href = data.redirectUrl;
-          return;
+    (async () => {
+      let imported = 0;
+      try {
+        for (let offset = 0; offset < charts.length; offset += 1000) {
+          const batch = charts.slice(offset, offset + 1000);
+          const response = await fetchWithTimeout("/import-charts", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ charts: batch }),
+            credentials: "same-origin",
+          }, 120000);
+          const data = await response.json();
+          if (data.redirectUrl) {
+            window.location.href = data.redirectUrl;
+            return;
+          }
+          if (!response.ok || !data.success) {
+            throw new Error(data.error || `Import failed (${response.status}).`);
+          }
+          imported += data.imported ?? batch.length;
         }
-
-        if (!data.success) {
-          hideLoading();
-          document.getElementById("importResults").innerText = data.error;
-          clearImportMessage("importResults");
-          return;
+        showImportResult(`Imported ${imported}/${charts.length} charts.`);
+        if (typeof window.fetchRecentCharts === "function") {
+          window.fetchRecentCharts();
         }
-
-        // Hide the spinner but keep the overlay to prevent clicks
-        const spinner = document.querySelector("#loading-overlay .spinner");
-        if (spinner) {
-          spinner.style.display = "none";
-        }
-
-        let errorsMsg = "";
-        if (data.errors && data.errors.length) {
-          errorsMsg = data.errors.join(". ") + ".";
-        }
-        const resultMsg =
-          "Imported " +
-          data.imported +
-          "/" +
-          data.total +
-          " charts. " +
-          errorsMsg +
-          " Updating...";
-        document.getElementById("importResults").innerText = resultMsg;
-
-        // Keep overlay active and refresh after notification disappears (5 seconds)
-        setTimeout(() => {
-          window.location.reload();
-        }, 6000);
-      })
-      .catch((err) => {
+      } catch (error) {
+        showImportResult(
+          imported
+            ? `Import partially completed (${imported}/${charts.length}): ${error.message}`
+            : `Import error: ${error.message}`,
+        );
+      } finally {
         hideLoading();
-        document.getElementById("importResults").innerText =
-          "Fetch error: " + err;
-        clearImportMessage("importResults");
-      });
+        fileInput.value = "";
+      }
+    })();
+  };
+  reader.onerror = () => {
+    showImportResult("Unable to read the selected file.");
+    fileInput.value = "";
   };
   reader.readAsText(file);
 });
 
 // Export Charts Handler
-document.getElementById("exportChartsBtn").addEventListener("click", () => {
+exportBtn.addEventListener("click", () => {
   showLoading();
-  fetch("/export-charts", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({}),
-    credentials: 'same-origin'
+  fetchWithTimeout("/export-charts", {
+    method: "GET",
+    credentials: "same-origin",
   })
-    .then((response) => response.json())
+    .then(async (response) => {
+      const data = await response.json();
+      if (!response.ok || data?.success === false) {
+        throw new Error(data?.error || `Export failed (${response.status}).`);
+      }
+      const charts = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.charts)
+          ? data.charts
+          : Array.isArray(data?.recentCharts)
+            ? data.recentCharts
+            : null;
+      if (!charts) throw new Error("The charts service returned an invalid response.");
+      return charts;
+    })
     .then((data) => {
       hideLoading();
-
-      // If the server returns a redirectUrl, redirect the browser to Stripe Checkout
-      if (data.redirectUrl) {
-        window.location.href = data.redirectUrl;
-        return;
-      }
-
-      if (!data.success) {
-        document.getElementById("importResults").innerText = data.error;
-        clearImportMessage("importResults");
-        return;
-      }
-      const blob = new Blob([data.fileContent], { type: "text/plain" });
+      const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "text/plain;charset=utf-8",
+      });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -157,14 +264,12 @@ document.getElementById("exportChartsBtn").addEventListener("click", () => {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      // No message after export
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showImportResult(`Exported ${data.length} charts.`);
     })
-    .catch((err) => {
+    .catch((error) => {
       hideLoading();
-      document.getElementById("importResults").innerText =
-        "Fetch error: " + err;
-      clearImportMessage("importResults");
+      showImportResult(`Export error: ${error.message}`);
     });
 });
 
@@ -178,7 +283,7 @@ document.getElementById("deleteChartsBtn").addEventListener("click", () => {
     return;
   }
   showLoading();
-  fetch("/delete-exported-charts", {
+  fetchWithTimeout("/delete-exported-charts", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: 'same-origin'
@@ -187,13 +292,13 @@ document.getElementById("deleteChartsBtn").addEventListener("click", () => {
     .then((data) => {
       hideLoading();
       if (data.success) {
-        document.getElementById("importResults").innerText = data.message;
+        importResults.innerText = data.message;
         // Reset the confirmation checkbox
         document.getElementById("confirmExportCheckbox").checked = false;
         // Refresh the recent charts list on the natal page
         fetchRecentCharts && fetchRecentCharts();
       } else {
-        document.getElementById("importResults").innerText = data.error;
+        importResults.innerText = data.error;
       }
       clearImportMessage("importResults");
     })

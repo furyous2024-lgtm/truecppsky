@@ -359,6 +359,15 @@
     return recent(cloudChartsCache);
   }
 
+  async function getAllCloudCharts() {
+    const collection = chartsCollection();
+    if (!collection) {
+      return firestoreRestList(`${userPath()}/charts`, 6500);
+    }
+    const snapshot = await withCloudTimeout(collection.get(), 30000, "Carregar todos os Birth Charts do Firebase");
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  }
+
   async function searchCloudCharts(query) {
     const q = normalizeText(query).toLowerCase();
     const charts = await getCloudCharts();
@@ -399,10 +408,25 @@
   }
 
   async function importCloudCharts(charts) {
+    const existingKeys = new Set(cloudChartsCache.map(chartKey));
+    const incomingKeys = new Set();
+    const newCharts = [];
+
     for (const chart of charts || []) {
-      await saveCloudChart(chart);
+      const key = chartKey(normalizeChart(chart));
+      if (existingKeys.has(key) || incomingKeys.has(key)) {
+        incomingKeys.add(key);
+        continue;
+      }
+      incomingKeys.add(key);
+      if (cloudChartsCache.length + newCharts.length >= 5000) break;
+      newCharts.push(chart);
     }
-    return recent(cloudChartsCache);
+
+    for (let offset = 0; offset < newCharts.length; offset += 10) {
+      await Promise.all(newCharts.slice(offset, offset + 10).map(saveCloudChart));
+    }
+    return { recentCharts: recent(cloudChartsCache), imported: newCharts.length };
   }
 
   async function getCloudDefaultLocation() {
@@ -563,13 +587,15 @@
         return new Response(JSON.stringify({ success: true, recentCharts: recent(cloudChartsCache) }), { headers: { "Content-Type": "application/json" } });
       }
       if (path === "/export-charts" && method === "GET") {
-        const recentCharts = await withCloudTimeout(getCloudCharts(), 12000, "Carregar Birth Charts do Firebase");
-        return new Response(JSON.stringify(recentCharts), { headers: { "Content-Type": "application/json" } });
+        const charts = await getAllCloudCharts();
+        cloudChartsCache = charts;
+        return new Response(JSON.stringify(charts), { headers: { "Content-Type": "application/json" } });
       }
       if (path === "/import-charts" && method === "POST") {
         const incoming = Array.isArray(body) ? body : (body.charts || body.recentCharts || []);
-        const recentCharts = await withCloudTimeout(importCloudCharts(incoming), 12000, "Importar Birth Charts no Firebase");
-        return new Response(JSON.stringify({ success: true, recentCharts }), { headers: { "Content-Type": "application/json" } });
+        cloudChartsCache = await getAllCloudCharts();
+        const result = await withCloudTimeout(importCloudCharts(incoming), 120000, "Importar Birth Charts no Firebase");
+        return new Response(JSON.stringify({ success: true, imported: result.imported, total: incoming.length, recentCharts: result.recentCharts }), { headers: { "Content-Type": "application/json" } });
       }
       if (path === "/api/default-location" && method === "GET") {
         const defaultLocation = await withCloudTimeout(getCloudDefaultLocation(), 12000, "Carregar Default Location do Firebase");

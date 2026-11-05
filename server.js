@@ -247,12 +247,17 @@ app.post('/view-report', (req, res) => res.json({ success: true }));
 app.post('/import-charts', (req, res) => {
   const db = readDb();
   const incoming = Array.isArray(req.body) ? req.body : (req.body.charts || req.body.recentCharts || []);
+  let imported = 0;
   for (const raw of incoming) {
     const chart = normalizeChart(raw);
-    if (!db.charts.some(c => chartKey(c) === chartKey(chart))) db.charts.push(chart);
+    if (!db.charts.some(c => chartKey(c) === chartKey(chart))) {
+      if (db.charts.length >= 5000) break;
+      db.charts.push(chart);
+      imported += 1;
+    }
   }
   writeDb(db);
-  res.json({ success: true, recentCharts: recent(db.charts) });
+  res.json({ success: true, imported, total: incoming.length, recentCharts: recent(db.charts) });
 });
 app.get('/export-charts', (req, res) => res.json(readDb().charts));
 app.post('/delete-exported-charts', (req, res) => res.json({ success: true }));

@@ -376,12 +376,41 @@ document.getElementById("graphForm").addEventListener("submit", async function (
   // This prevents issues where the user runs the graph without applying settings first
   const natalForm = document.getElementById("natalForm");
   if (natalForm) {
+    if (!natalForm.reportValidity()) {
+      window._graphNeedsOverlay = false;
+      document.getElementById("loading-overlay").style.display = "none";
+      const errorContainer = document.querySelector(".errorMessageGraph");
+      if (errorContainer) {
+        errorContainer.textContent =
+          "Complete the natal chart details before calculating the transit graph.";
+      }
+      return;
+    }
     // Flag to prevent natal form from hiding the overlay (graph needs it to stay visible)
     window._graphNeedsOverlay = true;
-    await new Promise((resolve) => {
-      document.addEventListener("natalChartComplete", resolve, { once: true });
+    const natalCalculationSucceeded = await new Promise((resolve) => {
+      let timeoutId;
+      const onComplete = (event) => {
+        clearTimeout(timeoutId);
+        resolve(event.detail?.success === true);
+      };
+      timeoutId = setTimeout(() => {
+        document.removeEventListener("natalChartComplete", onComplete);
+        resolve(false);
+      }, 65000);
+      document.addEventListener("natalChartComplete", onComplete, { once: true });
       natalForm.requestSubmit();
     });
+    if (!natalCalculationSucceeded) {
+      window._graphNeedsOverlay = false;
+      document.getElementById("loading-overlay").style.display = "none";
+      const errorContainer = document.querySelector(".errorMessageGraph");
+      if (errorContainer) {
+        errorContainer.textContent =
+          "The natal chart calculation did not finish. Check the chart details and try again.";
+      }
+      return;
+    }
   }
 
   const formData = new FormData(this);
@@ -460,15 +489,19 @@ document.getElementById("graphForm").addEventListener("submit", async function (
     typeof window.trueskyApiUrl === "function"
       ? window.trueskyApiUrl("/api/transit-graph")
       : "/api/transit-graph";
+  const graphRequestController = new AbortController();
+  const graphRequestTimeout = setTimeout(
+    () => graphRequestController.abort(),
+    90000,
+  );
   fetch(graphApiUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(combinedData),
     credentials: "same-origin",
+    signal: graphRequestController.signal,
   })
     .then(async (response) => {
-      document.getElementById("loading-overlay").style.display = "none";
-      window._graphNeedsOverlay = false;
       const responseText = await response.text();
       let payload;
       try {
@@ -1406,12 +1439,19 @@ document.getElementById("graphForm").addEventListener("submit", async function (
       const errorContainer = document.querySelector(".errorMessageGraph");
       if (errorContainer) {
         errorContainer.textContent =
-          error.message || "Unexpected error. Please check your connection.";
+          error.name === "AbortError"
+            ? "Transit Graph calculation timed out after 90 seconds. Try again."
+            : error.message || "Unexpected error. Please check your connection.";
         // Clear error after 5 seconds
         setTimeout(() => {
           errorContainer.textContent = "";
         }, 5000);
       }
+    })
+    .finally(() => {
+      clearTimeout(graphRequestTimeout);
+      document.getElementById("loading-overlay").style.display = "none";
+      window._graphNeedsOverlay = false;
     });
 });
 

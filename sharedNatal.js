@@ -1806,6 +1806,11 @@ export function sharedNatal(
       if (errorElement) errorElement.textContent = "Missing chart year. Enter a year before calculating.";
       const loadingOverlay = document.getElementById("loading-overlay");
       if (loadingOverlay) loadingOverlay.style.display = "none";
+      if (form === "natal") {
+        document.dispatchEvent(
+          new CustomEvent("natalChartComplete", { detail: { success: false } }),
+        );
+      }
       console.error("Chart submission blocked: year is empty; Swiss Ephemeris was not called.");
       return;
     }
@@ -2017,7 +2022,9 @@ export function sharedNatal(
       if (form === "natal") {
         localStorage.setItem("natalData", JSON.stringify(natalData));
         // Dispatch event to signal natal chart calculation is complete (used by graph)
-        document.dispatchEvent(new CustomEvent("natalChartComplete"));
+        document.dispatchEvent(
+          new CustomEvent("natalChartComplete", { detail: { success: true } }),
+        );
         document.getElementById("triwheelForm").requestSubmit();
         // MAP auto-renders alongside triwheel. Same fire-and-forget pattern —
         // its handler must not touch the loading overlay so existing 10K
@@ -3512,7 +3519,9 @@ export function sharedNatal(
       .catch((error) => {
         // Dispatch event so graph doesn't hang if it triggered this natal calculation
         if (form === "natal") {
-          document.dispatchEvent(new CustomEvent("natalChartComplete"));
+          document.dispatchEvent(
+            new CustomEvent("natalChartComplete", { detail: { success: false } }),
+          );
           // Clear stale-guard flags so a failed natal doesn't leave
           // them stuck for an unrelated future submit.
           window._staleGuardResubmitFormId = null;
